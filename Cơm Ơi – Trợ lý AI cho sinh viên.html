@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cơm Ơi – Trợ lý AI cho sinh viên</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef6f0;--surface:#fff;--ink:#12332b;--muted:#4d6b62;--line:#cfe0d6;--brand:#0f7a5a;--brand-ink:#fff;--hot:#e8452c;--soft:#dcefe3;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1f1a;--surface:#15302a;--ink:#e6f3ec;--muted:#9bbcae;--line:#27493f;--brand:#3ec79a;--brand-ink:#08201a;--hot:#ff7a5f;--soft:#1c3b33}}
+:root[data-theme="dark"]{--bg:#0e1f1a;--surface:#15302a;--ink:#e6f3ec;--muted:#9bbcae;--line:#27493f;--brand:#3ec79a;--brand-ink:#08201a;--hot:#ff7a5f;--soft:#1c3b33}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.6}
+a{color:inherit}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+header{display:flex;justify-content:space-between;align-items:center;padding:18px 0}
+.logo{font-weight:800;font-size:1.25rem;letter-spacing:-.02em}
+.logo span{color:var(--hot)}
+nav a{margin-left:18px;text-decoration:none;color:var(--muted);font-size:.95rem}
+nav a:hover,nav a:focus-visible{color:var(--ink);text-decoration:underline}
+.hero{display:grid;grid-template-columns:1.05fr 1fr;gap:36px;align-items:start;padding:28px 0 56px}
+h1{font-size:clamp(2.1rem,5.4vw,3.6rem);line-height:1.08;margin:0 0 14px;letter-spacing:-.03em;font-weight:800}
+.lead{color:var(--muted);font-size:1.08rem;max-width:46ch;margin:0 0 22px}
+.stats{display:flex;gap:22px;flex-wrap:wrap;color:var(--muted);font-size:.9rem}
+.stats b{display:block;color:var(--ink);font-size:1.3rem}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:0 14px 40px -24px rgba(15,60,45,.5)}
+.panel h2{margin:0 0 4px;font-size:1.15rem}
+.panel p.sub{margin:0 0 16px;color:var(--muted);font-size:.9rem}
+label{font-size:.88rem;font-weight:500;display:flex;justify-content:space-between}
+input[type=range]{width:100%;accent-color:var(--brand);margin:8px 0 14px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.chip{border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:999px;padding:7px 14px;font:inherit;font-size:.88rem;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--hot);outline-offset:2px}
+.btn{background:var(--hot);color:#fff;border:0;border-radius:12px;padding:12px 18px;font:inherit;font-weight:700;cursor:pointer;width:100%}
+.btn:hover{filter:brightness(1.06)}
+.result{margin-top:16px;display:grid;gap:10px}
+.dish{display:flex;justify-content:space-between;gap:12px;align-items:center;background:var(--soft);border-radius:14px;padding:12px 14px}
+.dish strong{display:block}
+.dish small{color:var(--muted)}
+.price{font-weight:800;color:var(--brand);white-space:nowrap}
+.empty{color:var(--muted);font-size:.9rem;margin:6px 0 0}
+section{padding:44px 0}
+section>.wrap>h2{font-size:clamp(1.6rem,3.6vw,2.2rem);margin:0 0 6px;letter-spacing:-.02em}
+section>.wrap>p{color:var(--muted);margin:0 0 24px;max-width:60ch}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.svc{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px}
+.svc:nth-child(2n){border-radius:18px 18px 4px 18px}
+.svc .ic{font-size:1.7rem}
+.svc h3{margin:8px 0 4px;font-size:1.05rem}
+.svc p{margin:0;color:var(--muted);font-size:.92rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.big{font-size:2.2rem;font-weight:800;color:var(--brand);letter-spacing:-.02em}
+input[type=number]{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:inherit;margin:6px 0 14px}
+.bar{height:12px;background:var(--soft);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--brand);width:0;transition:width .3s}
+.chat{display:flex;flex-direction:column;gap:10px;max-height:260px;overflow:auto;margin-bottom:12px}
+.msg{padding:10px 14px;border-radius:14px;max-width:88%;font-size:.93rem}
+.msg.ai{background:var(--soft);align-self:flex-start;border-bottom-left-radius:4px}
+.msg.me{background:var(--brand);color:var(--brand-ink);align-self:flex-end;border-bottom-right-radius:4px}
+.ask{display:flex;gap:8px}
+.ask input{flex:1;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:inherit;min-width:0}
+.ask button{background:var(--brand);color:var(--brand-ink);border:0;border-radius:10px;padding:0 16px;font:inherit;font-weight:700;cursor:pointer}
+.quick{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.sel{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:inherit;margin:6px 0 14px}
+.route{background:var(--soft);border-radius:14px;padding:12px 14px}
+.route .no{display:inline-block;background:var(--brand);color:var(--brand-ink);font-weight:800;border-radius:8px;padding:2px 10px;margin-right:8px}
+.route small{display:block;color:var(--muted);margin-top:4px}
+.fun{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px}
+.fun h3{margin:0 0 4px;font-size:1rem}
+.fun p{margin:0 0 8px;color:var(--muted);font-size:.9rem}
+.fun .tag{display:inline-block;font-size:.8rem;background:var(--soft);border-radius:8px;padding:2px 9px;margin:2px 4px 2px 0}
+.fun .price{font-size:.95rem}
+footer{padding:30px 0 40px;color:var(--muted);font-size:.85rem;border-top:1px solid var(--line)}
+@media (max-width:800px){.hero,.two{grid-template-columns:1fr}nav a:not(:last-child){display:none}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="logo">Cơm<span>Ơi</span></div>
+  <nav><a href="#an">Ăn gì</a><a href="#tien">Chi tiêu</a><a href="#xebuyt">Xe buýt</a><a href="#giaitri">Giải trí</a><a href="#dichvu">Dịch vụ</a><a href="#hoi">Hỏi AI</a></nav>
+</header>
+
+<main>
+<div class="hero">
+  <div>
+    <h1>Hết tiền, hết ý tưởng? Cứ hỏi Cơm Ơi.</h1>
+    <p class="lead">Trợ lý AI giúp sinh viên chọn bữa ăn hợp túi tiền, quản lý chi tiêu và tìm các dịch vụ quanh khu trọ, ký túc xá.</p>
+    <div class="stats">
+      <div><b>30.000đ</b>bữa trưa trung bình</div>
+      <div><b>5 giây</b>để có gợi ý món</div>
+      <div><b>Miễn phí</b>cho sinh viên</div>
+    </div>
+  </div>
+
+  <div class="panel" id="an">
+    <h2>Hôm nay ăn gì?</h2>
+    <p class="sub">Chọn ngân sách và nhu cầu, AI gợi ý ngay.</p>
+    <label for="budget">Ngân sách một bữa <b id="bv">35.000đ</b></label>
+    <input type="range" id="budget" min="15000" max="80000" step="5000" value="35000">
+    <div class="chips" id="chips" role="group" aria-label="Nhu cầu">
+      <button class="chip" aria-pressed="false" data-t="nhanh">Nhanh gọn</button>
+      <button class="chip" aria-pressed="false" data-t="lanh">Lành mạnh</button>
+      <button class="chip" aria-pressed="false" data-t="nuoc">Có nước</button>
+      <button class="chip" aria-pressed="false" data-t="cay">Cay cay</button>
+    </div>
+    <button class="btn" id="go">Gợi ý cho tôi</button>
+    <div class="result" id="res" aria-live="polite"></div>
+  </div>
+</div>
+
+<section id="tien">
+  <div class="wrap">
+    <h2>Tiền tháng này tiêu sao cho đủ?</h2>
+    <p>Nhập tiền sinh hoạt, Cơm Ơi chia sẵn ngân sách ăn uống mỗi ngày.</p>
+    <div class="two">
+      <div class="panel">
+        <label for="month">Tiền sinh hoạt một tháng (đồng)</label>
+        <input type="number" id="month" value="3000000" min="0" step="100000">
+        <label for="rent">Tiền trọ và điện nước (đồng)</label>
+        <input type="number" id="rent" value="1000000" min="0" step="100000">
+        <label for="spent">Đã tiêu cho ăn uống (đồng)</label>
+        <input type="number" id="spent" value="600000" min="0" step="50000">
+      </div>
+      <div class="panel">
+        <p class="sub">Có thể chi cho ăn mỗi ngày</p>
+        <div class="big" id="perday">0đ</div>
+        <p class="sub" id="note"></p>
+        <div class="bar" aria-hidden="true"><i id="fill"></i></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="dichvu">
+  <div class="wrap">
+    <h2>Mọi thứ sinh viên cần, một chỗ hỏi</h2>
+    <p>Ngoài chuyện ăn uống, AI hỗ trợ những việc nhỏ làm mất thời gian mỗi ngày.</p>
+    <div class="grid">
+      <div class="svc"><div class="ic">🍜</div><h3>Quán ăn quanh trường</h3><p>Lọc theo giá, khoảng cách và quán còn mở lúc này.</p></div>
+      <div class="svc"><div class="ic">🏠</div><h3>Tìm phòng trọ</h3><p>So sánh giá, diện tích và khoảng cách đến trường.</p></div>
+      <div class="svc"><div class="ic">🧺</div><h3>Giặt là, photo, in ấn</h3><p>Điểm dịch vụ gần nhất cùng bảng giá để bạn tham khảo.</p></div>
+      <div class="svc"><div class="ic">📅</div><h3>Lịch học và nhắc việc</h3><p>Nhắc giờ học, hạn nộp bài và lịch thi trước một ngày.</p></div>
+      <div class="svc"><div class="ic">🚌</div><h3>Đi lại</h3><p>Tuyến xe buýt, so sánh vé lượt với vé tháng, gợi ý đi chung.</p></div>
+      <div class="svc"><div class="ic">🎬</div><h3>Xem phim, giải trí</h3><p>Suất chiếu giá sinh viên, quán học nhóm, câu lạc bộ và sự kiện.</p></div>
+      <div class="svc"><div class="ic">💬</div><h3>Hỏi đáp thủ tục</h3><p>Học bổng, ký túc xá, thẻ sinh viên: hỏi là có hướng dẫn.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="xebuyt">
+  <div class="wrap">
+    <h2>Đi lại bằng xe buýt</h2>
+    <p>Chọn điểm đến để xem tuyến gợi ý, rồi so sánh vé lượt với vé tháng. Điểm xuất phát là Đại học Kinh tế Quốc dân (207 Giải Phóng). Số hiệu tuyến lấy từ các nguồn công khai, giờ chạy và giá vé có thể thay đổi, hãy kiểm tra lại trên ứng dụng xe buýt chính thức trước khi đi.</p>
+    <div class="two">
+      <div class="panel">
+        <label for="dest">Từ ĐH Kinh tế Quốc dân, bạn muốn đi đến</label>
+        <select id="dest" class="sel"><option value="all">Tất cả các tuyến</option><option value="Giáp Bát">Bến xe Giáp Bát</option><option value="Mỹ Đình">Bến xe Mỹ Đình</option><option value="Yên Nghĩa">Bến xe Yên Nghĩa</option><option value="Long Biên">Long Biên</option><option value="Nhổn">Nhổn</option><option value="Kiêu Kỵ">Kiêu Kỵ (Gia Lâm)</option><option value="Vân Hồ">Nguyễn Công Trứ – Vân Hồ</option></select>
+        <div class="result" id="routes" aria-live="polite"></div>
+        <p class="empty">Các tuyến khác cũng đi qua khu vực trường: 03, 03B, 08, 19, 24, 26, 28, 41. Điểm đầu cuối của các tuyến này bạn xem thêm trên ứng dụng chính thức.</p>
+      </div>
+      <div class="panel">
+        <h2>Vé lượt hay vé tháng?</h2>
+        <p class="sub">Sửa giá theo thực tế để so sánh.</p>
+        <label for="tp">Giá vé lượt (đồng)</label><input type="number" id="tp" value="7000" min="0" step="1000">
+        <label for="mp">Giá vé tháng (đồng)</label><input type="number" id="mp" value="100000" min="0" step="5000">
+        <label for="td">Số chuyến mỗi ngày <b id="tdv">2</b></label><input type="range" id="td" min="1" max="8" value="2">
+        <label for="dm">Số ngày đi mỗi tháng <b id="dmv">22</b></label><input type="range" id="dm" min="1" max="30" value="22">
+        <div class="big" id="busres" style="font-size:1.4rem"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="giaitri">
+  <div class="wrap">
+    <h2>Khu giải trí cuối tuần</h2>
+    <p>Xem phim, tụ tập nhóm bạn hay tham gia câu lạc bộ, đều có gợi ý theo túi tiền sinh viên. Lịch chiếu và giá là dữ liệu mẫu.</p>
+    <div class="chips" id="tabs" role="group" aria-label="Loại giải trí">
+      <button class="chip" aria-pressed="true" data-k="phim">Xem phim</button>
+      <button class="chip" aria-pressed="false" data-k="caphe">Học nhóm, cà phê</button>
+      <button class="chip" aria-pressed="false" data-k="clb">Câu lạc bộ, sự kiện</button>
+      <button class="chip" aria-pressed="false" data-k="the">Thể thao, game</button>
+    </div>
+    <div class="grid" id="fun"></div>
+  </div>
+</section>
+
+<section id="hoi">
+  <div class="wrap">
+    <h2>Hỏi nhanh Cơm Ơi</h2>
+    <p>Đây là bản demo, trả lời theo từ khóa. Bản đầy đủ sẽ hiểu câu hỏi tự nhiên hơn.</p>
+    <div class="panel" style="max-width:640px">
+      <div class="chat" id="chat" aria-live="polite"><div class="msg ai">Chào bạn! Bạn đang cần gì: ăn uống, tiết kiệm hay tìm trọ?</div></div>
+      <div class="quick" id="quick">
+        <button class="chip">Ăn gì rẻ mà no?</button>
+        <button class="chip">Cách tiết kiệm tiền</button>
+        <button class="chip">Tìm phòng trọ</button>
+      </div>
+      <div class="ask"><input id="q" placeholder="Nhập câu hỏi của bạn" aria-label="Câu hỏi"><button id="send">Gửi</button></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>Cơm Ơi – dự án demo hỗ trợ sinh viên. Giá món chỉ mang tính tham khảo.</footer>
+</div>
+
+<script>
+var dishes=[
+{n:"Cơm tấm sườn trứng",p:35000,t:["nhanh"],w:"Quán cơm bình dân"},
+{n:"Bún riêu cua",p:30000,t:["nuoc"],w:"Quán bún"},
+{n:"Bánh mì trứng ốp la",p:15000,t:["nhanh"],w:"Xe bánh mì đầu ngõ"},
+{n:"Phở gà",p:35000,t:["nuoc","lanh"],w:"Quán phở"},
+{n:"Cơm rau luộc, đậu sốt cà",p:25000,t:["lanh","nhanh"],w:"Cơm chay"},
+{n:"Mì cay hải sản",p:45000,t:["cay","nuoc"],w:"Quán mì cay"},
+{n:"Bún chả",p:40000,t:["nhanh"],w:"Quán bún chả"},
+{n:"Salad gà áp chảo",p:55000,t:["lanh","nhanh"],w:"Tiệm ăn healthy"},
+{n:"Bánh tráng trộn",p:20000,t:["cay","nhanh"],w:"Xe ăn vặt"},
+{n:"Cháo trứng bắc thảo",p:25000,t:["nuoc","lanh"],w:"Quán cháo"},
+{n:"Lẩu thái mini",p:70000,t:["cay","nuoc"],w:"Quán lẩu sinh viên"},
+{n:"Xôi mặn thập cẩm",p:20000,t:["nhanh"],w:"Xôi sáng"}];
+var sel={},budget=35000;
+var fmt=function(n){return n.toLocaleString("vi-VN")+"đ"};
+var b=document.getElementById("budget"),bv=document.getElementById("bv"),res=document.getElementById("res");
+b.oninput=function(){budget=+b.value;bv.textContent=fmt(budget)};
+document.querySelectorAll("#chips .chip").forEach(function(c){c.onclick=function(){
+ var k=c.dataset.t;sel[k]=!sel[k];c.setAttribute("aria-pressed",sel[k])}});
+function suggest(){
+ var keys=Object.keys(sel).filter(function(k){return sel[k]});
+ var list=dishes.filter(function(d){return d.p<=budget&&keys.every(function(k){return d.t.indexOf(k)>-1})});
+ list.sort(function(){return Math.random()-.5});
+ res.innerHTML="";
+ if(!list.length){res.innerHTML='<p class="empty">Chưa có món hợp. Thử tăng ngân sách hoặc bỏ bớt một nhu cầu.</p>';return}
+ list.slice(0,3).forEach(function(d){
+  var e=document.createElement("div");e.className="dish";
+  e.innerHTML="<div><strong></strong><small></small></div><span class='price'></span>";
+  e.querySelector("strong").textContent=d.n;e.querySelector("small").textContent=d.w;
+  e.querySelector(".price").textContent=fmt(d.p);res.appendChild(e)})
+}
+document.getElementById("go").onclick=suggest;suggest();
+
+var m=document.getElementById("month"),r=document.getElementById("rent"),s=document.getElementById("spent");
+function calc(){
+ var left=Math.max(0,(+m.value||0)-(+r.value||0));
+ var food=left*0.55,days=30,used=+s.value||0;
+ var remain=Math.max(0,food-used),per=remain/days;
+ document.getElementById("perday").textContent=fmt(Math.round(per/1000)*1000);
+ document.getElementById("note").textContent="Ngân sách ăn cả tháng khoảng "+fmt(Math.round(food))+" (55% số tiền sau khi trừ tiền trọ). Còn lại "+fmt(Math.round(remain))+".";
+ document.getElementById("fill").style.width=(food?Math.min(100,used/food*100):0)+"%";
+}
+[m,r,s].forEach(function(i){i.oninput=calc});calc();
+
+var routes=[
+{no:"18",a:"ĐH Kinh tế Quốc dân",b:"Long Biên",t:["Long Biên"],n:"Tuyến vòng, xuất phát và quay lại ĐH Kinh tế Quốc dân."},
+{no:"47B",a:"ĐH Kinh tế Quốc dân",b:"Kiêu Kỵ",t:["Kiêu Kỵ"],n:"Đi về phía Gia Lâm."},
+{no:"21A",a:"Bến xe Giáp Bát",b:"Bến xe Yên Nghĩa",t:["Giáp Bát","Yên Nghĩa"],n:"Chạy dọc đường Giải Phóng, nối hai bến xe phía Nam và phía Tây."},
+{no:"21B",a:"Duyên Thái",b:"Bến xe Mỹ Đình",t:["Mỹ Đình"],n:"Đi qua Giải Phóng, kết nối bến xe Mỹ Đình."},
+{no:"25",a:"BV Nhiệt đới TW cơ sở 2",b:"Bến xe Giáp Bát",t:["Giáp Bát"],n:"Đi qua Giải Phóng, đến bến xe Giáp Bát."},
+{no:"32",a:"Giáp Bát",b:"Nhổn",t:["Giáp Bát","Nhổn"],n:"Tuyến dài qua trung tâm, đến khu đại học phía Tây."},
+{no:"23",a:"Nguyễn Công Trứ",b:"Vân Hồ",t:["Vân Hồ"],n:"Tuyến vòng quanh khu Nguyễn Công Trứ – Vân Hồ."}];
+var routesOld=[
+{no:"32",a:"Giáp Bát",b:"Nhổn",t:["Trung tâm","Trường"],f:"05:00–21:00",g:"10–15 phút"},
+{no:"A1",a:"Khu ký túc xá",b:"Trung tâm thương mại",t:["Rạp phim","Trung tâm"],f:"06:00–22:00",g:"15 phút"},
+{no:"B2",a:"Khu trọ sinh viên",b:"Bến xe phía Nam",t:["Bến xe"],f:"05:30–20:30",g:"20 phút"},
+{no:"C3",a:"Cổng trường",b:"Khu đại học phía Tây",t:["Trường"],f:"06:00–21:00",g:"12 phút"},
+{no:"D4",a:"Khu ký túc xá",b:"Bến xe phía Bắc",t:["Bến xe","Trung tâm"],f:"05:00–20:00",g:"25 phút"}];
+var dest=document.getElementById("dest"),rb=document.getElementById("routes");
+function showRoutes(){
+ rb.innerHTML="";
+ var l=routes.filter(function(r){return dest.value==="all"||r.t.indexOf(dest.value)>-1});
+ if(!l.length){rb.innerHTML='<p class="empty">Chưa có tuyến phù hợp.</p>';return}
+ l.forEach(function(r){var e=document.createElement("div");e.className="route";
+  e.innerHTML='<span class="no"></span><strong></strong><small></small>';
+  e.querySelector(".no").textContent=r.no;e.querySelector("strong").textContent=r.a+" – "+r.b;
+  e.querySelector("small").textContent=r.n;rb.appendChild(e)})
+}
+dest.onchange=showRoutes;showRoutes();
+var tp=document.getElementById("tp"),mp=document.getElementById("mp"),td=document.getElementById("td"),dm=document.getElementById("dm");
+function busCalc(){
+ document.getElementById("tdv").textContent=td.value;document.getElementById("dmv").textContent=dm.value;
+ var single=(+tp.value||0)*td.value*dm.value,pass=+mp.value||0,out=document.getElementById("busres");
+ out.textContent=single>pass?"Nên mua vé tháng, tiết kiệm "+fmt(single-pass):"Mua vé lượt, rẻ hơn "+fmt(pass-single);
+}
+[tp,mp,td,dm].forEach(function(i){i.oninput=busCalc});busCalc();
+var fun={
+phim:[{n:"Phim hài, chiếu 19:30",d:"Rạp trung tâm thương mại, suất tối thứ Sáu",p:"55.000đ vé sinh viên",t:["Hài","Đi nhóm"]},{n:"Phim hành động, chiếu 15:00",d:"Suất chiều cuối tuần, ít đông",p:"60.000đ vé sinh viên",t:["Hành động"]},{n:"Phim tình cảm, chiếu 21:00",d:"Suất khuya, phù hợp tan học muộn",p:"50.000đ vé sinh viên",t:["Tình cảm"]}],
+caphe:[{n:"Tiny Coffee",d:"Quán bạn nhắc tới. Mình chưa xác minh được địa chỉ và giờ mở cửa, hãy mở bản đồ để kiểm tra trước khi đến.",p:"Giá: xem trên bản đồ",t:["Học bài"],l:"https://www.google.com/maps/search/?api=1&query=Tiny+Coffee+g%E1%BA%A7n+%C4%90%E1%BA%A1i+h%E1%BB%8Dc+Kinh+t%E1%BA%BF+Qu%E1%BB%91c+d%C3%A2n+H%C3%A0+N%E1%BB%99i"},{n:"Quán cà phê học bài quanh trường",d:"Tìm quán còn chỗ ngồi, có wifi và ổ điện trong khu 207 Giải Phóng. Xem đánh giá gần đây trước khi chọn.",p:"Giá: tùy quán",t:["Học nhóm","Wifi"],l:"https://www.google.com/maps/search/?api=1&query=c%C3%A0+ph%C3%AA+h%E1%BB%8Dc+b%C3%A0i+g%E1%BA%A7n+%C4%90%E1%BA%A1i+h%E1%BB%8Dc+Kinh+t%E1%BA%BF+Qu%E1%BB%91c+d%C3%A2n"},{n:"Thư viện của trường",d:"Chỗ học yên tĩnh, miễn phí, hỏi thư viện về giờ mở cửa và quy định mang thẻ sinh viên.",p:"Miễn phí",t:["Yên tĩnh"]}],
+clb:[{n:"Câu lạc bộ tình nguyện",d:"Hoạt động cuối tuần, tích lũy điểm rèn luyện",p:"Miễn phí",t:["Tình nguyện"]},{n:"Ngày hội việc làm",d:"Gặp doanh nghiệp, nộp CV trực tiếp",p:"Miễn phí",t:["Sự kiện","Thực tập"]},{n:"Câu lạc bộ tiếng Anh",d:"Giao lưu mỗi tối thứ Tư",p:"Miễn phí",t:["Ngoại ngữ"]}],
+the:[{n:"Sân bóng đá mini",d:"Đặt theo giờ, chia tiền cho cả đội",p:"Từ 200.000đ mỗi giờ",t:["Bóng đá","Đi nhóm"]},{n:"Quán game, bi-a",d:"Giá ưu đãi khung giờ ban ngày",p:"10.000đ mỗi giờ",t:["Game"]},{n:"Phòng gym sinh viên",d:"Vé tháng có giảm giá khi xuất trình thẻ",p:"Từ 150.000đ mỗi tháng",t:["Tập luyện"]}]};
+function showFun(k){
+ var box=document.getElementById("fun");box.innerHTML="";
+ fun[k].forEach(function(x){var e=document.createElement("div");e.className="fun";
+  e.innerHTML='<h3></h3><p></p><div class="tags"></div><span class="price"></span>';
+  e.querySelector("h3").textContent=x.n;e.querySelector("p").textContent=x.d;
+  e.querySelector(".price").textContent=x.p;if(x.l){var a=document.createElement("a");a.href=x.l;a.target="_blank";a.rel="noopener";a.textContent=" · Xem bản đồ";e.appendChild(a)}
+  x.t.forEach(function(t){var s=document.createElement("span");s.className="tag";s.textContent=t;e.querySelector(".tags").appendChild(s)});
+  box.appendChild(e)})
+}
+document.querySelectorAll("#tabs .chip").forEach(function(c){c.onclick=function(){
+ document.querySelectorAll("#tabs .chip").forEach(function(o){o.setAttribute("aria-pressed",o===c)});showFun(c.dataset.k)}});
+showFun("phim");
+var chat=document.getElementById("chat"),q=document.getElementById("q");
+function add(t,c){var d=document.createElement("div");d.className="msg "+c;d.textContent=t;chat.appendChild(d);chat.scrollTop=chat.scrollHeight}
+function reply(t){
+ t=t.toLowerCase();
+ if(/ăn|đói|cơm|bún|phở|rẻ/.test(t))return "Với 25.000–35.000đ bạn có cơm tấm, bún riêu hoặc phở gà. Kéo thanh ngân sách ở đầu trang để mình gợi ý đúng món.";
+ if(/tiết kiệm|tiền|chi tiêu/.test(t))return "Gợi ý: dành khoảng 55% tiền sau khi trừ tiền trọ cho ăn uống, nấu chung với bạn cùng phòng vài bữa mỗi tuần sẽ giảm đáng kể chi phí.";
+ if(/trọ|phòng|ở/.test(t))return "Khi tìm trọ, hãy so giá theo mét vuông, hỏi rõ giá điện nước và đến xem trực tiếp trước khi đặt cọc.";
+ if(/xe buýt|bus|đi lại|tuyến/.test(t))return "Kéo xuống mục Xe buýt, chọn điểm đến để xem tuyến gợi ý và so sánh vé lượt với vé tháng.";
+ if(/phim|giải trí|chơi|cà phê/.test(t))return "Mục Khu giải trí có suất phim giá sinh viên, quán học nhóm, câu lạc bộ và sân thể thao.";
+ if(/học|lịch|thi/.test(t))return "Bạn có thể nhập lịch học, Cơm Ơi sẽ nhắc trước một ngày. Tính năng này đang phát triển.";
+ return "Mình chưa hiểu rõ lắm. Bạn thử hỏi về ăn uống, tiết kiệm hoặc tìm trọ nhé.";
+}
+function ask(t){if(!t.trim())return;add(t,"me");setTimeout(function(){add(reply(t),"ai")},350)}
+document.getElementById("send").onclick=function(){ask(q.value);q.value=""};
+q.onkeydown=function(e){if(e.key==="Enter"){ask(q.value);q.value=""}};
+document.querySelectorAll("#quick .chip").forEach(function(c){c.onclick=function(){ask(c.textContent)}});
+</script>
+</body>
+</html>
