@@ -152,6 +152,18 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 .m3tag{position:absolute;left:10px;bottom:10px;background:rgba(2,14,30,.66);border:1px solid rgba(127,214,245,.3);color:var(--aqua);border-radius:99px;padding:3px 10px;font-size:11px;font-weight:600;pointer-events:none}
 #m3note{color:var(--warn);margin-top:10px}
 #delta{color:var(--aqua)}
+/* ---------- Thanh trượt chỉnh nhanh 3D ---------- */
+.m3sliders{margin-top:14px;background:rgba(2,14,30,.45);border:1px solid rgba(150,196,232,.16);border-radius:16px;padding:13px 15px 7px}
+.m3sliders[hidden]{display:none!important}
+.s3head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.s3head b{font-size:13px;color:var(--ink)}
+.s3head span{font-size:11.5px;color:var(--mute)}
+.s3row{display:grid;grid-template-columns:118px 1fr 64px;align-items:center;gap:10px;padding:5px 0;margin:0}
+.s3row .s3lab{font-size:12.5px;font-weight:600;color:var(--ink2)}
+.s3row .s3val{font-size:12.5px;font-weight:700;color:var(--gold);text-align:right;white-space:nowrap}
+.s3row input[type=range]{width:100%;height:26px;min-height:26px;padding:0;background:none;border:0;accent-color:var(--gold);cursor:pointer}
+.s3row input[type=range]:focus{box-shadow:none;border-color:transparent}
+@media(max-width:640px){.s3row{grid-template-columns:96px 1fr 58px;gap:8px}.s3head span{display:none}}
 /* ---------- Upload drops ---------- */
 .drop{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:11px;border:1.5px dashed rgba(127,214,245,.5);border-radius:20px;padding:20px;text-align:center;color:var(--aqua);font-size:13.5px;font-weight:500;cursor:pointer;background:linear-gradient(180deg,rgba(22,96,140,.34),rgba(6,36,62,.52));transition:border-color .3s,background .3s,transform .3s var(--ease),box-shadow .3s}
 .drop:hover,.drop.over{border-color:var(--gold);transform:translateY(-2px);box-shadow:0 12px 28px rgba(0,5,15,.4);background:linear-gradient(180deg,rgba(28,110,155,.42),rgba(8,44,74,.55))}
@@ -319,6 +331,16 @@ footer{position:relative;z-index:1;text-align:center;color:var(--mute2);font-siz
           <div id="m3d" class="off" hidden aria-label="Mô hình 3D"><div id="m3dCanvas"></div><div class="m3dims" id="m3dims"><span id="d3b" style="top:26%">Ngực</span><span id="d3w" style="top:39%">Eo</span><span id="d3h" style="top:48%">Mông</span></div><span class="m3tag">Kéo để xoay 360°</span></div>
           <div class="drop stbd off" id="bdrop" tabindex="0" role="button" aria-label="Tải ảnh toàn thân" hidden></div>
         </div>
+        <div class="m3sliders" id="m3sliders" hidden>
+          <div class="s3head"><b>Chỉnh nhanh theo số đo</b><span>Kéo là mô hình 3D đổi ngay · đồng bộ với ô số đo</span></div>
+          <label class="s3row"><span class="s3lab">Chiều cao</span><input type="range" id="s3h" min="120" max="220" step="1" value="165" aria-label="Chiều cao mô hình 3D"><span class="s3val" id="v3h">165 cm</span></label>
+          <label class="s3row"><span class="s3lab">Cân nặng</span><input type="range" id="s3w" min="30" max="200" step="1" value="55" aria-label="Cân nặng mô hình 3D"><span class="s3val" id="v3w">55 kg</span></label>
+          <label class="s3row"><span class="s3lab">Ngực</span><input type="range" id="s3b" min="55" max="170" step="1" value="88" aria-label="Vòng ngực mô hình 3D"><span class="s3val" id="v3b">88 cm</span></label>
+          <label class="s3row"><span class="s3lab">Eo</span><input type="range" id="s3wa" min="45" max="170" step="1" value="70" aria-label="Vòng eo mô hình 3D"><span class="s3val" id="v3wa">70 cm</span></label>
+          <label class="s3row"><span class="s3lab">Mông</span><input type="range" id="s3hi" min="60" max="170" step="1" value="93" aria-label="Vòng mông mô hình 3D"><span class="s3val" id="v3hi">93 cm</span></label>
+          <label class="s3row"><span class="s3lab">Vai (rộng)</span><input type="range" id="s3sh" min="34" max="58" step="0.5" value="42" aria-label="Chiều rộng vai mô hình 3D"><span class="s3val" id="v3sh">42 cm</span></label>
+          <p class="hint" style="margin:2px 0 8px">Số có dấu ~ là đang ước tính từ chiều cao / cân nặng / phom. Kéo thanh trượt sẽ ghi thành số đo thật.</p>
+        </div>
         <p class="hint" id="m3note" hidden>Thiết bị này chưa chạy được 3D, đang hiển thị 2D</p>
         <div class="stat" id="stat"><div><b id="bmi">–</b><span id="bmiCat">BMI</span></div><div><b id="whr">–</b>Eo/Mông</div><div><b class="sm" id="shapeName">–</b>Phom</div></div>
         <div class="mtools" id="mtools">
@@ -451,7 +473,7 @@ const SHAPES = ["Quả lê","Đồng hồ cát","Chữ nhật","Tam giác ngư�
 const SKINS = [["Rất sáng","#f8e0d0"],["Sáng","#efc9ab"],["Trung bình","#deae88"],["Rám","#c68e65"],["Ngăm","#9c6a47"],["Nâu đậm","#6b4430"]];
 const UNDERS = ["Ấm","Lạnh","Trung tính"];
 const SEXES = ["Nữ","Nam","Unisex"];
-let P = Object.assign({h:"",w:"",bust:"",waist:"",hip:"",sex:"",shape:"",skin:"",under:"",note:""}, store.get("fm_profile", {}));
+let P = Object.assign({h:"",w:"",bust:"",waist:"",hip:"",shoulder:"",sex:"",shape:"",skin:"",under:"",note:""}, store.get("fm_profile", {}));
 let HIST = store.get("fm_hist", []);
 let img = null, thumb = null, img2 = null, thumb2 = null, body = null, busy = false, last = null, history = store.get("fm_chat", []);
 document.querySelectorAll("nav.tabs button").forEach(b => b.onclick = () => {
@@ -672,33 +694,35 @@ W+=(sp==="Đồng hồ cát"?-6:sp==="Quả táo"?10:sp==="Chữ nhật"?4:0)*s;
 Hp+=(sp==="Quả lê"?7:sp==="Tam giác ngược"?-4:sp==="Đồng hồ cát"?3:0)*s;
 const bu=num(S.bust,55,170),wu=num(S.waist,45,170),hu=num(S.hip,60,170);
 B=bu||B;W=wu||W;Hp=hu||Hp;
+let Sh=lerp(38.5,46.5,sx)*s*(1+.30*f)*(sp==="Tam giác ngược"?1.07:sp==="Quả lê"?.96:1);
+const shu=num(S.shoulder,30,65); Sh=shu||Sh;
 const hex=(SKINS.find(k=>k[0]===S.skin)||[0,"#dcb899"])[1];
 let sk=[1,3,5].map(i=>parseInt(hex.substr(i,2),16));
 const tint=S.under==="Ấm"?[255,170,90]:S.under==="Lạnh"?[225,150,185]:null;
 if(tint)sk=sk.map((v,i)=>lerp(v,tint[i],.07));
-return{h,B,W,Hp,sx,d,shK:sp==="Tam giác ngược"?1.08:sp==="Quả lê"?.95:1,sk,gB:!bu,gW:!wu,gH:!hu,bmi,auto:shapeFrom(B,W,Hp),have:!!(parseFloat(S.h)&&parseFloat(S.w))};
+return{h,w,B,W,Hp,Sh,sx,d,shK:sp==="Tam giác ngược"?1.08:sp==="Quả lê"?.95:1,sk,gB:!bu,gW:!wu,gH:!hu,gSh:!shu,bmi,auto:shapeFrom(B,W,Hp),have:!!(parseFloat(S.h)&&parseFloat(S.w))};
 }
 
 /* ---------- Giao diện mô hình: xoay, số đo, so sánh, tải ảnh ---------- */
 const M=Object.assign({back:false,dims:true,ghost:false},store.get("fm_man",{}));
-const snap=q=>({h:+q.h||0,w:+q.w||0,bust:+q.bust||0,waist:+q.waist||0,hip:+q.hip||0,sex:q.sex||"",shape:q.shape||""});
+const snap=q=>({h:+q.h||0,w:+q.w||0,bust:+q.bust||0,waist:+q.waist||0,hip:+q.hip||0,shoulder:+q.shoulder||0,sex:q.sex||"",shape:q.shape||""});
 const snapKey=q=>q?JSON.stringify(snap(q)):"";
 const saveM=()=>store.set("fm_man",M);
 const prevP=()=>HIST[0]&&HIST[0].p||null;
 function opts(){return{back:M.back,dims:M.dims,top:"Thun",bot:"Short",topC:PAL[0],botC:PAL[2],ease:1,hair:HAIRS[0][1],ghost:M.ghost&&prevP()?targetParams(prevP()):null}}
 let OP=opts();
 const renderMan=()=>{OP=opts();$("#man").innerHTML=manSVG(cur||targetParams(),OP);if(typeof schedule3D==="function")schedule3D()};
-const NUMK=["h","B","W","Hp","sx","d","shK"];
-let cur=null,raf=0;
+const NUMK=["h","w","B","W","Hp","Sh","sx","d","shK"];
+let cur=null,raf=0,s3Instant=false;
 function updateMan(){
-const t=targetParams();statTween(t);
-if(!cur||REDUCE){cur=JSON.parse(JSON.stringify(t));renderMan();return}
+const t=targetParams();statTween(t);if(typeof syncSliders==="function")syncSliders(t);
+if(!cur||REDUCE||s3Instant){s3Instant=false;cur=JSON.parse(JSON.stringify(t));renderMan();return}
 cancelAnimationFrame(raf);OP=opts();
 const from=JSON.parse(JSON.stringify(cur)),t0=performance.now(),dur=520;
-cur.gB=t.gB;cur.gW=t.gW;cur.gH=t.gH;
+cur.gB=t.gB;cur.gW=t.gW;cur.gH=t.gH;cur.gSh=t.gSh;
 const tick=now=>{const u=Math.min(1,(now-t0)/dur),e=1-Math.pow(1-u,3);
-NUMK.forEach(k=>cur[k]=lerp(from[k],t[k],e));cur.sk=from.sk.map((v,i)=>lerp(v,t.sk[i],e));
-$("#man").innerHTML=manSVG(cur,OP);if(u<1)raf=requestAnimationFrame(tick)};
+NUMK.forEach(k=>cur[k]=lerp(from[k]||0,t[k],e));cur.sk=from.sk.map((v,i)=>lerp(v,t.sk[i],e));
+$("#man").innerHTML=manSVG(cur,OP);if(typeof schedule3D==="function")schedule3D();if(u<1)raf=requestAnimationFrame(tick)};
 raf=requestAnimationFrame(tick);
 }
 const tw={};
@@ -739,7 +763,9 @@ ind.style.width = `calc((100% - 10px) / ${items.length})`; ind.style.transform =
 $("#man").classList.toggle("off", i !== 0); $("#man").hidden = i !== 0;
 $("#m3d").classList.toggle("off", i !== 1); $("#m3d").hidden = i !== 1;
 $("#bdrop").classList.toggle("off", i !== 2); $("#bdrop").hidden = i !== 2; $("#stat").style.opacity = i === 2 ? .4 : 1;
+const sl=$("#m3sliders"); if (sl) sl.hidden = i !== 1;
 if (i === 1 && typeof t3Frame === "function") t3Frame();
+if (i === 1 && typeof syncSliders === "function") syncSliders();
 };
 btns.forEach((b, i) => b.onclick = () => {
 if (items[i] === "Mô hình 3D" && !(typeof start3D === "function" && start3D())) { $("#m3note").hidden = false; view = "Mô hình 2D"; sync(); return; }
@@ -749,155 +775,277 @@ view = items[i]; sync();
 sync(); return sync;
 })();
 
-/* ================= Mô hình 3D (thử nghiệm, Three.js) ================= */
-let T3=null,t3Pend=false;
+/* ================= Mô hình 3D chân thực (Three.js) =================
+   Người parametric: tiết diện elip mịn theo đúng 3 vòng / vai / chiều cao,
+   đầu = 1/7.5 chiều cao, tay có ngón, tóc có khối + sợi, áo/quần ôm theo
+   người kèm nếp gấp & viền, da mềm (phát sáng nhẹ kiểu subsurface),
+   3 nguồn sáng + sàn navy hứng bóng mềm thật. */
+let T3=null,t3Pend=false,_s3sync=false;
 function t3Dims(){ const el=$("#m3dims"); if(el) el.style.display=M.dims?"":"none"; }
 function t3Flip(){ if(!T3) return false; T3.auto=false; T3.targetY+=Math.PI; return true; }
 function t3Frame(){ if(T3) T3.dirty=true; }
 function schedule3D(){ if(!T3||t3Pend) return; t3Pend=true; requestAnimationFrame(()=>{ t3Pend=false; if(T3) update3D(cur||targetParams()); }); }
+/* ---- Thanh trượt chỉnh nhanh : đồng bộ 2 chiều với ô số đo ---- */
+function syncSliders(t){
+ if(_s3sync) return; t=t||targetParams();
+ const set=(id,vid,val,unit,est)=>{ const s=$(id),v=$(vid); if(!s||!v) return; _s3sync=true; s.value=val; _s3sync=false; v.textContent=(est?"~":"")+Math.round(val)+" "+unit; };
+ set("#s3h","#v3h",cl(t.h,120,220),"cm",!parseFloat(P.h));
+ set("#s3w","#v3w",cl(t.w,30,200),"kg",!parseFloat(P.w));
+ set("#s3b","#v3b",cl(t.B,55,170),"cm",t.gB);
+ set("#s3wa","#v3wa",cl(t.W,45,170),"cm",t.gW);
+ set("#s3hi","#v3hi",cl(t.Hp,60,170),"cm",t.gH);
+ set("#s3sh","#v3sh",cl(t.Sh,34,58),"cm",t.gSh);
+}
+(function wireSliders(){
+ const map=[["#s3h","h"],["#s3w","w"],["#s3b","bust"],["#s3wa","waist"],["#s3hi","hip"]];
+ map.forEach(([sid,key])=>{ const s=$(sid); if(!s) return; s.addEventListener("input",()=>{ if(_s3sync) return; $("#"+key).value=s.value; s3Instant=true; persist();
+   const t=targetParams(),lab={h:"#v3h",w:"#v3w",bust:"#v3b",waist:"#v3wa",hip:"#v3hi"}[key]; if(lab) $(lab).textContent=Math.round(+s.value)+(key==="w"?" kg":" cm"); }); });
+ const sh=$("#s3sh"); if(sh) sh.addEventListener("input",()=>{ if(_s3sync) return; P.shoulder=sh.value; $("#v3sh").textContent=(+sh.value)+" cm"; s3Instant=true; clearTimeout(saveT); saveT=setTimeout(()=>store.set("fm_profile",P),200); updateMan(); });
+})();
+/* ---- Bộ dựng hình ---- */
+function crp(p0,p1,p2,p3,u){ return .5*((2*p1)+(-p0+p2)*u+(2*p0-5*p1+4*p2-p3)*u*u+(-p0+3*p1-3*p2+p3)*u*u*u); }
+function interpProf(ctrl,n){
+ const out=[],L=ctrl.length;
+ for(let i=0;i<n;i++){ const t=i/(n-1)*(L-1),ix=Math.min(L-2,Math.floor(t)),u=t-ix;
+  const a=ctrl[Math.max(0,ix-1)],b=ctrl[ix],c=ctrl[ix+1],d=ctrl[Math.min(L-1,ix+2)],o={};
+  ["y","rx","rz","cx","cz"].forEach(k=>{ o[k]=crp(a[k]||0,b[k]||0,c[k]||0,d[k]||0,u); });
+  o.rx=Math.max(.012,o.rx); o.rz=Math.max(.012,o.rz); out.push(o); }
+ return out;
+}
+function tubeGeo(ctrl,radial,samples){
+ const prof=interpProf(ctrl,samples),pos=[],idx=[];
+ prof.forEach(p=>{ for(let j=0;j<radial;j++){ const th=j/radial*Math.PI*2; pos.push(p.cx+Math.cos(th)*p.rx,p.y,p.cz+Math.sin(th)*p.rz); } });
+ for(let i=0;i<samples-1;i++) for(let j=0;j<radial;j++){ const a=i*radial+j,b=i*radial+(j+1)%radial,c=a+radial,d=b+radial; idx.push(a,c,b,b,c,d); }
+ const top=prof[samples-1],bot=prof[0],ti=pos.length/3; pos.push(top.cx,top.y+.002,top.cz); const bi=ti+1; pos.push(bot.cx,bot.y-.002,bot.cz);
+ for(let j=0;j<radial;j++){ idx.push(ti,(samples-1)*radial+(j+1)%radial,(samples-1)*radial+j); idx.push(bi,j,(j+1)%radial); }
+ const g=new THREE.BufferGeometry();
+ g.setAttribute("position",new THREE.Float32BufferAttribute(pos,3)); g.setIndex(idx); g.computeVertexNormals(); return g;
+}
+function headGeo(){
+ const g=new THREE.SphereGeometry(1,36,28),pa=g.attributes.position;
+ for(let i=0;i<pa.count;i++){ const x=pa.getX(i),y=pa.getY(i),z=pa.getZ(i);
+  let jaw=cl((-y-.12)/.88,0,1); jaw=jaw*jaw*(3-2*jaw);
+  pa.setX(i,x*(1-.24*jaw)); pa.setZ(i,z*(1-.13*jaw)+(y>.55?.012:0)); }
+ g.computeVertexNormals(); return g;
+}
 function start3D(){
-if(T3){ t3Dims(); return true; }
+if(T3){ t3Dims(); syncSliders(); return true; }
 if(typeof THREE==="undefined"){ return false; }
 try{
 const wrap=$("#m3dCanvas");
-const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
-renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.75));
+const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,powerPreference:"high-performance"});
+const mob=window.innerWidth<700;
+renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,mob?1.5:1.75));
 renderer.setClearColor(0x000000,0);
+renderer.shadowMap.enabled=true; renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+if("outputEncoding" in renderer) renderer.outputEncoding=THREE.sRGBEncoding;
+if("ACESFilmicToneMapping" in THREE){ renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=1.06; }
 if(!renderer.getContext()) throw new Error("no webgl");
 wrap.appendChild(renderer.domElement);
 const scene=new THREE.Scene();
-const camera=new THREE.PerspectiveCamera(35,1,.1,100);
-scene.add(new THREE.HemisphereLight(0xe6f4ff,0x1c3550,1.0));
-const key=new THREE.DirectionalLight(0xfff0d6,1.05); key.position.set(3.5,6,4.5); scene.add(key);
-const rim=new THREE.DirectionalLight(0x7fd6f5,.45); rim.position.set(-4,3.5,-3.5); scene.add(rim);
-const front=new THREE.DirectionalLight(0xffffff,.28); front.position.set(0,2.5,6); scene.add(front);
+scene.fog=new THREE.Fog(0x06223e,11,20);
+const camera=new THREE.PerspectiveCamera(32,1,.1,100);
+/* 3 nguồn sáng : key ấm đổ bóng mềm, fill lạnh, rim aqua sau lưng */
+scene.add(new THREE.HemisphereLight(0xdcefff,0x2a1e16,.78));
+const key=new THREE.DirectionalLight(0xffe9c4,1.18); key.position.set(3.2,6.5,4.2); key.castShadow=true;
+key.shadow.mapSize.set(mob?1024:2048,mob?1024:2048); key.shadow.camera.left=-3; key.shadow.camera.right=3; key.shadow.camera.top=7; key.shadow.camera.bottom=-1; key.shadow.camera.far=20; key.shadow.radius=5; key.shadow.bias=-0.0006; scene.add(key);
+const fill=new THREE.DirectionalLight(0xbfe0ff,.34); fill.position.set(-4.5,3,4.5); scene.add(fill);
+const rim=new THREE.DirectionalLight(0x7fd6f5,.72); rim.position.set(-2.5,4.5,-5); scene.add(rim);
+/* Sàn navy hứng bóng */
+const floor=new THREE.Mesh(new THREE.CircleGeometry(2.6,48),new THREE.MeshStandardMaterial({color:0x0a2a4a,roughness:.95,metalness:0}));
+floor.rotation.x=-Math.PI/2; floor.position.y=0; floor.receiveShadow=true; scene.add(floor);
+const glow=new THREE.Mesh(new THREE.CircleGeometry(1.45,40),new THREE.MeshBasicMaterial({color:0x7fd6f5,transparent:true,opacity:.08,depthWrite:false}));
+glow.rotation.x=-Math.PI/2; glow.position.y=.004; glow.scale.y=.62; scene.add(glow);
 const grp=new THREE.Group(); scene.add(grp);
-const shadow=new THREE.Mesh(new THREE.CircleGeometry(1.18,36),new THREE.MeshBasicMaterial({color:0x010a16,transparent:true,opacity:.38}));
-shadow.rotation.x=-Math.PI/2; shadow.position.y=.012; shadow.scale.y=.42; grp.add(shadow);
-const glow=new THREE.Mesh(new THREE.CircleGeometry(1.5,36),new THREE.MeshBasicMaterial({color:0x7fd6f5,transparent:true,opacity:.07}));
-glow.rotation.x=-Math.PI/2; glow.position.y=.006; glow.scale.y=.45; grp.add(glow);
+const fig=new THREE.Group(); grp.add(fig);
 const M3={
- skin:new THREE.MeshStandardMaterial({color:0xdeae88,roughness:.62,metalness:0}),
- shirt:new THREE.MeshStandardMaterial({color:0x16507c,roughness:.85,metalness:0}),
- short:new THREE.MeshStandardMaterial({color:0x0b2a4d,roughness:.85,metalness:0}),
- hair:new THREE.MeshStandardMaterial({color:0x2a1b16,roughness:.55,metalness:.05}),
- shoe:new THREE.MeshStandardMaterial({color:0xeef1f5,roughness:.5,metalness:0}),
- dark:new THREE.MeshStandardMaterial({color:0x2a1d16,roughness:.4}),
- lip:new THREE.MeshStandardMaterial({color:0xb5544f,roughness:.5})
+ skin:new THREE.MeshStandardMaterial({color:0xdeae88,roughness:.56,metalness:0,emissive:0x3a1c0e,emissiveIntensity:.14}),
+ skinD:new THREE.MeshStandardMaterial({color:0x8a5f43,roughness:.6,metalness:0}),
+ shirt:new THREE.MeshStandardMaterial({color:0x1a5a8a,roughness:.88,metalness:0}),
+ shirtD:new THREE.MeshStandardMaterial({color:0x0f3a5c,roughness:.92,metalness:0,transparent:true,opacity:.55}),
+ short:new THREE.MeshStandardMaterial({color:0x102f52,roughness:.9,metalness:0}),
+ shortD:new THREE.MeshStandardMaterial({color:0x081e38,roughness:.92,metalness:0,transparent:true,opacity:.55}),
+ hair:new THREE.MeshStandardMaterial({color:0x2b1c15,roughness:.42,metalness:.08}),
+ hairL:new THREE.MeshStandardMaterial({color:0x54382a,roughness:.38,metalness:.08}),
+ shoe:new THREE.MeshStandardMaterial({color:0xf0f3f7,roughness:.42,metalness:0}),
+ sole:new THREE.MeshStandardMaterial({color:0x9fb2c4,roughness:.7,metalness:0}),
+ eyeW:new THREE.MeshStandardMaterial({color:0xf6f2ec,roughness:.25,metalness:0}),
+ iris:new THREE.MeshStandardMaterial({color:0x3a2a20,roughness:.2,metalness:0}),
+ pupil:new THREE.MeshBasicMaterial({color:0x090604}),
+ lip:new THREE.MeshStandardMaterial({color:0xbf6a60,roughness:.48,metalness:0,emissive:0x2a0d0a,emissiveIntensity:.25}),
+ blush:new THREE.MeshStandardMaterial({color:0xe79c8a,roughness:.7,transparent:true,opacity:.22,depthWrite:false})
 };
-const sph=(mat,r)=>{ const m=new THREE.Mesh(new THREE.SphereGeometry(r||1,22,18),mat); grp.add(m); return m; };
-const cylT=(rt,rb,mat)=>{ const g=new THREE.CylinderGeometry(rt,rb,1,16); g.translate(0,-.5,0); const m=new THREE.Mesh(g,mat); grp.add(m); return m; };
-const HT=5, fy=f=>f*HT;
-const torso=new THREE.Mesh(new THREE.BufferGeometry(),M3.shirt); grp.add(torso);
-const shorts=new THREE.Mesh(new THREE.BufferGeometry(),M3.short); grp.add(shorts);
-const neck=cylT(1,1.15,M3.skin);
-const headG=new THREE.Group(); grp.add(headG);
-const hsph=(mat,r)=>{ const m=new THREE.Mesh(new THREE.SphereGeometry(r||1,22,18),mat); headG.add(m); return m; };
-const head=hsph(M3.skin), hair=hsph(M3.hair), hairLong=hsph(M3.hair),
- earL=hsph(M3.skin), earR=hsph(M3.skin),
- eyeL=hsph(M3.dark), eyeR=hsph(M3.dark), nose=hsph(M3.skin), lips=hsph(M3.lip);
-const bustL=sph(M3.shirt), bustR=sph(M3.shirt);
-function makeArm(side){
- const g=new THREE.Group(); grp.add(g);
- const sleeve=cylT(1.16,1.04,M3.shirt); grp.remove(sleeve); g.add(sleeve);
- const upper=cylT(1,.86,M3.skin); grp.remove(upper); g.add(upper);
- const elb=new THREE.Mesh(new THREE.SphereGeometry(1,16,12),M3.skin); g.add(elb);
- const fg=new THREE.Group(); g.add(fg);
- const fore=cylT(.84,.66,M3.skin); grp.remove(fore); fg.add(fore);
- const hand=new THREE.Mesh(new THREE.SphereGeometry(1,16,12),M3.skin); fg.add(hand);
- const thumb=new THREE.Mesh(new THREE.SphereGeometry(1,12,10),M3.skin); fg.add(thumb);
- return {g,sleeve,upper,elb,fg,fore,hand,thumb,side};
-}
-function makeLeg(side){
- const g=new THREE.Group(); grp.add(g);
- const thigh=cylT(1,.76,M3.skin); grp.remove(thigh); g.add(thigh);
- const knee=new THREE.Mesh(new THREE.SphereGeometry(1,16,12),M3.skin); g.add(knee);
- const cg=new THREE.Group(); g.add(cg);
- const calf=cylT(.8,.48,M3.skin); grp.remove(calf); cg.add(calf);
- const shoe=new THREE.Mesh(new THREE.SphereGeometry(1,18,14),M3.shoe); cg.add(shoe);
- return {g,thigh,knee,cg,calf,shoe,side};
-}
-const armL=makeArm(-1), armR=makeArm(1), legL=makeLeg(-1), legR=makeLeg(1);
-T3={renderer,scene,camera,grp,M3,torso,shorts,neck,headG,head,hair,hairLong,earL,earR,eyeL,eyeR,nose,lips,bustL,bustR,armL,armR,legL,legR,
- targetY:0,curY:0,targetX:0,curX:0,drag:false,auto:!REDUCE,dirty:true,w:0,h:0};
-/* Kéo để xoay */
+T3={renderer,scene,camera,grp,fig,M3,HT:5,targetY:.0,curY:0,targetX:0,curX:0,drag:false,auto:!REDUCE,dirty:true,w:0,h:0};
 const cv=renderer.domElement, W2v=$("#m3d");
 let lx=0,ly=0;
 cv.addEventListener("pointerdown",e=>{ T3.drag=true; T3.auto=false; lx=e.clientX; ly=e.clientY; try{cv.setPointerCapture(e.pointerId)}catch(_){} });
-cv.addEventListener("pointermove",e=>{ if(!T3.drag) return; T3.targetY+=(e.clientX-lx)*.012; T3.targetX=Math.max(-.28,Math.min(.28,T3.targetX+(e.clientY-ly)*.005)); lx=e.clientX; ly=e.clientY; });
+cv.addEventListener("pointermove",e=>{ if(!T3.drag) return; T3.targetY+=(e.clientX-lx)*.012; T3.targetX=Math.max(-.3,Math.min(.3,T3.targetX+(e.clientY-ly)*.005)); lx=e.clientX; ly=e.clientY; });
 const endDrag=()=>{ T3.drag=false; };
 cv.addEventListener("pointerup",endDrag); cv.addEventListener("pointercancel",endDrag);
 window.addEventListener("resize",()=>{ if(T3) T3.dirty=true; });
 update3D(cur||targetParams());
-t3Dims();
+t3Dims(); syncSliders();
 (function tick(){
  requestAnimationFrame(tick);
  if(!T3) return;
  if(view!=="Mô hình 3D"){ return; }
- const wpx=W2v.clientWidth, hpx=W2v.clientHeight;
- if(wpx>0&&hpx>0&&(wpx!==T3.w||hpx!==T3.h)){ T3.w=wpx; T3.h=hpx; renderer.setSize(wpx,hpx,false); camera.aspect=wpx/hpx; camera.position.set(0,2.62,camera.aspect<.8?9.4:7.6); camera.lookAt(0,2.42,0); camera.updateProjectionMatrix(); }
+ const wpx=W2v.clientWidth, hpx=W2v.clientHeight, HT=T3.HT||5;
+ if(wpx>0&&hpx>0&&(wpx!==T3.w||hpx!==T3.h||T3.dirty)){ T3.w=wpx; T3.h=hpx; T3.dirty=false; renderer.setSize(wpx,hpx,false); camera.aspect=wpx/hpx; const dist=HT*(camera.aspect<.8?2.05:1.62); camera.position.set(0,HT*.55,dist); camera.lookAt(0,HT*.485,0); camera.updateProjectionMatrix(); }
  if(T3.auto&&!T3.drag) T3.targetY+=.005;
  if(!T3.drag){ T3.curY+=(T3.targetY-T3.curY)*.14; T3.curX+=(T3.targetX-T3.curX)*.14; } else { T3.curY=T3.targetY; T3.curX=T3.targetX; }
- grp.rotation.y=T3.curY; grp.rotation.x=T3.curX*.35;
+ grp.rotation.y=T3.curY; grp.rotation.x=T3.curX*.3;
  renderer.render(scene,camera);
 })();
 return true;
 }catch(e){ try{ $("#m3dCanvas").innerHTML=""; }catch(_){} T3=null; return false; }
 }
+function clearFig(){
+ const fig=T3.fig, geos=[];
+ fig.traverse(o=>{ if(o.geometry) geos.push(o.geometry); });
+ while(fig.children.length) fig.remove(fig.children[0]);
+ geos.forEach(g=>g.dispose());
+}
 function update3D(p){
 if(!T3) return;
-const T=T3, M3=T.M3, HT=5, fy=f=>f*HT;
+const T=T3,M3=T.M3,fem=p.sx<.45,HT=p.h*(5/165); T.HT=HT; T.dirty=true;
+const k=HT/p.h, Y=f=>f*HT;
 M3.skin.color.setRGB(p.sk[0]/255,p.sk[1]/255,p.sk[2]/255);
-const cr3=C=>C/(2*Math.PI)/p.h*HT*1.14;
-const hipR=cr3(p.Hp), waistR=cr3(p.W), bustR=cr3(p.B);
-const shR=Math.max(bustR*1.06,hipR*.9)+.06, neckR=.155;
-const prof=[[hipR*.5,.515],[hipR*.97,.538],[hipR*.995,.562],[lerp(hipR,waistR,.6),.588],[waistR*1.03,.63],[lerp(waistR,bustR,.55),.678],[bustR,.722],[bustR*.95,.772],[shR*.94,.812],[neckR*1.5,.848],[neckR*1.1,.878]];
-T.torso.geometry.dispose();
-T.torso.geometry=new THREE.LatheGeometry(prof.map(q=>new THREE.Vector2(Math.max(.02,q[0]),fy(q[1]))),26);
-const sp=[[hipR*.62,.392],[hipR*1.05,.42],[hipR*1.07,.5],[hipR*1.03,.575],[hipR*.9,.592]];
-T.shorts.geometry.dispose();
-T.shorts.geometry=new THREE.LatheGeometry(sp.map(q=>new THREE.Vector2(Math.max(.02,q[0]),fy(q[1]))),26);
-T.torso.scale.z=.8; T.shorts.scale.z=.8;
-T.neck.position.set(0,fy(.905),0); T.neck.scale.set(neckR,fy(.905)-fy(.845),neckR);
-const hR=.335, hcy=fy(.885)+hR*.92;
-T.headG.position.set(0,hcy,0); T.headG.rotation.y=0;
-T.head.scale.set(hR*.92,hR*1.07,hR*.96);
-T.hair.position.set(0,hR*.1,-hR*.1); T.hair.scale.set(hR*.97,hR*1.06,hR*.98);
-const fem=p.sx<.45;
-T.hairLong.visible=fem; T.hairLong.position.set(0,-hR*.75,-hR*.5); T.hairLong.scale.set(hR*1.02,hR*1.55,hR*.55);
-T.earL.position.set(-hR*.92,0,0); T.earL.scale.set(.045,.075,.05);
-T.earR.position.set(hR*.92,0,0); T.earR.scale.set(.045,.075,.05);
-T.eyeL.position.set(-hR*.34,hR*.05,hR*.88); T.eyeL.scale.set(.024,.03,.02);
-T.eyeR.position.set(hR*.34,hR*.05,hR*.88); T.eyeR.scale.set(.024,.03,.02);
-T.nose.position.set(0,-hR*.06,hR*.95); T.nose.scale.set(.035,.05,.035);
-T.lips.position.set(0,-hR*.3,hR*.86); T.lips.scale.set(.075,.022,.025);
-const bR=fem?Math.max(.055,Math.min(.17,(p.B-p.W)*.0075)):0.001;
-T.bustL.visible=T.bustR.visible=fem;
-T.bustL.position.set(-bustR*.44,fy(.715),bustR*.6); T.bustL.scale.set(bR,bR*.88,bR*.8);
-T.bustR.position.set(bustR*.44,fy(.715),bustR*.6); T.bustR.scale.set(bR,bR*.88,bR*.8);
-const armR=Math.max(.1,bustR*.33), upL=fy(.812)-fy(.628), foL=fy(.628)-fy(.478), shX=shR*.94;
-[["armL",-1],["armR",1]].forEach(([k,side])=>{
- const A=T[k]; A.g.position.set(side*shX,fy(.812),0); A.g.rotation.z=side*.15;
- A.upper.scale.set(armR,upL,armR); A.sleeve.scale.set(armR,upL*.52,armR);
- A.elb.position.set(0,-upL,0); A.elb.scale.set(armR*.88,armR*.88,armR*.88);
- A.fg.position.set(0,-upL,0); A.fg.rotation.z=side*.05;
- A.fore.scale.set(armR*.92,foL,armR*.92);
- A.hand.position.set(0,-foL-.07,0); A.hand.scale.set(.072,.115,.042);
- A.thumb.position.set(-side*.055,-foL-.045,.012); A.thumb.scale.set(.026,.05,.026);
+M3.skinD.color.setRGB(p.sk[0]*.72/255,p.sk[1]*.72/255,p.sk[2]*.72/255);
+clearFig();
+const fig=T.fig, add=(mesh,parent)=>{ mesh.castShadow=true; mesh.receiveShadow=false; (parent||fig).add(mesh); return mesh; };
+const sph=(mat,sx,sy,sz,x,y,z,parent)=>{ const m=new THREE.Mesh(new THREE.SphereGeometry(1,24,18),mat); m.scale.set(sx,sy,sz); m.position.set(x,y,z); return add(m,parent); };
+const ell=C=>({rx:C*k*.205,rz:C*k*.132});
+const bE=ell(p.B),wE=ell(p.W),hE=ell(p.Hp),shHalf=p.Sh*k/2,neckR=.098+p.sx*.018;
+const bF=lerp(.715,.725,p.sx),wF=lerp(.628,.618,p.sx);
+/* ---- Thân : tiết diện elip mịn (40 lớp x 32 điểm) ---- */
+const torsoCtrl=[
+ {y:Y(.468),rx:hE.rx*.9,rz:hE.rz*.92,cx:0,cz:0},
+ {y:Y(.528),rx:hE.rx,rz:hE.rz,cx:0,cz:0},
+ {y:Y(.575),rx:lerp(hE.rx,wE.rx,.5),rz:lerp(hE.rz,wE.rz,.5),cx:0,cz:0},
+ {y:Y(wF),rx:wE.rx*1.02,rz:wE.rz*1.03,cx:0,cz:0},
+ {y:Y(.672),rx:lerp(wE.rx,bE.rx,.55),rz:lerp(wE.rz,bE.rz,.55),cx:0,cz:fem?.008:0},
+ {y:Y(bF),rx:bE.rx,rz:bE.rz,cx:0,cz:fem?.02:.004},
+ {y:Y(.778),rx:bE.rx*.93,rz:bE.rz*.88,cx:0,cz:0},
+ {y:Y(.818),rx:shHalf*.94,rz:bE.rz*.66,cx:0,cz:0},
+ {y:Y(.85),rx:neckR*2.0,rz:neckR*1.45,cx:0,cz:0},
+ {y:Y(.878),rx:neckR*1.08,rz:neckR,cx:0,cz:0}];
+add(new THREE.Mesh(tubeGeo(torsoCtrl,32,42),M3.skin));
+/* Cổ */
+add(new THREE.Mesh(tubeGeo([{y:Y(.84),rx:neckR*1.12,rz:neckR*1.02,cx:0,cz:0},{y:Y(.878),rx:neckR,rz:neckR*.94,cx:0,cz:0},{y:Y(.915),rx:neckR*.96,rz:neckR*.9,cx:0,cz:0}],18,8),M3.skin));
+/* ---- Áo ôm theo thân + viền gấu + nếp gấp ---- */
+const shirtCtrl=torsoCtrl.filter(c=>c.y>=Y(.55)&&c.y<=Y(.85)).map(c=>({y:c.y,rx:c.rx+.024,rz:c.rz+.022,cx:c.cx,cz:c.cz+.004}));
+shirtCtrl.unshift({y:Y(.552),rx:wE.rx+.052,rz:wE.rz+.042,cx:0,cz:.004});
+add(new THREE.Mesh(tubeGeo(shirtCtrl,32,30),M3.shirt));
+const hemY=Y(.56),hemRx=wE.rx+.05,hemRz=wE.rz+.04;
+const hem=new THREE.Mesh(new THREE.TorusGeometry(hemRx,.012,8,44),M3.shirt); hem.rotation.x=Math.PI/2; hem.scale.y=hemRz/hemRx; hem.position.y=hemY; add(hem);
+const collar=new THREE.Mesh(new THREE.TorusGeometry(neckR*1.5,.011,8,28),M3.shirtD); collar.rotation.x=Math.PI/2; collar.position.y=Y(.848); collar.scale.y=.82; add(collar);
+/* Nếp gấp vải dọc thân trước + ngang eo */
+[[-.55,.6],[ -.18,.85],[.28,.9],[.62,.55]].forEach(([fx])=>{
+ const pts=[new THREE.Vector3(fx*wE.rx*.8,Y(.575),wE.rz+.02),new THREE.Vector3(fx*bE.rx*.72,Y(.668),lerp(wE.rz,bE.rz,.55)+.024),new THREE.Vector3(fx*bE.rx*.78,Y(bF),bE.rz+.02)];
+ add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts),10,.0038,5),M3.shirtD));
 });
-const thR=Math.max(.17,hipR*.55), hipX=hipR*.52, kneeX=hipR*.47, thL=fy(.528)-fy(.285), caL=fy(.285)-fy(.05);
-[["legL",-1],["legR",1]].forEach(([k,side])=>{
- const L=T[k]; L.g.position.set(side*hipX,fy(.528),0);
- L.thigh.scale.set(thR,thL,thR);
- L.knee.position.set(side*(kneeX-hipX),-thL,0); L.knee.scale.set(thR*.74,thR*.74,thR*.74);
- L.cg.position.set(side*(kneeX-hipX),-thL,0);
- L.calf.scale.set(thR*.78,caL,thR*.78);
- L.shoe.position.set(0,-caL+.015,.075); L.shoe.scale.set(.125,.062,.235);
+/* Ngực nữ : hai bầu mềm dưới áo, chìm 1/2 vào thân */
+if(fem){ const bR=cl((p.B-p.W)*k*.34,.028,.085);
+ sph(M3.shirt,bR*1.25,bR*1.02,bR*.95,-bE.rx*.42,Y(bF)-.012,bE.rz*.68);
+ sph(M3.shirt,bR*1.25,bR*1.02,bR*.95, bE.rx*.42,Y(bF)-.012,bE.rz*.68); }
+/* ---- Quần short ôm + cạp + gấu ---- */
+const shortCtrl=[
+ {y:Y(.408),rx:hE.rx*.78+.026,rz:hE.rz*.76+.024,cx:0,cz:.002},
+ {y:Y(.472),rx:hE.rx*.94+.024,rz:hE.rz*.92+.022,cx:0,cz:.002},
+ {y:Y(.528),rx:hE.rx+.026,rz:hE.rz+.024,cx:0,cz:.002},
+ {y:Y(.588),rx:lerp(hE.rx,wE.rx,.35)+.028,rz:lerp(hE.rz,wE.rz,.35)+.026,cx:0,cz:.002}];
+add(new THREE.Mesh(tubeGeo(shortCtrl,32,18),M3.short));
+const belt=new THREE.Mesh(new THREE.TorusGeometry(lerp(hE.rx,wE.rx,.35)+.03,.014,8,44),M3.shortD); belt.rotation.x=Math.PI/2; belt.scale.y=(lerp(hE.rz,wE.rz,.35)+.028)/(lerp(hE.rx,wE.rx,.35)+.03); belt.position.y=Y(.585); add(belt);
+/* ---- Chân : đùi -> gối -> bắp chân phình -> cổ chân ---- */
+const thighC=p.Hp*.60,calfC=thighC*.64,kneeC=thighC*.73,ankC=thighC*.42;
+const legR=C=>C*k*.163, hipX=hE.rx*.52, kneeX=hE.rx*.47, ankX=hE.rx*.42;
+[-1,1].forEach(side=>{
+ const cxX=f=>side*lerp(ankX,hipX,f);
+ const legCtrl=[
+  {y:Y(.038),rx:legR(ankC),rz:legR(ankC)*.95,cx:cxX(0),cz:0},
+  {y:Y(.11),rx:legR(ankC)*1.22,rz:legR(ankC)*1.15,cx:cxX(.16),cz:0},
+  {y:Y(.235),rx:legR(calfC),rz:legR(calfC)*.96,cx:cxX(.42),cz:-.006},
+  {y:Y(.288),rx:legR(kneeC),rz:legR(kneeC)*.94,cx:side*kneeX,cz:0},
+  {y:Y(.385),rx:legR(thighC)*.94,rz:legR(thighC)*.92,cx:cxX(.78),cz:0},
+  {y:Y(.472),rx:legR(thighC)*1.05,rz:legR(thighC),cx:side*hipX,cz:0},
+  {y:Y(.53),rx:legR(thighC)*1.02,rz:legR(thighC)*.96,cx:side*hipX*.96,cz:0}];
+ add(new THREE.Mesh(tubeGeo(legCtrl,22,30),M3.skin));
+ /* ống quần */
+ const pantCtrl=legCtrl.filter(c=>c.y>=Y(.4)).map(c=>({y:c.y,rx:c.rx+.02,rz:c.rz+.019,cx:c.cx,cz:c.cz}));
+ add(new THREE.Mesh(tubeGeo(pantCtrl,22,10),M3.short));
+ const ph=new THREE.Mesh(new THREE.TorusGeometry(legR(thighC)*.97+.02,.01,7,26),M3.shortD); ph.rotation.x=Math.PI/2; ph.position.set(cxX(.86),Y(.408),0); add(ph);
+ sph(M3.skin,legR(kneeC)*.92,legR(kneeC)*.8,legR(kneeC)*.9,side*kneeX,Y(.288),.012);
+ /* Giày : thân + mũi + đế + dây */
+ const sg=new THREE.Group(); sg.position.set(side*ankX,Y(.012),.012); fig.add(sg);
+ sph(M3.shoe,.068,.04,.118,0,.032,.028,sg); sph(M3.shoe,.06,.033,.062,0,.026,.128,sg);
+ const sole=new THREE.Mesh(new THREE.BoxGeometry(.142,.024,.285),M3.sole); sole.position.set(0,.012,.038); add(sole,sg);
+ [.0,.036,.072].forEach((dz,i)=>{ const lace=new THREE.Mesh(new THREE.BoxGeometry(.062,.007,.013),M3.sole); lace.position.set(0,.066-i*.008,.028+dz); lace.rotation.x=-.32; add(lace,sg); });
 });
+/* ---- Tay : vai -> khuỷu -> cổ tay + bàn tay có ngón ---- */
+const upC=p.B*.335,foC=upC*.82,wrC=upC*.54, armR=C=>C*k*.163;
+const shX=shHalf*.96, elX=shX+.075, wrX=shX+.115;
+[-1,1].forEach(side=>{
+ const armCtrl=[
+  {y:Y(.476),rx:armR(wrC),rz:armR(wrC),cx:side*wrX,cz:.004},
+  {y:Y(.545),rx:armR(foC)*.9,rz:armR(foC)*.9,cx:side*(wrX-.012),cz:.003},
+  {y:Y(.615),rx:armR(foC),rz:armR(foC),cx:side*elX,cz:.002},
+  {y:Y(.642),rx:armR(foC)*.94,rz:armR(foC)*.94,cx:side*elX,cz:.002},
+  {y:Y(.715),rx:armR(upC)*1.04,rz:armR(upC)*1.02,cx:side*(shX+.028),cz:0},
+  {y:Y(.795),rx:armR(upC)*1.14,rz:armR(upC)*1.1,cx:side*shX,cz:0},
+  {y:Y(.828),rx:armR(upC)*1.02,rz:armR(upC),cx:side*shX*.96,cz:0}];
+ add(new THREE.Mesh(tubeGeo(armCtrl,20,28),M3.skin));
+ const sleeveCtrl=armCtrl.filter(c=>c.y>=Y(.665)).map(c=>({y:c.y,rx:c.rx+.02,rz:c.rz+.019,cx:c.cx,cz:c.cz}));
+ add(new THREE.Mesh(tubeGeo(sleeveCtrl,20,10),M3.shirt));
+ const slH=new THREE.Mesh(new THREE.TorusGeometry(armR(upC)+.02,.009,7,24),M3.shirtD); slH.rotation.x=Math.PI/2; slH.position.set(side*(shX+.05),Y(.672),0); add(slH);
+ /* Bàn tay */
+ const hg=new THREE.Group(); hg.position.set(side*wrX,Y(.472),.006); hg.rotation.z=side*.06; fig.add(hg);
+ sph(M3.skin,.043,.06,.019,0,-.048,0,hg);
+ const fl=[.05,.066,.06,.045], fx=[-.027,-.009,.009,.026];
+ fx.forEach((ox,i)=>{ const len=fl[i], fg2=new THREE.Group(); fg2.position.set(ox,-.1,0); fg2.rotation.z=(ox)*1.4; hg.add(fg2);
+  const fin=new THREE.Mesh(new THREE.CylinderGeometry(.0068,.0082,len,8),M3.skin); fin.position.y=-len/2; fin.castShadow=true; fg2.add(fin);
+  sph(M3.skin,.0075,.009,.0075,0,-len,0,fg2); });
+ const tg=new THREE.Group(); tg.position.set(-side*.04,-.045,.008); tg.rotation.z=side*.85; hg.add(tg);
+ const th=new THREE.Mesh(new THREE.CylinderGeometry(.007,.0088,.052,8),M3.skin); th.position.y=-.024; th.castShadow=true; tg.add(th);
+ sph(M3.skin,.0075,.009,.0075,0,-.05,0,tg);
+});
+/* ---- Đầu : tỉ lệ 1/7.5, cằm thon, tai, mắt, mũi, môi ---- */
+const headH=HT/7.5, hRy=headH/2, hRx=hRy*.68, hRz=hRy*.74, hcy=HT-hRy;
+const hg2=new THREE.Group(); hg2.position.set(0,hcy,0); fig.add(hg2);
+const headMesh=new THREE.Mesh(headGeo(),M3.skin); headMesh.scale.set(hRx,hRy,hRz); headMesh.castShadow=true; hg2.add(headMesh);
+sph(M3.skin,.026,.042,.018,-hRx*.99,-.005,0,hg2); sph(M3.skin,.026,.042,.018,hRx*.99,-.005,0,hg2);
+[-1,1].forEach(side=>{
+ sph(M3.eyeW,.03,.018,.011,side*hRx*.36,hRy*.04,hRz*.925,hg2);
+ sph(M3.iris,.0125,.0125,.008,side*hRx*.36,hRy*.04,hRz*.945,hg2);
+ sph(M3.pupil,.006,.006,.004,side*hRx*.36,hRy*.04,hRz*.965,hg2);
+ const hl=sph(new THREE.MeshBasicMaterial({color:0xffffff}),.0035,.0035,.0035,side*hRx*.36+.004,hRy*.04+.006,hRz*.985,hg2); hl.castShadow=false;
+ const browPts=[new THREE.Vector3(side*hRx*.14,hRy*.155,hRz*.9),new THREE.Vector3(side*hRx*.36,hRy*.185,hRz*.93),new THREE.Vector3(side*hRx*.57,hRy*.15,hRz*.88)];
+ const brow=new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(browPts),8,.0048,5),M3.hair); hg2.add(brow);
+ if(fem) sph(M3.blush,.038,.022,.01,side*hRx*.52,-hRy*.2,hRz*.815,hg2);
+});
+sph(M3.skinD,.02,.011,.01,0,-hRy*.24,hRz*.955,hg2);
+sph(M3.skin,.021,.036,.02,0,-hRy*.13,hRz*.975,hg2);
+sph(M3.lip,.033,.0085,.011,0,-hRy*.385,hRz*.905,hg2);
+sph(M3.lip,.029,.011,.012,0,-hRy*.435,hRz*.895,hg2);
+/* Tóc : khối ôm đầu + mặt sau (nữ dài) + sợi */
+const hairMesh=new THREE.Mesh(new THREE.SphereGeometry(1,36,24,0,Math.PI*2,0,Math.PI*.6),M3.hair);
+hairMesh.scale.set(hRx*1.06,hRy*1.05,hRz*1.05); hairMesh.position.set(0,hRy*.07,-hRz*.07); hairMesh.castShadow=true; hg2.add(hairMesh);
+if(fem){
+ sph(M3.hair,hRx*1.05,hRy*1.5,hRz*.55,0,-hRy*.72,-hRz*.55,hg2);
+ sph(M3.hair,hRx*.34,hRy*1.25,hRz*.4,-hRx*.88,-hRy*.55,-hRz*.18,hg2);
+ sph(M3.hair,hRx*.34,hRy*1.25,hRz*.4, hRx*.88,-hRy*.55,-hRz*.18,hg2);
+ for(let i=-2;i<=2;i++){ const sx=i*hRx*.34, pts=[new THREE.Vector3(sx,hRy*.3,-hRz*.92),new THREE.Vector3(sx*1.06,-hRy*.7,-hRz*1.0),new THREE.Vector3(sx*1.02,-hRy*1.95,-hRz*.92)];
+  const st=new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts),10,.0034,4),i%2?M3.hairL:M3.hair); hg2.add(st); }
+}else{
+ for(let i=-1;i<=1;i++){ const pts=[new THREE.Vector3(i*hRx*.4,hRy*.86,hRz*.42),new THREE.Vector3(i*hRx*.44,hRy*.97,hRz*.05),new THREE.Vector3(i*hRx*.4,hRy*.9,-hRz*.4)];
+  const st=new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts),8,.0032,4),M3.hairL); hg2.add(st); }
+}
 $("#d3b").textContent="Ngực "+(p.gB?"~":"")+Math.round(p.B)+" cm";
 $("#d3w").textContent="Eo "+(p.gW?"~":"")+Math.round(p.W)+" cm";
 $("#d3h").textContent="Mông "+(p.gH?"~":"")+Math.round(p.Hp)+" cm";
+const db=$("#d3b"),dw=$("#d3w"),dh=$("#d3h");
+if(db) db.style.top=((1-bF)*100*.92+4)+"%"; if(dw) dw.style.top=((1-wF)*100*.92+4)+"%"; if(dh) dh.style.top=((1-.528)*100*.92+4)+"%";
 }
+
 
 $("#to2").onclick = () => {
 persist(); store.set("fm_profile", P);
