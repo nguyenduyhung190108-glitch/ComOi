@@ -143,6 +143,14 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 .mtools{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
 .mtools .chip{padding:7px 13px;font-size:12.5px}
 .stbody #man.flip{transform:scaleX(.02);transition-duration:.18s}
+#m3d{touch-action:none}
+#m3dCanvas{position:absolute;inset:0}
+#m3dCanvas canvas{width:100%!important;height:100%!important;display:block;cursor:grab;touch-action:none}
+#m3dCanvas canvas:active{cursor:grabbing}
+.m3dims{position:absolute;inset:0;pointer-events:none}
+.m3dims span{position:absolute;right:10px;transform:translateY(-50%);background:rgba(2,14,30,.72);border:1px solid rgba(232,196,121,.35);color:var(--gold);border-radius:99px;padding:3px 10px;font-size:11px;font-weight:600;white-space:nowrap;backdrop-filter:blur(4px)}
+.m3tag{position:absolute;left:10px;bottom:10px;background:rgba(2,14,30,.66);border:1px solid rgba(127,214,245,.3);color:var(--aqua);border-radius:99px;padding:3px 10px;font-size:11px;font-weight:600;pointer-events:none}
+#m3note{color:var(--warn);margin-top:10px}
 #delta{color:var(--aqua)}
 /* ---------- Upload drops ---------- */
 .drop{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:11px;border:1.5px dashed rgba(127,214,245,.5);border-radius:20px;padding:20px;text-align:center;color:var(--aqua);font-size:13.5px;font-weight:500;cursor:pointer;background:linear-gradient(180deg,rgba(22,96,140,.34),rgba(6,36,62,.52));transition:border-color .3s,background .3s,transform .3s var(--ease),box-shadow .3s}
@@ -308,8 +316,10 @@ footer{position:relative;z-index:1;text-align:center;color:var(--mute2);font-siz
         <div class="seg" id="viewSeg"></div>
         <div class="stbody">
           <svg viewBox="0 0 300 470" id="man" role="img" aria-label="Hình người minh họa theo số đo"></svg>
+          <div id="m3d" class="off" hidden aria-label="Mô hình 3D"><div id="m3dCanvas"></div><div class="m3dims" id="m3dims"><span id="d3b" style="top:26%">Ngực</span><span id="d3w" style="top:39%">Eo</span><span id="d3h" style="top:48%">Mông</span></div><span class="m3tag">Kéo để xoay 360°</span></div>
           <div class="drop stbd off" id="bdrop" tabindex="0" role="button" aria-label="Tải ảnh toàn thân" hidden></div>
         </div>
+        <p class="hint" id="m3note" hidden>Thiết bị này chưa chạy được 3D, đang hiển thị 2D</p>
         <div class="stat" id="stat"><div><b id="bmi">–</b><span id="bmiCat">BMI</span></div><div><b id="whr">–</b>Eo/Mông</div><div><b class="sm" id="shapeName">–</b>Phom</div></div>
         <div class="mtools" id="mtools">
           <button type="button" class="chip" id="mBack" aria-pressed="false">Xoay mặt sau</button>
@@ -424,6 +434,7 @@ footer{position:relative;z-index:1;text-align:center;color:var(--mute2);font-siz
 </div>
 </div>
 <footer>✦ Be yourself · FitMe AI</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 const API_BASE = location.hostname.endsWith(".workers.dev") ? "" : "https://yellow-grass-933f.nguyenduyhung190108.workers.dev";
 const WORKER_URL = API_BASE + "/api/chat";
@@ -562,7 +573,7 @@ const band=(y0,y1,q)=>{const id="k"+cid++;defs.push(`<clipPath id="${id}"><rect 
 const tU=c=>`<use href="#half" fill="${c}" stroke="${c}" stroke-width="${sw2}" stroke-linejoin="round"/>`;
 const skirt=c=>{const P=[[ww+e+1,y(.6)],[lerp(ww,hw,.55)+e+1,y(.56)],[hw+e,y(.528)],[hw+e+5,y(.45)],[hw+e+12,y(.36)]];return sides(`<path d="M0 ${f1(P[0][1])}L${f1(P[0][0])} ${f1(P[0][1])}${cr(P)}L0 ${f1(P[4][1])}Z" fill="${c}" stroke="${dk(c,.7)}" stroke-width=".8"/>`)};
 const neckP=`M${f1(CX-nw*1.3)} ${f1(y(.862))}Q${CX} ${f1(y(.772))} ${f1(CX+nw*1.3)} ${f1(y(.862))}`;
-const shoe=g=>{const cx=CX+g*(.075*Hp*SC+1),cy=y(.013),rx=.052*Hp*SC,ry=2.9*s*SC;return`<g transform="rotate(${g*9} ${f1(cx)} ${f1(cy)})"><ellipse cx="${f1(cx)}" cy="${f1(cy)}" rx="${f1(rx)}" ry="${f1(ry)}" fill="#eef3f8" stroke="#9fb2c4" stroke-width=".8"/><ellipse cx="${f1(cx)}" cy="${f1(cy+ry*.55)}" rx="${f1(rx*.95)}" ry="${f1(ry*.35)}" fill="#c3d0dc"/>${bk?`<path d="M${f1(cx-rx*.45)} ${f1(cy+ry*.1)}Q${f1(cx)} ${f1(cy-ry*.95)} ${f1(cx+rx*.45)} ${f1(cy+ry*.1)}" stroke="#9fb2c4" stroke-width=".9" fill="none"/>`:`<path d="M${f1(cx-rx*.3)} ${f1(cy-ry*.5)}h${f1(rx*.6)}M${f1(cx-rx*.25)} ${f1(cy-ry*.1)}h${f1(rx*.5)}" stroke="#9fb2c4" stroke-width=".8" fill="none"/>`}</g>`};
+const shoe=g=>{const cx=CX+g*(.075*Hp*SC+1),cy=y(.013),rx=.052*Hp*SC,ry=2.9*s*SC;return`<g transform="rotate(${g*9} ${f1(cx)} ${f1(cy)})"><ellipse cx="${f1(cx)}" cy="${f1(cy+ry*.82)}" rx="${f1(rx*1.04)}" ry="${f1(ry*.3)}" fill="#8fa5ba"/><ellipse cx="${f1(cx)}" cy="${f1(cy)}" rx="${f1(rx)}" ry="${f1(ry)}" fill="#f2f6fa" stroke="#93a9bd" stroke-width=".8"/><ellipse cx="${f1(cx-rx*.28)}" cy="${f1(cy-ry*.34)}" rx="${f1(rx*.42)}" ry="${f1(ry*.3)}" fill="#fff" opacity=".65"/>${bk?`<path d="M${f1(cx-rx*.45)} ${f1(cy+ry*.1)}Q${f1(cx)} ${f1(cy-ry*.95)} ${f1(cx+rx*.45)} ${f1(cy+ry*.1)}" stroke="#93a9bd" stroke-width=".9" fill="none"/><path d="M${f1(cx-rx*.8)} ${f1(cy+ry*.62)}Q${f1(cx)} ${f1(cy+ry*.95)} ${f1(cx+rx*.8)} ${f1(cy+ry*.62)}" stroke="#7e97ad" stroke-width=".8" fill="none"/>`:`<path d="M${f1(cx-rx*.32)} ${f1(cy-ry*.52)}h${f1(rx*.64)}M${f1(cx-rx*.27)} ${f1(cy-ry*.14)}h${f1(rx*.54)}M${f1(cx-rx*.22)} ${f1(cy+ry*.22)}h${f1(rx*.44)}" stroke="#93a9bd" stroke-width=".85" fill="none" stroke-linecap="round"/><path d="M${f1(cx-rx*.82)} ${f1(cy+ry*.6)}Q${f1(cx)} ${f1(cy+ry*.92)} ${f1(cx+rx*.82)} ${f1(cy+ry*.6)}" stroke="#7e97ad" stroke-width=".8" fill="none"/>`}</g>`};
 let g="";
 if(topT==="Đầm")g+=skirt(tc);
 else if(botT==="Váy")g+=skirt(bc);
@@ -596,7 +607,13 @@ g+=bk
 :elb(`<path d="M${f1(Ex-ew*.55)} ${f1(Ey+ew*.1)}Q${f1(Ex)} ${f1(Ey+ew*.6)} ${f1(Ex+ew*.55)} ${f1(Ey+ew*.1)}" stroke="${skinD}" stroke-opacity=".4" stroke-width=".9" fill="none" stroke-linecap="round"/>`);
 g+=[rt,mir].map(b=>`<g transform="${hT(b)}">${handSVG(G.W2,G.wr,G.L,bk,skin,skinD)}</g>`).join("");
 
-const hk=lerp(.15,.1325,cl((h-110)/60,0,1))*h*SC/100,HG=`translate(${CX} ${f1(y(1))}) scale(${hk.toFixed(4)})`;
+/* Shading mềm + chi tiết thực tế phủ thêm */
+g+=band(y(.857),y(.40),sides(`<use href="#half" fill="url(#cg)"/>`));
+if(!bk)g+=`<ellipse cx="${CX}" cy="${f1(y(.862))}" rx="${f1(nw*1.2)}" ry="3.6" fill="#000" opacity=".12"/>`
++sides(`<path d="M${f1(nw*1.15)} ${f1(y(.845))}Q${f1(bw*.5)} ${f1(y(.838))} ${f1(bw*.82)} ${f1(y(.828))}" stroke="${skinD}" stroke-opacity=".28" stroke-width="1" fill="none" stroke-linecap="round"/>`)
++sides(`<path d="M${f1(bw*.55)} ${f1(y(.70))}Q${f1(bw*.6)} ${f1(y(.65))} ${f1(ww*.7)} ${f1(y(.625))}M${f1(bw*.3)} ${f1(y(.735))}Q${f1(bw*.34)} ${f1(y(.68))} ${f1(ww*.4)} ${f1(y(.64))}" stroke="#000" stroke-opacity=".10" stroke-width="2.2" fill="none" stroke-linecap="round"/>`)
++sides(`<path d="M${f1(hw*.45)} ${f1(y(.555))}Q${f1(hw*.5)} ${f1(y(.48))} ${f1(hw*.42)} ${f1(y(.415))}" stroke="#000" stroke-opacity=".12" stroke-width="2" fill="none" stroke-linecap="round"/>`);
+const hk=lerp(.141,.124,cl((h-110)/60,0,1))*h*SC/100,HG=`translate(${CX} ${f1(y(1))}) scale(${hk.toFixed(4)})`;
 const long=`<path d="M-40 36C-47-4-22-10 0-10S47-4 40 36C49 90 47 160 38 205H-38C-47 160-49 90-40 36Z" fill="url(#hg)"/>`;
 const ear=`<ellipse cx="-38" cy="52" rx="5" ry="10"/><ellipse cx="38" cy="52" rx="5" ry="10"/>`;
 const face=`<path d="M0 0C22 0 38 18 38 42C38 66 26 92 0 100C-26 92-38 66-38 42C-38 18-22 0 0 0Z"/>`;
@@ -616,7 +633,7 @@ const head=bk
 <g fill="none" stroke-linecap="round"><path d="M-19.5 40.5Q-14 36.5-8 40M19.5 40.5Q14 36.5 8 40" stroke="${skinD}" stroke-opacity=".55" stroke-width=".8"/><path d="M-18 49.5Q-14 51.8-10 49.5M18 49.5Q14 51.8 10 49.5" stroke="${skinD}" stroke-opacity=".25" stroke-width=".7"/><path d="M-20.5 45l-1.8-1.2M20.5 45l1.8-1.2" stroke="#2a1b16" stroke-width="1.1"/><path d="M40.5 46Q44 52 40.5 58M-40.5 46Q-44 52-40.5 58" stroke="${skinD}" stroke-opacity=".5" stroke-width=".8"/><path d="M0 48Q-1 56 0 62" stroke="#fff" stroke-opacity=".12" stroke-width="2"/></g>
 <ellipse cx="-3.4" cy="66.3" rx="1.5" ry=".9" fill="#000" opacity=".25"/><ellipse cx="3.4" cy="66.3" rx="1.5" ry=".9" fill="#000" opacity=".25"/><ellipse cx="0" cy="92" rx="6" ry="3" fill="#fff" opacity=".06"/>
 <g opacity="${lh.toFixed(2)}" fill="url(#hg)"><path d="M-40 46C-46 4-22-8 2-8C26-8 46 6 40 46C38 30 30 18 14 14C2 22-22 26-40 46Z"/><path d="M-40 40C-45 70-44 96-38 112C-36 90-36 66-33 44Z"/><path d="M40 40C45 70 44 96 38 112C36 90 36 66 33 44Z"/></g>
-<g opacity="${(1-lh).toFixed(2)}" fill="url(#hg)"><path d="M-40 42C-45 2-22-9 0-9C24-9 45 2 40 42C38 26 28 17 12 14C-4 16-26 22-40 42Z"/></g></g>`;
+<g opacity="${(1-lh).toFixed(2)}" fill="url(#hg)"><path d="M-40 42C-45 2-22-9 0-9C24-9 45 2 40 42C38 26 28 17 12 14C-4 16-26 22-40 42Z"/></g><g fill="none" stroke="${dk(hc,1.9)}" stroke-opacity=".4" stroke-width="1.6" stroke-linecap="round"><path d="M-25 4C-14-3 9-5 23 3"/><path d="M-31 17C-25 7-12 1 1-1"/><path d="M31 15C27 6 17 0 6-2"/></g><ellipse cx="-19" cy="30" rx="6" ry="11" fill="#fff" opacity=".05"/><ellipse cx="17" cy="28" rx="5" ry="10" fill="#fff" opacity=".04"/></g>`;
 const hairBehind=bk?"":`<g transform="${HG}" opacity="${lh.toFixed(2)}">${long}</g>`;
 let ruler=`<line x1="26" x2="26" y1="${y(0)}" y2="${y(220/h)}" stroke="#8fb3cf" stroke-opacity=".5"/>`;
 for(let c=0;c<=220;c+=10){const yy=FLOOR-c*SC,big=c%50===0;ruler+=`<line x1="${big?19:22}" x2="26" y1="${yy}" y2="${yy}" stroke="#8fb3cf" stroke-opacity=".6" stroke-width="${big?1:.7}"/>`+(big&&c?`<text x="30" y="${yy+3}" font-size="7.5" fill="#8fb3cf" font-family="sans-serif">${c}</text>`:"")}
@@ -626,11 +643,13 @@ const dims=o.dims===false?"":gl(bF,"Ngực",p.B,p.gB,bw+11,G.oB)+gl(wF,"Eo",p.W,
 let ghost="";
 if(o.ghost){const GG=geom(o.ghost);defs.push(`<path id="gh" d="${GG.body}"/>`);ghost=`<g fill="none" stroke="#7fd6f5" stroke-width="1.3" stroke-dasharray="4 3" opacity=".9"><use href="#gh" transform="${rt}" clip-path="url(#hx)"/><use href="#gh" transform="${mir}" clip-path="url(#hx)"/></g><text x="16" y="${FLOOR+14}" font-size="8.5" fill="#7fd6f5" font-family="sans-serif">Nét đứt: lần lưu trước</text>`}
 return`<defs>
-<linearGradient id="sh" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity=".2"/><stop offset=".42" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".3"/></linearGradient>
+<linearGradient id="sh" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity=".27"/><stop offset=".42" stop-color="#fff" stop-opacity="0"/><stop offset=".78" stop-color="#000" stop-opacity=".06"/><stop offset="1" stop-color="#000" stop-opacity=".36"/></linearGradient>
+<linearGradient id="cg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".15"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".26"/></linearGradient>
+<filter id="fb" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="3.2"/></filter>
 <linearGradient id="hg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${dk(hc,1.5)}"/><stop offset="1" stop-color="${dk(hc,.6)}"/></linearGradient>
 <radialGradient id="fl" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#7fd6f5" stop-opacity=".4"/><stop offset="1" stop-color="#7fd6f5" stop-opacity="0"/></radialGradient>
 <clipPath id="hx"><rect x=".8" y="0" width="300" height="470"/></clipPath><path id="half" d="${body}"/><path id="arm" d="${arm}"/>${defs.join("")}</defs>
-<ellipse cx="${CX}" cy="${FLOOR+4}" rx="100" ry="11" fill="url(#fl)"/>${ruler}${hairBehind}
+<ellipse cx="${CX}" cy="${FLOOR+5}" rx="86" ry="9" fill="#000" opacity=".34" filter="url(#fb)"/><ellipse cx="${CX}" cy="${FLOOR+4}" rx="100" ry="11" fill="url(#fl)"/>${ruler}${hairBehind}
 <g fill="${skin}">${sides(`<use href="#half"/>`)}</g><g fill="none" stroke="${skinD}" stroke-opacity=".5" stroke-width=".7" stroke-linejoin="round">${sides(`<use href="#half" clip-path="url(#hx)"/>`)}</g>
 ${shoe(1)}${shoe(-1)}${g}${sides(`<use href="#half" fill="url(#sh)"/>`)}${head}${ghost}${dims}`;
 }
@@ -668,7 +687,7 @@ const saveM=()=>store.set("fm_man",M);
 const prevP=()=>HIST[0]&&HIST[0].p||null;
 function opts(){return{back:M.back,dims:M.dims,top:"Thun",bot:"Short",topC:PAL[0],botC:PAL[2],ease:1,hair:HAIRS[0][1],ghost:M.ghost&&prevP()?targetParams(prevP()):null}}
 let OP=opts();
-const renderMan=()=>{OP=opts();$("#man").innerHTML=manSVG(cur||targetParams(),OP)};
+const renderMan=()=>{OP=opts();$("#man").innerHTML=manSVG(cur||targetParams(),OP);if(typeof schedule3D==="function")schedule3D()};
 const NUMK=["h","B","W","Hp","sx","d","shK"];
 let cur=null,raf=0;
 function updateMan(){
@@ -704,23 +723,182 @@ const press=(el,on)=>{el.classList.toggle("on",on);el.setAttribute("aria-pressed
 function syncGhostBtn(){const b=$("#mGhost"),has=!!prevP();b.disabled=!has;b.title=has?"":"Chưa có lần lưu nào. Bấm Tiếp tục để lưu số đo hiện tại.";press(b,M.ghost&&has)}
 press($("#mBack"),M.back);press($("#mDims"),M.dims);syncGhostBtn();
 $("#mBack").onclick=()=>{M.back=!M.back;press($("#mBack"),M.back);$("#mBack").textContent=M.back?"Xoay mặt trước":"Xoay mặt sau";saveM();
+if(view==="Mô hình 3D"&&typeof t3Flip==="function"&&t3Flip())return;
 const el=$("#man");if(REDUCE){renderMan();return}el.classList.add("flip");setTimeout(()=>{renderMan();el.classList.remove("flip")},190)};
 $("#mBack").textContent=M.back?"Xoay mặt trước":"Xoay mặt sau";
-$("#mDims").onclick=()=>{M.dims=!M.dims;press($("#mDims"),M.dims);saveM();renderMan()};
+$("#mDims").onclick=()=>{M.dims=!M.dims;press($("#mDims"),M.dims);saveM();renderMan();if(typeof t3Dims==="function")t3Dims()};
 $("#mGhost").onclick=()=>{M.ghost=!M.ghost;saveM();syncGhostBtn();renderMan()};
 let view = "Mô hình 2D";
 const viewSync = (function(){
-const items = ["Mô hình 2D", "Ảnh của bạn"], el = $("#viewSeg"); el.className = "seg";
+const items = ["Mô hình 2D", "Mô hình 3D", "Ảnh của bạn"], el = $("#viewSeg"); el.className = "seg";
 el.innerHTML = '<i class="ind"></i>' + items.map(t => `<button type="button">${t}</button>`).join("");
 const btns = [...el.querySelectorAll("button")], ind = el.querySelector(".ind");
 const sync = () => {
 const i = items.indexOf(view); btns.forEach((b, j) => { b.classList.toggle("on", j === i); b.setAttribute("aria-pressed", j === i); });
-ind.style.width = "calc((100% - 10px) / 2)"; ind.style.transform = `translateX(${i*100}%)`;
-$("#man").classList.toggle("off", i === 1); $("#man").hidden = i === 1; $("#bdrop").classList.toggle("off", i === 0); $("#bdrop").hidden = i === 0; $("#stat").style.opacity = i === 0 ? 1 : .4;
+ind.style.width = `calc((100% - 10px) / ${items.length})`; ind.style.transform = `translateX(${Math.max(i,0)*100}%)`;
+$("#man").classList.toggle("off", i !== 0); $("#man").hidden = i !== 0;
+$("#m3d").classList.toggle("off", i !== 1); $("#m3d").hidden = i !== 1;
+$("#bdrop").classList.toggle("off", i !== 2); $("#bdrop").hidden = i !== 2; $("#stat").style.opacity = i === 2 ? .4 : 1;
+if (i === 1 && typeof t3Frame === "function") t3Frame();
 };
-btns.forEach((b, i) => b.onclick = () => { view = items[i]; sync(); });
+btns.forEach((b, i) => b.onclick = () => {
+if (items[i] === "Mô hình 3D" && !(typeof start3D === "function" && start3D())) { $("#m3note").hidden = false; view = "Mô hình 2D"; sync(); return; }
+if (items[i] === "Mô hình 3D") $("#m3note").hidden = true;
+view = items[i]; sync();
+});
 sync(); return sync;
 })();
+
+/* ================= Mô hình 3D (thử nghiệm, Three.js) ================= */
+let T3=null,t3Pend=false;
+function t3Dims(){ const el=$("#m3dims"); if(el) el.style.display=M.dims?"":"none"; }
+function t3Flip(){ if(!T3) return false; T3.auto=false; T3.targetY+=Math.PI; return true; }
+function t3Frame(){ if(T3) T3.dirty=true; }
+function schedule3D(){ if(!T3||t3Pend) return; t3Pend=true; requestAnimationFrame(()=>{ t3Pend=false; if(T3) update3D(cur||targetParams()); }); }
+function start3D(){
+if(T3){ t3Dims(); return true; }
+if(typeof THREE==="undefined"){ return false; }
+try{
+const wrap=$("#m3dCanvas");
+const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
+renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.75));
+renderer.setClearColor(0x000000,0);
+if(!renderer.getContext()) throw new Error("no webgl");
+wrap.appendChild(renderer.domElement);
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(35,1,.1,100);
+scene.add(new THREE.HemisphereLight(0xe6f4ff,0x1c3550,1.0));
+const key=new THREE.DirectionalLight(0xfff0d6,1.05); key.position.set(3.5,6,4.5); scene.add(key);
+const rim=new THREE.DirectionalLight(0x7fd6f5,.45); rim.position.set(-4,3.5,-3.5); scene.add(rim);
+const front=new THREE.DirectionalLight(0xffffff,.28); front.position.set(0,2.5,6); scene.add(front);
+const grp=new THREE.Group(); scene.add(grp);
+const shadow=new THREE.Mesh(new THREE.CircleGeometry(1.18,36),new THREE.MeshBasicMaterial({color:0x010a16,transparent:true,opacity:.38}));
+shadow.rotation.x=-Math.PI/2; shadow.position.y=.012; shadow.scale.y=.42; grp.add(shadow);
+const glow=new THREE.Mesh(new THREE.CircleGeometry(1.5,36),new THREE.MeshBasicMaterial({color:0x7fd6f5,transparent:true,opacity:.07}));
+glow.rotation.x=-Math.PI/2; glow.position.y=.006; glow.scale.y=.45; grp.add(glow);
+const M3={
+ skin:new THREE.MeshStandardMaterial({color:0xdeae88,roughness:.62,metalness:0}),
+ shirt:new THREE.MeshStandardMaterial({color:0x16507c,roughness:.85,metalness:0}),
+ short:new THREE.MeshStandardMaterial({color:0x0b2a4d,roughness:.85,metalness:0}),
+ hair:new THREE.MeshStandardMaterial({color:0x2a1b16,roughness:.55,metalness:.05}),
+ shoe:new THREE.MeshStandardMaterial({color:0xeef1f5,roughness:.5,metalness:0}),
+ dark:new THREE.MeshStandardMaterial({color:0x2a1d16,roughness:.4}),
+ lip:new THREE.MeshStandardMaterial({color:0xb5544f,roughness:.5})
+};
+const sph=(mat,r)=>{ const m=new THREE.Mesh(new THREE.SphereGeometry(r||1,22,18),mat); grp.add(m); return m; };
+const cylT=(rt,rb,mat)=>{ const g=new THREE.CylinderGeometry(rt,rb,1,16); g.translate(0,-.5,0); const m=new THREE.Mesh(g,mat); grp.add(m); return m; };
+const HT=5, fy=f=>f*HT;
+const torso=new THREE.Mesh(new THREE.BufferGeometry(),M3.shirt); grp.add(torso);
+const shorts=new THREE.Mesh(new THREE.BufferGeometry(),M3.short); grp.add(shorts);
+const neck=cylT(1,1.15,M3.skin);
+const headG=new THREE.Group(); grp.add(headG);
+const hsph=(mat,r)=>{ const m=new THREE.Mesh(new THREE.SphereGeometry(r||1,22,18),mat); headG.add(m); return m; };
+const head=hsph(M3.skin), hair=hsph(M3.hair), hairLong=hsph(M3.hair),
+ earL=hsph(M3.skin), earR=hsph(M3.skin),
+ eyeL=hsph(M3.dark), eyeR=hsph(M3.dark), nose=hsph(M3.skin), lips=hsph(M3.lip);
+const bustL=sph(M3.shirt), bustR=sph(M3.shirt);
+function makeArm(side){
+ const g=new THREE.Group(); grp.add(g);
+ const sleeve=cylT(1.16,1.04,M3.shirt); grp.remove(sleeve); g.add(sleeve);
+ const upper=cylT(1,.86,M3.skin); grp.remove(upper); g.add(upper);
+ const elb=new THREE.Mesh(new THREE.SphereGeometry(1,16,12),M3.skin); g.add(elb);
+ const fg=new THREE.Group(); g.add(fg);
+ const fore=cylT(.84,.66,M3.skin); grp.remove(fore); fg.add(fore);
+ const hand=new THREE.Mesh(new THREE.SphereGeometry(1,16,12),M3.skin); fg.add(hand);
+ const thumb=new THREE.Mesh(new THREE.SphereGeometry(1,12,10),M3.skin); fg.add(thumb);
+ return {g,sleeve,upper,elb,fg,fore,hand,thumb,side};
+}
+function makeLeg(side){
+ const g=new THREE.Group(); grp.add(g);
+ const thigh=cylT(1,.76,M3.skin); grp.remove(thigh); g.add(thigh);
+ const knee=new THREE.Mesh(new THREE.SphereGeometry(1,16,12),M3.skin); g.add(knee);
+ const cg=new THREE.Group(); g.add(cg);
+ const calf=cylT(.8,.48,M3.skin); grp.remove(calf); cg.add(calf);
+ const shoe=new THREE.Mesh(new THREE.SphereGeometry(1,18,14),M3.shoe); cg.add(shoe);
+ return {g,thigh,knee,cg,calf,shoe,side};
+}
+const armL=makeArm(-1), armR=makeArm(1), legL=makeLeg(-1), legR=makeLeg(1);
+T3={renderer,scene,camera,grp,M3,torso,shorts,neck,headG,head,hair,hairLong,earL,earR,eyeL,eyeR,nose,lips,bustL,bustR,armL,armR,legL,legR,
+ targetY:0,curY:0,targetX:0,curX:0,drag:false,auto:!REDUCE,dirty:true,w:0,h:0};
+/* Kéo để xoay */
+const cv=renderer.domElement, W2v=$("#m3d");
+let lx=0,ly=0;
+cv.addEventListener("pointerdown",e=>{ T3.drag=true; T3.auto=false; lx=e.clientX; ly=e.clientY; try{cv.setPointerCapture(e.pointerId)}catch(_){} });
+cv.addEventListener("pointermove",e=>{ if(!T3.drag) return; T3.targetY+=(e.clientX-lx)*.012; T3.targetX=Math.max(-.28,Math.min(.28,T3.targetX+(e.clientY-ly)*.005)); lx=e.clientX; ly=e.clientY; });
+const endDrag=()=>{ T3.drag=false; };
+cv.addEventListener("pointerup",endDrag); cv.addEventListener("pointercancel",endDrag);
+window.addEventListener("resize",()=>{ if(T3) T3.dirty=true; });
+update3D(cur||targetParams());
+t3Dims();
+(function tick(){
+ requestAnimationFrame(tick);
+ if(!T3) return;
+ if(view!=="Mô hình 3D"){ return; }
+ const wpx=W2v.clientWidth, hpx=W2v.clientHeight;
+ if(wpx>0&&hpx>0&&(wpx!==T3.w||hpx!==T3.h)){ T3.w=wpx; T3.h=hpx; renderer.setSize(wpx,hpx,false); camera.aspect=wpx/hpx; camera.position.set(0,2.62,camera.aspect<.8?9.4:7.6); camera.lookAt(0,2.42,0); camera.updateProjectionMatrix(); }
+ if(T3.auto&&!T3.drag) T3.targetY+=.005;
+ if(!T3.drag){ T3.curY+=(T3.targetY-T3.curY)*.14; T3.curX+=(T3.targetX-T3.curX)*.14; } else { T3.curY=T3.targetY; T3.curX=T3.targetX; }
+ grp.rotation.y=T3.curY; grp.rotation.x=T3.curX*.35;
+ renderer.render(scene,camera);
+})();
+return true;
+}catch(e){ try{ $("#m3dCanvas").innerHTML=""; }catch(_){} T3=null; return false; }
+}
+function update3D(p){
+if(!T3) return;
+const T=T3, M3=T.M3, HT=5, fy=f=>f*HT;
+M3.skin.color.setRGB(p.sk[0]/255,p.sk[1]/255,p.sk[2]/255);
+const cr3=C=>C/(2*Math.PI)/p.h*HT*1.14;
+const hipR=cr3(p.Hp), waistR=cr3(p.W), bustR=cr3(p.B);
+const shR=Math.max(bustR*1.06,hipR*.9)+.06, neckR=.155;
+const prof=[[hipR*.5,.515],[hipR*.97,.538],[hipR*.995,.562],[lerp(hipR,waistR,.6),.588],[waistR*1.03,.63],[lerp(waistR,bustR,.55),.678],[bustR,.722],[bustR*.95,.772],[shR*.94,.812],[neckR*1.5,.848],[neckR*1.1,.878]];
+T.torso.geometry.dispose();
+T.torso.geometry=new THREE.LatheGeometry(prof.map(q=>new THREE.Vector2(Math.max(.02,q[0]),fy(q[1]))),26);
+const sp=[[hipR*.62,.392],[hipR*1.05,.42],[hipR*1.07,.5],[hipR*1.03,.575],[hipR*.9,.592]];
+T.shorts.geometry.dispose();
+T.shorts.geometry=new THREE.LatheGeometry(sp.map(q=>new THREE.Vector2(Math.max(.02,q[0]),fy(q[1]))),26);
+T.torso.scale.z=.8; T.shorts.scale.z=.8;
+T.neck.position.set(0,fy(.905),0); T.neck.scale.set(neckR,fy(.905)-fy(.845),neckR);
+const hR=.335, hcy=fy(.885)+hR*.92;
+T.headG.position.set(0,hcy,0); T.headG.rotation.y=0;
+T.head.scale.set(hR*.92,hR*1.07,hR*.96);
+T.hair.position.set(0,hR*.1,-hR*.1); T.hair.scale.set(hR*.97,hR*1.06,hR*.98);
+const fem=p.sx<.45;
+T.hairLong.visible=fem; T.hairLong.position.set(0,-hR*.75,-hR*.5); T.hairLong.scale.set(hR*1.02,hR*1.55,hR*.55);
+T.earL.position.set(-hR*.92,0,0); T.earL.scale.set(.045,.075,.05);
+T.earR.position.set(hR*.92,0,0); T.earR.scale.set(.045,.075,.05);
+T.eyeL.position.set(-hR*.34,hR*.05,hR*.88); T.eyeL.scale.set(.024,.03,.02);
+T.eyeR.position.set(hR*.34,hR*.05,hR*.88); T.eyeR.scale.set(.024,.03,.02);
+T.nose.position.set(0,-hR*.06,hR*.95); T.nose.scale.set(.035,.05,.035);
+T.lips.position.set(0,-hR*.3,hR*.86); T.lips.scale.set(.075,.022,.025);
+const bR=fem?Math.max(.055,Math.min(.17,(p.B-p.W)*.0075)):0.001;
+T.bustL.visible=T.bustR.visible=fem;
+T.bustL.position.set(-bustR*.44,fy(.715),bustR*.6); T.bustL.scale.set(bR,bR*.88,bR*.8);
+T.bustR.position.set(bustR*.44,fy(.715),bustR*.6); T.bustR.scale.set(bR,bR*.88,bR*.8);
+const armR=Math.max(.1,bustR*.33), upL=fy(.812)-fy(.628), foL=fy(.628)-fy(.478), shX=shR*.94;
+[["armL",-1],["armR",1]].forEach(([k,side])=>{
+ const A=T[k]; A.g.position.set(side*shX,fy(.812),0); A.g.rotation.z=side*.15;
+ A.upper.scale.set(armR,upL,armR); A.sleeve.scale.set(armR,upL*.52,armR);
+ A.elb.position.set(0,-upL,0); A.elb.scale.set(armR*.88,armR*.88,armR*.88);
+ A.fg.position.set(0,-upL,0); A.fg.rotation.z=side*.05;
+ A.fore.scale.set(armR*.92,foL,armR*.92);
+ A.hand.position.set(0,-foL-.07,0); A.hand.scale.set(.072,.115,.042);
+ A.thumb.position.set(-side*.055,-foL-.045,.012); A.thumb.scale.set(.026,.05,.026);
+});
+const thR=Math.max(.17,hipR*.55), hipX=hipR*.52, kneeX=hipR*.47, thL=fy(.528)-fy(.285), caL=fy(.285)-fy(.05);
+[["legL",-1],["legR",1]].forEach(([k,side])=>{
+ const L=T[k]; L.g.position.set(side*hipX,fy(.528),0);
+ L.thigh.scale.set(thR,thL,thR);
+ L.knee.position.set(side*(kneeX-hipX),-thL,0); L.knee.scale.set(thR*.74,thR*.74,thR*.74);
+ L.cg.position.set(side*(kneeX-hipX),-thL,0);
+ L.calf.scale.set(thR*.78,caL,thR*.78);
+ L.shoe.position.set(0,-caL+.015,.075); L.shoe.scale.set(.125,.062,.235);
+});
+$("#d3b").textContent="Ngực "+(p.gB?"~":"")+Math.round(p.B)+" cm";
+$("#d3w").textContent="Eo "+(p.gW?"~":"")+Math.round(p.W)+" cm";
+$("#d3h").textContent="Mông "+(p.gH?"~":"")+Math.round(p.Hp)+" cm";
+}
+
 $("#to2").onclick = () => {
 persist(); store.set("fm_profile", P);
 if (!(+P.h >= 120 && +P.h <= 220 && +P.w >= 30 && +P.w <= 200)) { $("#e1").textContent = "Nhập chiều cao (120–220 cm) và cân nặng (30–200 kg) để tiếp tục."; return; }
