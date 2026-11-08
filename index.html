@@ -23,7 +23,7 @@
   color-scheme:dark;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 84px);scroll-behavior:smooth}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 96px);scroll-behavior:smooth}
 body{margin:0;min-height:100vh;color:var(--ink);font:15px/1.65 "Be Vietnam Pro",system-ui,sans-serif;background:#03101f;padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0);overflow-x:hidden;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 ::selection{background:rgba(232,196,121,.85);color:#1b1204}
 button{font:inherit;color:inherit}
@@ -33,9 +33,9 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;bac
   radial-gradient(ellipse 55% 40% at 80% 12%,rgba(127,214,245,.08),transparent 60%),
   linear-gradient(180deg,#073059 0%,#041c36 42%,#020e1d 100%)}
 body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;background-image:radial-gradient(rgba(180,220,250,.055) 1px,transparent 1px);background-size:26px 26px;mask-image:linear-gradient(180deg,rgba(0,0,0,.7),transparent 70%);-webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.7),transparent 70%)}
-.app{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:0 22px}
-/* ---------- Header ---------- */
-header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin:0 -22px;padding:14px 22px 12px;background:linear-gradient(180deg,rgba(3,16,32,.96),rgba(3,16,32,.93));backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border-bottom:1px solid rgba(150,196,232,.12);box-shadow:0 10px 30px rgba(0,5,15,.35)}
+.app{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:0 32px}
+/* ---------- Header : kính mờ full-width, thoáng ---------- */
+header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:20px 32px;flex-wrap:wrap;width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);padding:16px max(32px,calc(50vw - 640px + 32px)) 14px;background:rgba(10,38,66,.48);backdrop-filter:blur(20px) saturate(1.45);-webkit-backdrop-filter:blur(20px) saturate(1.45);border-bottom:1px solid rgba(190,225,250,.14);box-shadow:0 8px 32px rgba(0,8,20,.18),inset 0 1px 0 rgba(255,255,255,.08)}
 .metal{background:linear-gradient(180deg,#fff 0,#d5f0ff 44%,#f3dca8 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;filter:drop-shadow(0 0 12px rgba(120,210,255,.35))}
 .logo{display:flex;align-items:center;gap:7px;font:700 33px/1 "Cormorant Garamond",Georgia,serif;letter-spacing:.5px}
 .logo svg{width:23px;height:23px;fill:var(--gold);filter:drop-shadow(0 0 7px rgba(232,196,121,.65));animation:spin 28s linear infinite}
@@ -44,26 +44,32 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 .brandimg svg{width:32px;height:32px;fill:var(--gold)}
 .team{display:block;margin-top:5px;font:600 11px/1.2 "Be Vietnam Pro",sans-serif;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold);opacity:.92}
 @keyframes spin{to{transform:rotate(360deg)}}
-nav.tabs{display:flex;gap:4px;background:rgba(3,16,32,.66);border:1px solid var(--line2);border-radius:99px;padding:4px;box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 8px 22px rgba(0,5,15,.35)}
-nav.tabs button{display:flex;align-items:center;gap:7px;background:none;border:0;border-radius:99px;padding:9px 17px;font-weight:600;font-size:14px;color:var(--mute);cursor:pointer;transition:background .3s var(--ease),color .3s,box-shadow .3s;white-space:nowrap}
+nav.tabs{display:flex;gap:6px;background:rgba(255,255,255,.06);border:1px solid rgba(190,225,250,.16);border-radius:99px;padding:5px;box-shadow:inset 0 1px 0 rgba(255,255,255,.07)}
+nav.tabs button{display:flex;align-items:center;gap:8px;background:none;border:0;border-radius:99px;padding:10px 20px;font-weight:600;font-size:14px;color:var(--mute);cursor:pointer;transition:background .3s var(--ease),color .3s,box-shadow .3s;white-space:nowrap}
 nav.tabs button svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none}
 nav.tabs button:hover{color:var(--ink)}
 nav.tabs button.on{background:linear-gradient(180deg,rgba(190,225,250,.22),rgba(120,175,220,.14));color:#fff;box-shadow:inset 0 0 0 1px rgba(190,225,250,.22),0 2px 10px rgba(0,5,15,.35)}
-main{padding:20px 0 12px}
+main{padding:28px 0 12px}
 .view{display:none}.view.on{display:block;animation:in .55s var(--ease)}
 @keyframes in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 .enter{animation:in .55s var(--ease)}
 [hidden]{display:none!important}
-/* ---------- Stepper ---------- */
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:min(600px,100%);margin:2px 0 26px}
-.steps button{position:relative;display:block;background:rgba(4,20,40,.45);border:1px solid var(--line2);border-radius:14px;padding:26px 14px 11px;text-align:left;cursor:pointer;font-size:13px;color:var(--mute);transition:color .35s,border-color .35s,background .35s;overflow:hidden}
-.steps button:hover{color:var(--ink);border-color:rgba(232,196,121,.45)}
-.steps button:before{content:"";position:absolute;top:11px;left:14px;right:14px;height:4px;border-radius:4px;background:linear-gradient(90deg,var(--gold),#fff3cf) left/0 100% no-repeat,rgba(143,190,225,.20);transition:background-size .65s var(--ease)}
-.steps button.on:before{background-size:100% 100%}
-.steps button.on{border-color:rgba(232,196,121,.35)}
-.steps button.cur{color:#fff;font-weight:700;background:rgba(10,38,66,.6);border-color:rgba(232,196,121,.55);box-shadow:0 6px 18px rgba(0,5,15,.35)}
+/* ---------- Stepper : nhẹ, số tròn + đường nối ---------- */
+.steps{display:flex;align-items:flex-start;width:min(620px,100%);margin:4px 0 34px;padding:2px 4px 0}
+.steps button{position:relative;flex:1;display:flex;flex-direction:column;align-items:center;gap:10px;background:none;border:0;padding:0 10px;text-align:center;cursor:pointer;font-size:13.5px;line-height:1.35;color:var(--mute);transition:color .35s}
+.steps button:hover{color:var(--ink)}
+.steps button::before{content:"";position:absolute;top:19px;left:calc(-50% + 26px);right:calc(50% + 26px);height:2px;border-radius:2px;background:rgba(150,196,232,.26)}
+.steps button:first-child::before{display:none}
+.steps button.on::before{background:linear-gradient(90deg,var(--gold),rgba(232,196,121,.55))}
+.steps .s-num{display:grid;place-items:center;width:38px;height:38px;flex:none;border-radius:50%;font-size:14px;font-weight:700;line-height:1;background:rgba(6,28,52,.72);border:1.5px solid rgba(150,196,232,.38);color:var(--mute);position:relative;z-index:1;transition:background .35s,border-color .35s,color .35s,box-shadow .35s}
+.steps .s-lab{font-weight:500;white-space:nowrap}
+.steps button.on .s-num{background:rgba(20,70,110,.85);border-color:rgba(232,196,121,.55);color:var(--gold2)}
+.steps button.cur{color:#fff}
+.steps button.cur .s-num{background:linear-gradient(180deg,#f6dc9b,#c99a4b);border-color:transparent;color:#1b1204;box-shadow:0 0 0 5px rgba(232,196,121,.16),0 6px 16px rgba(201,154,75,.35)}
+.steps button.cur .s-lab{font-weight:700}
 /* ---------- Type ---------- */
-h1{font:700 clamp(31px,5.2vw,47px)/1.14 "Playfair Display",Georgia,serif;margin:0 0 8px;letter-spacing:-.3px}
+h1{font:700 clamp(31px,5.2vw,47px)/1.14 "Playfair Display",Georgia,serif;margin:0 0 10px;letter-spacing:-.3px}
+#s1>h1{margin-bottom:26px}
 h1 em{font-style:italic;-webkit-text-fill-color:transparent;background:linear-gradient(180deg,#e9f8ff,#7fd6f5 58%,#f1dcaa);-webkit-background-clip:text;background-clip:text}
 h1.metal{display:inline-block}
 .sub{color:var(--mute);margin:0 0 22px;max-width:68ch}
@@ -71,11 +77,11 @@ label,.lab{display:block;font-weight:600;font-size:13px;margin:0 0 8px;color:var
 .hint{font-size:12.5px;color:var(--mute);margin:8px 0 0;line-height:1.55}
 .err{color:var(--bad);font-size:13.5px;margin-top:10px;min-height:0;font-weight:500}
 /* ---------- Layout ---------- */
-.s1grid{display:grid;grid-template-columns:minmax(310px,412px) minmax(0,1fr);gap:34px;align-items:start}
-.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(258px,1fr));gap:20px 28px;align-content:start}
+.s1grid{display:grid;grid-template-columns:minmax(320px,430px) minmax(0,1fr);gap:40px;align-items:start}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:0 36px;align-content:start}
 .fields>div{min-width:0}
-.col{display:flex;flex-direction:column;gap:18px}
-.row3{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.col{display:flex;flex-direction:column;gap:24px}
+.row3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 /* ---------- Inputs ---------- */
 input,select,textarea{width:100%;font:inherit;color:var(--ink);background:var(--field);border:1px solid var(--line2);border-radius:var(--r-sm);padding:12px 15px;min-height:48px;transition:border-color .25s,box-shadow .25s,background .25s}
 input::placeholder,textarea::placeholder{color:#5f7f9c}
@@ -87,17 +93,17 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 .unit{position:relative}.unit i{position:absolute;right:15px;top:50%;transform:translateY(-50%);color:var(--mute);font-style:normal;font-size:13px;font-weight:600;pointer-events:none}
 .unit input{padding-right:42px}
 /* Segmented */
-.seg{position:relative;display:flex;background:var(--field);border:1px solid var(--line2);border-radius:15px;padding:4px;box-shadow:inset 0 1px 3px rgba(0,4,12,.45)}
-.seg .ind{position:absolute;left:4px;top:4px;bottom:4px;border-radius:11px;background:linear-gradient(180deg,rgba(150,195,225,.42),rgba(85,135,175,.32));box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 2px 8px rgba(0,5,15,.3);transition:transform .4s var(--ease),opacity .25s}
-.seg button{position:relative;flex:1;background:none;border:0;padding:9px 6px;font-size:13.5px;color:var(--mute);cursor:pointer;border-radius:11px;transition:color .25s;min-height:40px}
+.seg{position:relative;display:flex;background:var(--field);border:1px solid var(--line2);border-radius:15px;padding:5px;box-shadow:inset 0 1px 3px rgba(0,4,12,.45)}
+.seg .ind{position:absolute;left:5px;top:5px;bottom:5px;border-radius:11px;background:linear-gradient(180deg,rgba(150,195,225,.42),rgba(85,135,175,.32));box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 2px 8px rgba(0,5,15,.3);transition:transform .4s var(--ease),opacity .25s}
+.seg button{position:relative;flex:1;background:none;border:0;padding:11px 10px;font-size:13.5px;color:var(--mute);cursor:pointer;border-radius:11px;transition:color .25s;min-height:44px;white-space:nowrap}
 .seg button.on{color:#fff;font-weight:600}
 /* Swatches & chips */
-.swatches{display:flex;gap:11px;flex-wrap:wrap;padding:3px 1px}
-.swatch{width:40px;height:40px;border-radius:50%;padding:0;border:2px solid rgba(255,255,255,.24);cursor:pointer;box-shadow:inset 0 -6px 10px rgba(0,0,0,.16),0 3px 8px rgba(0,5,15,.35);transition:transform .3s var(--ease),box-shadow .3s,border-color .3s}
+.swatches{display:flex;gap:16px;flex-wrap:wrap;padding:6px 2px}
+.swatch{width:44px;height:44px;border-radius:50%;padding:0;border:2px solid rgba(255,255,255,.24);cursor:pointer;box-shadow:inset 0 -6px 10px rgba(0,0,0,.16),0 3px 8px rgba(0,5,15,.35);transition:transform .3s var(--ease),box-shadow .3s,border-color .3s}
 .swatch:hover{transform:scale(1.09)}
 .swatch.on{transform:scale(1.12);border-color:#fff;box-shadow:0 0 0 3px rgba(232,196,121,.8),0 0 18px rgba(232,196,121,.4)}
-.chips{display:flex;flex-wrap:wrap;gap:8px}
-.chip{border:1px solid rgba(143,179,207,.32);background:rgba(2,14,30,.48);padding:9px 16px;border-radius:99px;cursor:pointer;font-size:13.5px;transition:background .3s,color .3s,border-color .3s,transform .2s,box-shadow .3s}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{border:1px solid rgba(143,179,207,.32);background:rgba(2,14,30,.48);padding:10px 18px;border-radius:99px;cursor:pointer;font-size:13.5px;transition:background .3s,color .3s,border-color .3s,transform .2s,box-shadow .3s}
 .chip:hover{border-color:var(--gold);color:var(--ink)}
 .chip:active{transform:scale(.96)}
 .chip.on{background:linear-gradient(180deg,#f6dc9b,#c99a4b);border-color:transparent;color:#1b1204;font-weight:700;box-shadow:0 4px 14px rgba(201,154,75,.35)}
@@ -111,7 +117,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 .accb{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s var(--ease)}
 .acc.open .accb{grid-template-rows:1fr}
 .accb>div{min-height:0;overflow:hidden}
-.accb .in{padding:2px 18px 18px;opacity:0;transition:opacity .35s}
+.accb .in{padding:4px 20px 22px;opacity:0;transition:opacity .35s}
+.acc .unit input{padding:13px 52px 13px 16px;min-height:52px;font-size:15px}
+.acc .unit i{right:17px}
 .acc.open .accb .in{opacity:1;transition-delay:.12s}
 /* Buttons */
 .actions{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;align-items:center}
@@ -123,13 +131,13 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 .btn:disabled{opacity:.55;cursor:wait;transform:none}
 .link{background:none;border:0;color:var(--bad);cursor:pointer;font-size:13px;text-decoration:underline;text-underline-offset:3px;padding:8px 2px}
 /* ---------- Model stage ---------- */
-.stage{position:sticky;top:96px;background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:var(--r-lg);padding:16px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:var(--shadow)}
-.stbody{position:relative;margin-top:14px;aspect-ratio:300/470;border-radius:20px;overflow:hidden;background:radial-gradient(ellipse at 50% 16%,rgba(130,205,245,.17),rgba(3,18,36,.4) 72%),linear-gradient(180deg,rgba(16,62,100,.35),rgba(2,12,26,.3));border:1px solid var(--line2);box-shadow:inset 0 1px 0 rgba(255,255,255,.06),inset 0 -30px 50px rgba(0,5,15,.35)}
+.stage{position:sticky;top:96px;background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:var(--r-lg);padding:20px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:var(--shadow);overflow:visible}
+.stbody{position:relative;margin-top:16px;aspect-ratio:300/478;border-radius:20px;overflow:hidden;background:radial-gradient(ellipse at 50% 16%,rgba(130,205,245,.17),rgba(3,18,36,.4) 72%),linear-gradient(180deg,rgba(16,62,100,.35),rgba(2,12,26,.3));border:1px solid var(--line2);box-shadow:inset 0 1px 0 rgba(255,255,255,.06),inset 0 -30px 50px rgba(0,5,15,.35)}
 .stbody>*{position:absolute;inset:0;width:100%;height:100%;transition:opacity .45s var(--ease),transform .45s var(--ease)}
 .stbody .off{opacity:0;transform:scale(.97);pointer-events:none}
 #man{display:block}
-.stat{display:grid;grid-template-columns:repeat(3,1fr);text-align:center;font-size:12px;color:var(--mute);margin-top:14px;gap:8px}
-.stat>div{background:rgba(2,14,30,.42);border:1px solid rgba(150,196,232,.12);border-radius:14px;padding:9px 4px 8px}
+.stat{display:grid;grid-template-columns:repeat(3,1fr);text-align:center;font-size:12px;color:var(--mute);margin-top:16px;gap:10px}
+.stat>div{background:rgba(2,14,30,.42);border:1px solid rgba(150,196,232,.12);border-radius:14px;padding:11px 6px 10px}
 .stat b{display:block;font:700 21px/1.2 "Cormorant Garamond",serif;color:var(--gold)}
 .stat b.sm{font-size:15.5px;padding-top:3px;font-family:"Be Vietnam Pro",sans-serif;font-weight:700}
 .mtools{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
@@ -147,7 +155,18 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 .drop img{width:100%;height:100%;object-fit:cover;display:block;animation:in .45s var(--ease)}
 .drop .x{position:absolute;top:9px;right:9px;width:32px;height:32px;border-radius:50%;border:1px solid rgba(255,255,255,.18);background:rgba(2,12,26,.82);color:#fff;cursor:pointer;font-size:16px;line-height:1;transition:background .25s;z-index:2}
 .drop .x:hover{background:#b3394a}
-.hist{margin-top:8px}
+.hist{margin-top:10px}
+/* Hộp xác nhận trong trang (thay confirm() của trình duyệt) */
+.cfm{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:20px;background:rgba(2,10,22,.68);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.cfm[hidden]{display:none!important}
+.cfm-card{width:min(430px,100%);background:linear-gradient(180deg,#0d3052,#071f3a);border:1px solid var(--line);border-radius:20px;padding:24px;box-shadow:0 24px 60px rgba(0,4,12,.6)}
+.cfm-card p{margin:0 0 20px;font-size:14.5px;line-height:1.6;color:var(--ink)}
+.cfm-actions{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+.cfm-actions .btn{min-height:46px;padding:0 24px}
+#hist{display:flex;flex-wrap:wrap;align-items:center;gap:6px;line-height:1.4}
+#hist[hidden]{display:none!important}
+.hist-label{font-weight:600;color:var(--ink2);font-size:12.5px;margin-right:2px}
+.hist-chip{display:inline-flex;align-items:center;white-space:nowrap;background:rgba(127,214,245,.10);border:1px solid rgba(127,214,245,.20);color:var(--ink2);border-radius:99px;padding:4px 11px;font-size:12px;font-weight:500}
 /* ---------- Result ---------- */
 .res{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:var(--r-lg);padding:28px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:var(--shadow)}
 .size-big{font:700 88px/1 "Cormorant Garamond",Georgia,serif;display:inline-block}
@@ -160,6 +179,17 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 ul.clean{padding-left:19px;margin:6px 0}
 ul.clean li{margin:3px 0}
 ul.clean li::marker{color:var(--gold)}
+/* ---------- Thẻ outfit (bước 3) ---------- */
+.outfits{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:12px;margin-top:6px;clear:both}
+.outfit{background:rgba(2,14,30,.48);border:1px solid var(--line2);border-radius:16px;padding:16px 17px;animation:in .45s var(--ease) both}
+.outfit .o-occ{display:inline-block;padding:3px 11px;border-radius:99px;font-size:11.5px;font-weight:700;letter-spacing:.3px;background:rgba(232,196,121,.16);color:var(--gold2);border:1px solid rgba(232,196,121,.28)}
+.outfit h4{margin:9px 0 7px;font-size:15.5px;line-height:1.35;color:var(--ink)}
+.outfit p{margin:0;font-size:13.5px;line-height:1.6;color:var(--ink2)}
+.outfit dl{margin:10px 0 0;display:grid;gap:7px}
+.outfit dl div{display:grid;grid-template-columns:74px 1fr;gap:8px;font-size:12.5px;line-height:1.5}
+.outfit dt{font-weight:700;color:var(--gold);white-space:nowrap}
+.outfit dd{margin:0;color:var(--ink2)}
+.outfit .o-note{margin-top:11px;padding-top:10px;border-top:1px dashed rgba(150,196,232,.22);font-size:12.5px;line-height:1.55;color:var(--mute)}
 .empty{text-align:center;color:var(--mute);padding:42px 12px}
 .compass{display:block;width:46px;height:46px;margin:0 auto 14px;fill:var(--gold);animation:spin 3s linear infinite;filter:drop-shadow(0 0 9px rgba(232,196,121,.6))}
 .tryimg{width:100%;max-width:420px;border-radius:18px;border:1px solid var(--line);display:block;animation:in .6s var(--ease);box-shadow:0 14px 36px rgba(0,5,15,.5)}
@@ -198,30 +228,39 @@ footer{position:relative;z-index:1;text-align:center;color:var(--mute2);font-siz
 .sz input{padding:9px 7px;font-size:13.5px;border-radius:10px;text-align:center;min-height:40px}
 .sz td:first-child input{font-weight:700;color:var(--gold)}
 .sz .addrow{margin:2px 0 8px}
-/* ---------- Responsive ---------- */
-@media(min-width:901px){.stage{max-height:calc(100vh - 112px);overflow-y:auto;scrollbar-width:thin}}
+/* ---------- Responsive : không cuộn trong, không tràn ngang ---------- */
 @media(max-width:900px){
-  .s1grid,.s2grid{grid-template-columns:1fr!important}
-  .stage{position:static!important;max-height:none}
+  .s1grid,.s2grid{grid-template-columns:1fr!important;gap:28px}
+  .stage{position:static!important}
   .stbody{max-width:430px;margin-left:auto;margin-right:auto}
+  .fields{grid-template-columns:1fr 1fr;gap:0 24px}
 }
 @media(max-width:640px){
-  .app{padding:0 15px}
-  header{margin:0 -15px;padding:11px 15px 10px;gap:10px}
+  .app{padding:0 16px}
+  header{margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);padding:12px 16px 11px;gap:12px}
   .brandimg{height:48px;width:48px;border-radius:13px}
   .brandimg svg{width:27px;height:27px}
   .logo{font-size:27px}
   .team{font-size:10px;letter-spacing:1.1px}
-  nav.tabs{width:100%;padding:3px}
-  nav.tabs button{flex:1;justify-content:center;padding:9px 6px;font-size:13.5px;min-height:42px}
-  main{padding:16px 0 8px}
-  .steps{gap:7px;margin-bottom:20px}
-  .steps button{padding:23px 10px 9px;font-size:12px;border-radius:12px}
-  .steps button:before{left:10px;right:10px;top:9px}
-  .fields{grid-template-columns:1fr;gap:16px}
-  .col{gap:15px}
-  .row3{grid-template-columns:repeat(3,1fr);gap:8px}
+  nav.tabs{width:100%;padding:4px;gap:4px}
+  nav.tabs button{flex:1;justify-content:center;padding:10px 8px;font-size:13.5px;min-height:42px}
+  main{padding:20px 0 8px}
+  .steps{margin-bottom:26px;padding:0 2px}
+  .steps button{padding:0 4px;font-size:12.5px;gap:8px}
+  .steps .s-num{width:34px;height:34px;font-size:13px}
+  .steps button::before{top:17px;left:calc(-50% + 22px);right:calc(50% + 22px)}
+  .steps .s-lab{white-space:normal}
+  #s1>h1{margin-bottom:20px}
+  .stage{padding:16px}
+  .fields{grid-template-columns:1fr;gap:0}
+  .col{gap:20px}
+  .col+.col{margin-top:20px}
+  .row3{grid-template-columns:repeat(3,1fr);gap:10px}
+  .swatches{gap:12px}
+  .swatch{width:40px;height:40px}
   .res,.chatbox{padding:19px 16px;border-radius:22px}
+  .outfits{grid-template-columns:1fr;gap:10px}
+  .outfit{padding:14px 15px}
   .size-big{font-size:68px}
   .rthumb{width:82px}
   .actions .btn{flex:1 1 auto}
@@ -261,7 +300,7 @@ footer{position:relative;z-index:1;text-align:center;color:var(--mute2);font-siz
 </header>
 <main>
 <section class="view on" id="tryon">
-  <div class="steps" id="steps"><button type="button" class="on cur">1 · Vóc dáng</button><button type="button">2 · Sản phẩm</button><button type="button">3 · Kết quả</button></div>
+  <div class="steps" id="steps"><button type="button" class="on cur"><span class="s-num">1</span><span class="s-lab">Vóc dáng</span></button><button type="button"><span class="s-num">2</span><span class="s-lab">Sản phẩm</span></button><button type="button"><span class="s-num">3</span><span class="s-lab">Kết quả</span></button></div>
   <div id="s1" class="enter">
     <h1 class="metal">Mặc thử trước, <em>mua sau</em></h1>
     <div class="s1grid">
@@ -269,7 +308,7 @@ footer{position:relative;z-index:1;text-align:center;color:var(--mute2);font-siz
         <div class="seg" id="viewSeg"></div>
         <div class="stbody">
           <svg viewBox="0 0 300 470" id="man" role="img" aria-label="Hình người minh họa theo số đo"></svg>
-          <div class="drop stbd off" id="bdrop" tabindex="0" role="button" aria-label="Tải ảnh toàn thân"></div>
+          <div class="drop stbd off" id="bdrop" tabindex="0" role="button" aria-label="Tải ảnh toàn thân" hidden></div>
         </div>
         <div class="stat" id="stat"><div><b id="bmi">–</b><span id="bmiCat">BMI</span></div><div><b id="whr">–</b>Eo/Mông</div><div><b class="sm" id="shapeName">–</b>Phom</div></div>
         <div class="mtools" id="mtools">
@@ -295,7 +334,7 @@ footer{position:relative;z-index:1;text-align:center;color:var(--mute2);font-siz
               <p class="hint">Mẹo: gân cổ tay xanh dương/tím là lạnh, xanh lục là ấm, lẫn lộn là trung tính. Chỉ dùng lựa chọn bạn xác nhận; để trống thì Stylist sẽ không đoán tông da.</p></div>
           </div>
         </div>
-        <div class="acc" id="acc" style="margin-top:20px">
+        <div class="acc" id="acc" style="margin-top:26px">
           <button type="button" id="accBtn" aria-expanded="false" aria-controls="accIn">Số đo 3 vòng <span>(không bắt buộc, tư vấn chuẩn hơn)</span></button>
           <div class="accb" id="accIn" inert><div><div class="in">
             <div class="row3">
@@ -377,6 +416,12 @@ footer{position:relative;z-index:1;text-align:center;color:var(--mute2);font-siz
   <div class="wardrobe" id="wardrobe"></div>
 </section>
 </main>
+<div class="cfm" id="cfm" hidden role="dialog" aria-modal="true" aria-labelledby="cfmMsg">
+  <div class="cfm-card">
+    <p id="cfmMsg"></p>
+    <div class="cfm-actions"><button class="btn ghost" id="cfmNo" type="button">Hủy</button><button class="btn" id="cfmYes" type="button">Tiếp tục</button></div>
+  </div>
+</div>
 </div>
 <footer>✦ Be yourself · FitMe AI</footer>
 <script>
@@ -419,7 +464,7 @@ const btns = [...el.querySelectorAll("button")], ind = el.querySelector(".ind");
 const sync = () => {
 const i = items.indexOf(P[key]);
 btns.forEach((b, j) => { b.classList.toggle("on", j === i); b.setAttribute("aria-pressed", j === i); });
-ind.style.opacity = i < 0 ? 0 : 1; ind.style.width = `calc((100% - 6px) / ${items.length})`; ind.style.transform = `translateX(${Math.max(i,0)*100}%)`;
+ind.style.opacity = i < 0 ? 0 : 1; ind.style.width = `calc((100% - 10px) / ${items.length})`; ind.style.transform = `translateX(${Math.max(i,0)*100}%)`;
 };
 btns.forEach((b, i) => b.onclick = () => { P[key] = P[key] === items[i] ? "" : items[i]; sync(); (onChange || persist)(); });
 sync(); return sync;
@@ -442,8 +487,8 @@ el.appendChild(b);
 }
 $("#accBtn").onclick = () => { const o = $("#acc").classList.toggle("open"); $("#accBtn").setAttribute("aria-expanded", o); $("#accIn").inert = !o; };
 const FIELDS = ["h","w","bust","waist","hip"];
-function histText(){ return HIST.slice(0, 4).map(x => `${x.d} · ${x.w}kg${x.n ? " (" + x.n + ")" : ""}`).join(" | "); }
-function showHist(){ const el = $("#hist"), t = histText(); el.hidden = !t; el.textContent = t ? "Lịch sử: " + t : ""; }
+function histText(){ return HIST.slice(0, 4).map(x => `${x.d} · ${x.w}kg${x.n ? " (" + x.n + ")" : ""}`).join("; "); }
+function showHist(){ const el = $("#hist"); el.hidden = !HIST.length; if (!HIST.length){ el.innerHTML = ""; return; } const escH = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); el.innerHTML = '<span class="hist-label">Lịch sử:</span>' + HIST.slice(0, 4).map(x => `<span class="hist-chip">${escH(x.d)} · ${escH(x.w)}kg${x.n ? " · " + escH(x.n) : ""}</span>`).join(""); }
 let saveT = 0;
 function persist(){
 FIELDS.forEach(k => P[k] = $("#"+k).value); P.note = $("#note").value;
@@ -485,7 +530,10 @@ const cap=[[.98,.2],[.85,.53],[.6,.8],[.3,.95]].map(([q,w])=>[[Sx-Math.sin(th)*R
 const AC=[...cap.map(c=>c[0]),S_,pt(S_,E_,.4),pt(S_,E_,.8),E_,pt(E_,W_,.25),pt(E_,W_,.7),W_,pt(W_,T_,.1)];
 const AW=[...cap.map(c=>c[1]),R0,R0,R0*.82,elbD*SC/2,foreD*SC/2,lerp(foreD,wrD,.6)*SC/2,wrD*SC/2,wrD*SC/2*1.04];
 const W2=handW*SC/2,wr=wrD*SC/2,L=dl;
-return{y,s,bw,ww,hw,sw,nw,bF,wF,R0,body,arm:ribbon(AC,AW),W2,wr,L,Ex,Ey,ew:elbD*SC/2,Wx,Wy,Sy,hemX:lerp(Sx,Ex,.52),hemY:lerp(Sy,Ey,.52),hdeg:f1(-th*180/Math.PI),ang:Math.atan2(Ty-Wy,Tx-Wx)*180/Math.PI-90};
+const ribL=AC.map((p,i)=>{const a=AC[Math.max(0,i-1)],b=AC[Math.min(AC.length-1,i+1)],dx=b[0]-a[0],dy=b[1]-a[1],n=Math.hypot(dx,dy)||1;return[p[0]+dy/n*AW[i],p[1]-dx/n*AW[i]]});
+const outerAt=yy=>{if(yy<=ribL[0][1])return ribL[0][0];for(let i=0;i<ribL.length-1;i++){const a=ribL[i],b=ribL[i+1];if((yy>=a[1]&&yy<=b[1])||(yy>=b[1]&&yy<=a[1])){const t=(b[1]-a[1])?(yy-a[1])/(b[1]-a[1]):0;return lerp(a[0],b[0],t)}}return ribL[ribL.length-1][0]};
+const oB=outerAt(y(bF)),oW=outerAt(y(wF)),oH=outerAt(y(.528));
+return{y,s,bw,ww,hw,sw,nw,bF,wF,R0,body,arm:ribbon(AC,AW),W2,wr,L,Ex,Ey,ew:elbD*SC/2,Wx,Wy,Sy,oB,oW,oH,hemX:lerp(Sx,Ex,.52),hemY:lerp(Sy,Ey,.52),hdeg:f1(-th*180/Math.PI),ang:Math.atan2(Ty-Wy,Tx-Wx)*180/Math.PI-90};
 }
 /* Bàn tay: lòng bàn tay + 4 ngón + ngón cái, tọa độ cục bộ: gốc ở cổ tay, +y hướng xuống, -x hướng vào thân */
 function handSVG(W2,wr,L,bk,skin,skinD){
@@ -570,11 +618,11 @@ const head=bk
 <g opacity="${lh.toFixed(2)}" fill="url(#hg)"><path d="M-40 46C-46 4-22-8 2-8C26-8 46 6 40 46C38 30 30 18 14 14C2 22-22 26-40 46Z"/><path d="M-40 40C-45 70-44 96-38 112C-36 90-36 66-33 44Z"/><path d="M40 40C45 70 44 96 38 112C36 90 36 66 33 44Z"/></g>
 <g opacity="${(1-lh).toFixed(2)}" fill="url(#hg)"><path d="M-40 42C-45 2-22-9 0-9C24-9 45 2 40 42C38 26 28 17 12 14C-4 16-26 22-40 42Z"/></g></g>`;
 const hairBehind=bk?"":`<g transform="${HG}" opacity="${lh.toFixed(2)}">${long}</g>`;
-let ruler=`<line x1="16" x2="16" y1="${y(0)}" y2="${y(220/h)}" stroke="#8fb3cf" stroke-opacity=".5"/>`;
-for(let c=0;c<=220;c+=10){const yy=FLOOR-c*SC,big=c%50===0;ruler+=`<line x1="${big?9:12}" x2="16" y1="${yy}" y2="${yy}" stroke="#8fb3cf" stroke-opacity=".6" stroke-width="${big?1:.7}"/>`+(big&&c?`<text x="20" y="${yy+3}" font-size="7.5" fill="#8fb3cf" font-family="sans-serif">${c}</text>`:"")}
-const topY=y(1);ruler+=`<line x1="16" x2="${CX+34}" y1="${topY}" y2="${topY}" stroke="${gold}" stroke-opacity=".6" stroke-dasharray="3 3" stroke-width=".8"/><text x="44" y="${topY-4}" font-size="9" fill="${gold}" font-family="sans-serif">${Math.round(h)} cm</text>`;
-const gl=(f,t,v,gu,wd)=>{const yy=y(f);return`<circle cx="${f1(CX+wd)}" cy="${f1(yy)}" r="2" fill="${gold}"/><line x1="${f1(CX+wd)}" x2="294" y1="${f1(yy)}" y2="${f1(yy)}" stroke="${gold}" stroke-opacity=".55" stroke-dasharray="2 3" stroke-width=".8"/><text x="294" y="${f1(yy-4)}" text-anchor="end" font-size="9" fill="${gold}" font-family="sans-serif">${t} ${gu?"~":""}${Math.round(v)} cm</text>`};
-const dims=o.dims===false?"":gl(bF,"Ngực",p.B,p.gB,bw+4)+gl(wF,"Eo",p.W,p.gW,ww+4)+gl(.528,"Mông",p.Hp,p.gH,hw+4);
+let ruler=`<line x1="26" x2="26" y1="${y(0)}" y2="${y(220/h)}" stroke="#8fb3cf" stroke-opacity=".5"/>`;
+for(let c=0;c<=220;c+=10){const yy=FLOOR-c*SC,big=c%50===0;ruler+=`<line x1="${big?19:22}" x2="26" y1="${yy}" y2="${yy}" stroke="#8fb3cf" stroke-opacity=".6" stroke-width="${big?1:.7}"/>`+(big&&c?`<text x="30" y="${yy+3}" font-size="7.5" fill="#8fb3cf" font-family="sans-serif">${c}</text>`:"")}
+const topY=y(1);ruler+=`<line x1="26" x2="${CX+30}" y1="${topY}" y2="${topY}" stroke="${gold}" stroke-opacity=".55" stroke-dasharray="3 3" stroke-width=".8"/><text x="52" y="${topY-5}" font-size="9" fill="${gold}" font-family="sans-serif">${Math.round(h)} cm</text>`;
+const gl=(f,t,v,gu,wd,outer)=>{const yy=y(f);const dx=Math.min(238,Math.max(CX+wd,CX+(outer||0)+17));return`<circle cx="${f1(dx)}" cy="${f1(yy)}" r="2" fill="${gold}"/><line x1="${f1(dx+3)}" x2="274" y1="${f1(yy)}" y2="${f1(yy)}" stroke="${gold}" stroke-opacity=".5" stroke-dasharray="2 3" stroke-width=".8"/><text x="274" y="${f1(yy-5)}" text-anchor="end" font-size="9" fill="${gold}" font-family="sans-serif">${t} ${gu?"~":""}${Math.round(v)} cm</text>`};
+const dims=o.dims===false?"":gl(bF,"Ngực",p.B,p.gB,bw+11,G.oB)+gl(wF,"Eo",p.W,p.gW,ww+11,G.oW)+gl(.528,"Mông",p.Hp,p.gH,hw+11,G.oH);
 let ghost="";
 if(o.ghost){const GG=geom(o.ghost);defs.push(`<path id="gh" d="${GG.body}"/>`);ghost=`<g fill="none" stroke="#7fd6f5" stroke-width="1.3" stroke-dasharray="4 3" opacity=".9"><use href="#gh" transform="${rt}" clip-path="url(#hx)"/><use href="#gh" transform="${mir}" clip-path="url(#hx)"/></g><text x="16" y="${FLOOR+14}" font-size="8.5" fill="#7fd6f5" font-family="sans-serif">Nét đứt: lần lưu trước</text>`}
 return`<defs>
@@ -667,8 +715,8 @@ el.innerHTML = '<i class="ind"></i>' + items.map(t => `<button type="button">${t
 const btns = [...el.querySelectorAll("button")], ind = el.querySelector(".ind");
 const sync = () => {
 const i = items.indexOf(view); btns.forEach((b, j) => { b.classList.toggle("on", j === i); b.setAttribute("aria-pressed", j === i); });
-ind.style.width = "calc((100% - 6px) / 2)"; ind.style.transform = `translateX(${i*100}%)`;
-$("#man").classList.toggle("off", i === 1); $("#bdrop").classList.toggle("off", i === 0); $("#stat").style.opacity = i === 0 ? 1 : .4;
+ind.style.width = "calc((100% - 10px) / 2)"; ind.style.transform = `translateX(${i*100}%)`;
+$("#man").classList.toggle("off", i === 1); $("#man").hidden = i === 1; $("#bdrop").classList.toggle("off", i === 0); $("#bdrop").hidden = i === 0; $("#stat").style.opacity = i === 0 ? 1 : .4;
 };
 btns.forEach((b, i) => b.onclick = () => { view = items[i]; sync(); });
 sync(); return sync;
@@ -690,8 +738,17 @@ if (n === 2) return step(2);
 if (last) return step(3);
 $("#go").click();
 });
-$("#wipe").onclick = () => {
-if (!confirm("Xóa hồ sơ, tủ đồ, lịch sử cân nặng và lịch sử chat trên trình duyệt này?")) return;
+let cfmRes = null;
+function askConfirm(msg){
+return new Promise(res => { cfmRes = res; $("#cfmMsg").textContent = msg; $("#cfm").hidden = false; $("#cfmNo").focus(); });
+}
+function cfmDone(v){ $("#cfm").hidden = true; if (cfmRes){ const r = cfmRes; cfmRes = null; r(v); } }
+$("#cfmYes").onclick = () => cfmDone(true);
+$("#cfmNo").onclick = () => cfmDone(false);
+$("#cfm").addEventListener("click", e => { if (e.target.id === "cfm") cfmDone(false); });
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !$("#cfm").hidden) cfmDone(false); });
+$("#wipe").onclick = async () => {
+if (!(await askConfirm("Xóa hồ sơ, tủ đồ, lịch sử cân nặng và lịch sử chat trên trình duyệt này?"))) return;
 ["fm_profile","fm_closet","fm_chat","fm_hist","fm_man"].forEach(k => store.del(k)); location.reload();
 };
 const readImg = (file, max = 1024) => new Promise((ok, no) => {
@@ -774,30 +831,73 @@ if (h < 152) i--;
 return order[Math.max(0, Math.min(5, i))];
 }
 const arr = v => Array.isArray(v) ? v.map(String) : (v ? [String(v)] : []);
+const SHAPE_TIPS = {"Quả lê":"Ưu tiên nhấn vào eo và để phần dưới suông nhẹ, tránh ôm quá sát ở hông.","Đồng hồ cát":"Chọn phom ôm vừa theo eo để tôn đường cong, tránh dáng hộp che mất eo.","Chữ nhật":"Thêm điểm nhấn ở eo (sơ vin, thắt lưng mảnh) và phối lớp để vóc dáng có đường cong hơn.","Tam giác ngược":"Để phần dưới sáng màu hoặc có độ phồng nhẹ để cân bằng với vai, phần trên giữ gọn.","Quả táo":"Ưu tiên cổ thoáng, vải rũ mềm và tránh ôm sát vùng bụng; đường dọc giúp dáng trông dài hơn."};
+function curShape(){ if (P.shape) return P.shape; try { const t = targetParams(); return (t.gB && t.gW && t.gH) ? "" : t.auto; } catch { return ""; } }
+function toneHint(){ if (P.under === "Ấm") return "Undertone ấm hợp gam vàng kem, camel, nâu ấm và vàng ánh kim."; if (P.under === "Lạnh") return "Undertone lạnh hợp gam xanh navy, xám, trắng tinh và bạc."; if (P.under === "Trung tính") return "Undertone trung tính phối được cả gam ấm lẫn lạnh, ưu tiên một màu chủ đạo và một điểm nhấn."; if (P.skin) return "Gam trung tính (trắng, đen, xám, navy) là lựa chọn an toàn và dễ phối với tông da của bạn."; return "Gam trung tính (trắng, đen, xám, navy, be) hợp với mọi tông da."; }
+function outfitCat(product, bottom){ const s = String(product || "").toLowerCase(); if (/đầm|váy liền|dress|gown/.test(s)) return "dress"; if (bottom || /quần|jean|short|chân váy|skirt|legging/.test(s)) return "bottom"; return "top"; }
+function defaultOutfits(product, bottom){
+const cat = outfitCat(product, bottom), shape = curShape(), tip = shape && SHAPE_TIPS[shape] ? `Hợp với phom ${shape.toLowerCase()} của bạn: ${SHAPE_TIPS[shape]}` : "Chọn phom vừa với cơ thể, không quá ôm cũng không quá rộng để tổng thể gọn gàng.", tone = toneHint();
+const L = cat === "dress" ? "Chiếc đầm này" : cat === "bottom" ? "Món quần/váy này" : "Chiếc áo này";
+const sets = cat === "dress" ? [
+["Thanh lịch đi làm","Đi làm",`${L} khoác thêm blazer vừa người, giày loafer hoặc cao gót kín mũi và túi tote da trơn.`,"Blazer navy / xám, giày và túi đen hoặc nâu","Đi làm cần kín đáo, gọn gàng nên blazer giúp tổng thể chỉn chu ngay. " + tip],
+["Dịu dàng hẹn hò","Đi chơi / hẹn hò",`${L} đi với sandal quai mảnh hoặc giày búp bê, túi nhỏ đeo vai và khuyên tai mảnh.`,"Gam pastel hoặc trắng kem, điểm nhấn vàng / bạc mảnh","Phụ kiện nhỏ và giày nhẹ giúp outfit mềm mại, không nặng nề cho buổi hẹn. " + tone],
+["Nổi bật đi tiệc","Đi tiệc",`${L} phối cao gót quai mảnh ánh kim, clutch cầm tay và trang sức có điểm nhấn (khuyên tai dài hoặc vòng cổ mảnh).`,"Đen, ánh kim vàng / bạc, có thể thêm một màu jewel (ngọc lục, đỏ rượu)","Đi tiệc nên để một điểm nhấn lấp lánh là đủ, tránh thêm nhiều phụ kiện cùng lúc. " + tip],
+["Thoải mái dạo phố","Dạo phố / cuối tuần",`${L} mặc cùng sneaker trắng, túi tote hoặc túi đeo chéo và kính mát / mũ cói khi trời nắng.`,"Trắng, be, denim xanh nhạt","Sneaker và túi đeo chéo giúp đầm bớt formal, dễ di chuyển cả ngày. " + tone]]
+: cat === "bottom" ? [
+["Thanh lịch đi làm","Đi làm",`${L} phối sơ mi hoặc áo thun trắng sơ vin gọn, thêm blazer khi cần, giày loafer và túi tote.`,"Trắng, navy, xám; blazer cùng tông trung tính","Sơ vin gọn và áo trên sáng màu giúp tổng thể công sở cân đối. " + tip],
+["Năng động đi chơi","Đi chơi / hẹn hò",`${L} đi với áo kiểu / áo thun ôm vừa, sneaker trắng và túi đeo chéo nhỏ.`,"Áo trắng / pastel, sneaker trắng","Áo trên gọn giúp phần dưới là điểm nhấn, sneaker giữ vẻ trẻ trung. " + tone],
+["Sang đi tiệc","Đi tiệc",`${L} phối áo satin hoặc áo cổ yếm, cao gót quai mảnh và clutch nhỏ.`,"Áo đen / ánh kim / đỏ rượu, phụ kiện vàng hoặc bạc","Chất liệu satin và cao gót nâng outfit lên hẳn so với ban ngày. " + tip],
+["Thoải mái dạo phố","Dạo phố / cuối tuần",`${L} mặc với áo thun oversize hoặc hoodie mỏng, sneaker và mũ lưỡi trai.`,"Áo thun trắng / xám / đen, mũ cùng tông giày","Phom rộng ở trên và sneaker tạo cảm giác thoải mái, dễ vận động. " + tone]]
+: [
+["Thanh lịch đi làm","Đi làm",`${L} sơ vin gọn với quần tây ống đứng hoặc chân váy bút chì, giày loafer / cao gót mũi nhọn và túi tote.`,"Quần/váy navy, đen hoặc xám; giày đen / nâu","Sơ vin và quần ống đứng giúp dáng gọn, đúng chất công sở. " + tip],
+["Dịu dàng hẹn hò","Đi chơi / hẹn hò",`${L} phối quần jean ống rộng sáng màu hoặc chân váy midi, sandal / sneaker trắng và túi đeo chéo nhỏ.`,"Denim xanh nhạt, trắng, pastel","Phần dưới nhẹ và sáng màu làm outfit trẻ, mềm mại hơn cho buổi hẹn. " + tone],
+["Nổi bật đi tiệc","Đi tiệc",`${L} đi với chân váy satin hoặc quần tây đen ống suông, cao gót quai mảnh, clutch và trang sức mảnh.`,"Đen, ánh kim, một màu jewel làm điểm nhấn","Chất satin và phụ kiện ánh kim giúp áo thường ngày trông sang hơn hẳn. " + tip],
+["Thoải mái dạo phố","Dạo phố / cuối tuần",`${L} mặc cùng quần jean / short, sneaker trắng, túi tote vải và kính mát hoặc mũ lưỡi trai.`,"Trắng, denim, be","Set này dễ mặc hằng ngày, ưu tiên giày êm và túi nhẹ. " + tone]];
+return sets.map(([name, occasion, items, colors, note]) => ({ name, occasion, items, colors, note }));
+}
+function normOutfits(o){
+const raw = Array.isArray(o.outfits) ? o.outfits : [];
+return raw.map(x => {
+if (typeof x === "string") return { name:"", occasion:"", items:x, colors:"", note:"" };
+if (!x || typeof x !== "object") return null;
+return { name: String(x.name || ""), occasion: String(x.occasion || x.when || ""), items: Array.isArray(x.items) ? x.items.map(String).join(", ") : String(x.items || x.pair || x.with || ""), colors: Array.isArray(x.colors) ? x.colors.map(String).join(", ") : String(x.colors || x.color || ""), note: String(x.note || x.why || "") };
+}).filter(x => x && (x.items || x.name)).slice(0, 4);
+}
+function ensureOutfits(r, bottom){
+r.outfits = Array.isArray(r.outfits) ? r.outfits : [];
+const defs = defaultOutfits(r.product, bottom);
+const used = new Set(r.outfits.map(o => String(o.occasion || "").toLowerCase()));
+for (const d of defs){ if (r.outfits.length >= 4) break; const k = d.occasion.toLowerCase(); if ([...used].some(h => h && (k.includes(h) || h.includes(k)))) continue; r.outfits.push(d); used.add(k); }
+for (const d of defs){ if (r.outfits.length >= 3) break; if (!r.outfits.includes(d)) r.outfits.push(d); }
+if (!r.styling || !r.styling.length) r.styling = r.outfits.map(o => `${o.occasion}: ${o.name} — ${o.items}`);
+return r;
+}
 function normalize(o){
 const f = String(o.fit || "vừa").toLowerCase(), ok = P.skin || P.under;
 return { product: String(o.product || "Sản phẩm của bạn"), size: String(o.size || "?").trim().toUpperCase(),
 confidence: Math.max(0, Math.min(100, parseInt(o.confidence) || 60)), fit: ["ôm","vừa","rộng","oversize"].find(x => f.includes(x)) || "vừa",
-reasons: arr(o.reasons), alt_size: String(o.alt_size || "").trim().toUpperCase(), warnings: arr(o.warnings), styling: arr(o.styling), colors: ok ? arr(o.colors) : [] };
+reasons: arr(o.reasons), alt_size: String(o.alt_size || "").trim().toUpperCase(), warnings: arr(o.warnings), styling: arr(o.styling), outfits: normOutfits(o), colors: ok ? arr(o.colors) : [] };
 }
 async function analyze(imgData, text, link, bottom, pre){
 const prompt = `Chọn size cho người dùng. Link: ${link||"không có"}. Bảng size shop: ${text||"không có (hãy dùng bảng size chung, nói rõ nếu ước tính)"}.${pre ? ` Đã đối chiếu bảng size bằng phép tính chính xác: size ${pre}. Bắt buộc dùng đúng size này, không tự suy luận lại.` : ""}
+Phần outfits bắt buộc đủ 4 gợi ý phối đồ hoàn chỉnh và khác nhau cho đúng món này, lần lượt cho 4 dịp: Đi làm, Đi chơi / hẹn hò, Đi tiệc, Dạo phố / cuối tuần. Mỗi outfit phải ghi rõ món này phối với gì (quần/váy hoặc áo đi kèm, giày, phụ kiện), màu sắc cụ thể và một ghi chú ngắn vì sao hợp với vóc dáng (và tông da/undertone nếu hồ sơ đã có, nếu chưa có thì không được đoán tông da).
 Chỉ trả về JSON hợp lệ, không markdown:
-{"product":"tên/loại món đồ","size":"size đề xuất","confidence":0-100,"fit":"ôm|vừa|rộng|oversize","reasons":["..."],"alt_size":"size dự phòng hoặc rỗng","warnings":["..."],"styling":["gợi ý phối đồ"],"colors":["màu hợp, chỉ khi đã có tông da/undertone xác nhận, nếu không để mảng rỗng"]}`;
+{"product":"tên/loại món đồ","size":"size đề xuất","confidence":0-100,"fit":"ôm|vừa|rộng|oversize","reasons":["..."],"alt_size":"size dự phòng hoặc rỗng","warnings":["..."],"styling":["tóm tắt ngắn từng outfit"],"outfits":[{"name":"tên outfit","occasion":"Đi làm","items":"món này phối với quần/váy (hoặc áo), giày và phụ kiện cụ thể","colors":"màu sắc cụ thể của cả set","note":"vì sao hợp với vóc dáng / tông da của người dùng"}],"colors":["màu hợp, chỉ khi đã có tông da/undertone xác nhận, nếu không để mảng rỗng"]}`;
 const content = [];
 if (imgData) content.push({type:"image", source:{type:"base64", media_type:"image/jpeg", data:imgData}});
 content.push({type:"text", text:prompt});
 try {
-const out = await callAI(SYS(), [{role:"user", content}], 1400, .2);
+const out = await callAI(SYS(), [{role:"user", content}], 1900, .2);
 const m = out.match(/\{[\s\S]*\}/);
 if (!m) throw new Error("AI trả về dữ liệu không đọc được.");
 const r = normalize(JSON.parse(m[0])); r.ai = true;
-return r;
+return ensureOutfits(r, bottom);
 } catch (e) {
 const k = bottom ? P.hip : P.bust;
+const defs = defaultOutfits(bottom ? "Quần/váy" : "Áo", bottom);
 return { product: bottom ? "Món 2 của bạn" : "Sản phẩm của bạn", size: localSize(bottom), confidence: 45, fit: "vừa", ai: false,
 reasons: ["Ước tính offline từ chiều cao/cân nặng" + (k ? (bottom ? " và vòng mông" : " và vòng ngực") : "") + "."],
-warnings: [e.message, "Kết quả chỉ mang tính tham khảo, hãy đối chiếu bảng size của shop."], styling: [], colors: [], alt_size: "" };
+warnings: [e.message, "Kết quả chỉ mang tính tham khảo, hãy đối chiếu bảng size của shop."], styling: defs.map(o => `${o.occasion}: ${o.name} — ${o.items}`), outfits: defs, colors: [], alt_size: "" };
 }
 }
 const SIZES = ["M","L","XL"];
@@ -886,6 +986,17 @@ renderResult(); initFit(); $("#loading").hidden = true; $("#save").hidden = fals
 };
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const list = a => a && a.length ? `<ul class="clean">${a.map(x => `<li>${esc(x)}</li>`).join("")}</ul>` : "";
+function outfitCards(r){
+let outs = Array.isArray(r.outfits) ? r.outfits.filter(o => o && (o.items || o.name)) : [];
+if (!outs.length && r.styling && r.styling.length) outs = r.styling.slice(0, 4).map((s, idx) => ({ name: "Gợi ý " + (idx + 1), occasion: ["Đi làm","Đi chơi / hẹn hò","Đi tiệc","Dạo phố / cuối tuần"][idx % 4], items: s, colors: "", note: "" }));
+if (!outs.length) outs = defaultOutfits(r.product, false);
+const card = (o, idx) => {
+const items = Array.isArray(o.items) ? o.items.join(", ") : (o.items || "");
+const colors = Array.isArray(o.colors) ? o.colors.join(", ") : (o.colors || "");
+return `<article class="outfit" style="animation-delay:${idx * 60}ms">${o.occasion ? `<span class="o-occ">${esc(o.occasion)}</span>` : ""}<h4>${esc(o.name || ("Outfit " + (idx + 1)))}</h4>${items ? `<p>${esc(items)}</p>` : ""}${colors ? `<dl><div><dt>Màu sắc</dt><dd>${esc(colors)}</dd></div></dl>` : ""}${o.note ? `<p class="o-note">${esc(o.note)}</p>` : ""}</article>`;
+};
+return `<label style="margin-top:16px">Gợi ý phối đồ — ${outs.length} outfit hoàn chỉnh</label><div class="outfits">${outs.map(card).join("")}</div>`;
+}
 function renderOne(r, i){
 const fitCls = r.fit === "vừa" ? "ok" : "warn";
 return `<div class="enter">
@@ -897,7 +1008,7 @@ ${r.thumb ? `<img class="rthumb" src="${r.thumb}" alt="Ảnh sản phẩm">` : "
 <div class="hint">Độ tin cậy ${+r.confidence||0}%</div>
 <label style="margin-top:14px">Vì sao chọn size này</label>${list(r.reasons)}
 ${r.warnings?.length ? `<label style="margin-top:14px">Lưu ý</label>${list(r.warnings)}` : ""}
-${r.styling?.length ? `<label style="margin-top:14px">Gợi ý phối đồ</label>${list(r.styling)}` : ""}
+${outfitCards(r)}
 ${r.colors?.length ? `<label style="margin-top:14px">Màu hợp với bạn</label>${r.colors.map(c => `<span class="tag">${esc(c)}</span>`).join("")}` : ""}</div>`;
 }
 function renderResult(){
@@ -941,7 +1052,7 @@ $("#aiBtn").onclick = async () => {
 const err = $("#e4"); err.textContent = "";
 if (!body || !img) { err.textContent = "Cần ảnh toàn thân và ảnh sản phẩm."; return; }
 const steps = img2 ? [{ g: img2, low: true }, { g: img }] : [{ g: img }], n = steps.length;
-if (!confirm("Ảnh của bạn và ảnh sản phẩm sẽ được gửi tới Hugging Face (Space IDM-VTON) để tạo ảnh mặc thử" + (n > 1 ? ", lần lượt từng món" : "") + ". Tiếp tục?")) return;
+if (!(await askConfirm("Ảnh của bạn và ảnh sản phẩm sẽ được gửi tới Hugging Face (Space IDM-VTON) để tạo ảnh mặc thử" + (n > 1 ? ", lần lượt từng món" : "") + ". Tiếp tục?"))) return;
 $("#aiBtn").disabled = true;
 const show = src => `<img class="tryimg" src="${src}" alt="Ảnh mặc thử do AI tạo">
 <div class="actions"><a class="btn ghost" href="${src}" download="fitme-mac-thu.png">Tải ảnh về</a></div>`;
