@@ -1,303 +1,1019 @@
 <!DOCTYPE html>
-<html lang="vi"><head><meta charset="utf-8">
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="theme-color" content="#04182e">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Dynamic NEU – Quanh NEU có gì?</title>
-<meta name="description" content="Sổ chi tiêu, tính vé xe buýt, gợi ý món ăn và quán cà phê học bài quanh ĐH Kinh tế Quốc dân.">
-<meta name="theme-color" content="#0b2a6f">
-<meta property="og:type" content="website"><meta property="og:title" content="Dynamic NEU – Quanh NEU có gì?">
-<meta property="og:description" content="Ghi chi tiêu, tìm quán ăn, chỗ học bài và nơi giải trí quanh NEU.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230b2a6f'/%3E%3Ctext x='50' y='72' font-size='62' text-anchor='middle' font-weight='800' fill='%23ffc21a'%3EN%3C/text%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700;800&display=swap" rel="stylesheet">
+<title>FitMe AI – Trợ lý thử đồ & chọn size</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Cormorant+Garamond:wght@600;700&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f4f6fb;--surface:#fff;--ink:#0d1b3d;--muted:#52608a;--line:#d6dcee;--brand:#0b2a6f;--brand-ink:#fff;--accent:#ffc21a;--accent-ink:#0d1b3d;--soft:#e6ebf8;
-box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0a1330;--surface:#111e45;--ink:#eaf0ff;--muted:#a3b2dd;--line:#25376f;--brand:#ffc21a;--brand-ink:#0d1b3d;--accent:#ffc21a;--soft:#18295c}}
-:root[data-theme="dark"]{--bg:#0a1330;--surface:#111e45;--ink:#eaf0ff;--muted:#a3b2dd;--line:#25376f;--brand:#ffc21a;--brand-ink:#0d1b3d;--accent:#ffc21a;--soft:#18295c}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.6}
-.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
-.top{background:#0b2a6f;color:#fff}
-.top .wrap{display:flex;justify-content:space-between;align-items:center;padding-top:16px;padding-bottom:16px}
-.logo{font-weight:800;font-size:1.2rem;letter-spacing:-.02em}.logo b{color:#ffc21a}
-.top nav a{color:#dbe4ff;text-decoration:none;margin-left:18px;font-size:.92rem}
-.top nav a:hover,.top nav a:focus-visible{color:#ffc21a;text-decoration:underline}
-.hero{background:#0b2a6f;color:#fff;padding:26px 0 54px}
-h1{font-size:clamp(2.1rem,5.6vw,3.7rem);line-height:1.06;letter-spacing:-.03em;margin:0 0 14px;font-weight:800;max-width:15ch}
-.hero p{max-width:50ch;color:#dbe4ff;margin:0 0 20px;font-size:1.05rem}
-.cta{display:inline-block;background:#ffc21a;color:#0d1b3d;font-weight:700;text-decoration:none;padding:12px 22px;border-radius:12px}
-.cta:focus-visible,button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid #ffc21a;outline-offset:2px}
-.tools{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:18px;margin-top:0;box-shadow:0 12px 34px -22px rgba(11,42,111,.6)}
-.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
-.tab{border:1px solid var(--line);background:transparent;color:var(--ink);padding:9px 16px;border-radius:999px;font:inherit;font-size:.92rem;cursor:pointer}
-.tab[aria-pressed="true"]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand);font-weight:700}
-.row{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
-.row label{font-size:.88rem;font-weight:500}
-input[type=range]{accent-color:var(--brand);width:200px;vertical-align:middle}
-.count{color:var(--muted);font-size:.88rem;margin-left:auto}
-section{padding:36px 0}
-h2{font-size:clamp(1.5rem,3.4vw,2.1rem);letter-spacing:-.02em;margin:0 0 6px}
-.lead{color:var(--muted);margin:0 0 20px;max-width:62ch}
-.list{display:grid;gap:12px}
-.card{display:grid;grid-template-columns:92px 1fr auto;gap:14px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px 16px}
-.dist{text-align:center;background:var(--soft);border-radius:12px;padding:8px 4px;font-weight:800;line-height:1.15}
-.dist small{display:block;font-weight:500;color:var(--muted);font-size:.72rem}
-.card h3{margin:0;font-size:1.02rem}
-.card .a{color:var(--muted);font-size:.9rem}
-.card .meta{font-size:.88rem;margin-top:3px}
-.tag{display:inline-block;background:var(--soft);border-radius:8px;padding:1px 9px;font-size:.78rem;margin-right:6px}
-.map{background:var(--brand);color:var(--brand-ink);text-decoration:none;font-weight:700;font-size:.88rem;padding:9px 14px;border-radius:10px;white-space:nowrap}
-.sep{margin:18px 0 4px;font-weight:700;color:var(--muted);font-size:.92rem}
-.bus{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
-.route{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px 16px}
-.route .no{display:inline-block;background:#ffc21a;color:#0d1b3d;font-weight:800;border-radius:8px;padding:1px 10px;margin-right:8px}
-.route small{display:block;color:var(--muted);margin-top:4px}
-.note{background:var(--soft);border-radius:14px;padding:12px 16px;color:var(--muted);font-size:.9rem;margin-top:16px}
-footer{border-top:1px solid var(--line);padding:26px 0 40px;color:var(--muted);font-size:.85rem}
-@media(max-width:640px){.card{grid-template-columns:76px 1fr}.map{grid-column:1/-1;text-align:center}.top .wrap{gap:12px}.top nav{overflow-x:auto;white-space:nowrap}.count{margin-left:0}}
-
-label.l{font-size:.88rem;font-weight:500;display:flex;justify-content:space-between;margin-top:6px}
-input[type=number],input[type=text],input[type=search],select.sel{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:inherit;margin:6px 0 12px;min-width:0}
-.panel{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:20px}
-.panel h3{margin:0 0 4px;font-size:1.1rem}.sub{color:var(--muted);font-size:.9rem;margin:0 0 14px}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
-.btn{background:var(--brand);color:var(--brand-ink);border:0;border-radius:12px;padding:12px 18px;font:inherit;font-weight:700;cursor:pointer}
-.btn.full{width:100%}.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
-.chip{border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:999px;padding:7px 14px;font:inherit;font-size:.88rem;cursor:pointer;margin:0 6px 8px 0}
-.chip[aria-pressed="true"]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
-.dish{display:flex;justify-content:space-between;gap:12px;align-items:center;background:var(--soft);border-radius:14px;padding:12px 14px;margin-top:10px}
-.dish small{display:block;color:var(--muted)}.price{font-weight:800;white-space:nowrap}
-.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:14px}
-.kpi{background:var(--soft);border-radius:14px;padding:10px 12px}.kpi small{display:block;color:var(--muted);font-size:.78rem}.kpi b{font-size:1.08rem}
-.verdict{border-radius:14px;padding:12px 14px;font-weight:700;margin-bottom:12px}
-.v-good{background:#d6f5e3;color:#0b5132}.v-mid{background:#fff0c2;color:#6b4a00}.v-bad{background:#ffd9d3;color:#7a1a0c}
-.donut{width:150px;height:150px;border-radius:50%;margin:6px auto 12px;position:relative}
-.donut:after{content:"";position:absolute;inset:34px;background:var(--surface);border-radius:50%}
-.brow{margin:8px 0;font-size:.88rem}.brow .t{display:flex;justify-content:space-between;gap:8px}
-.track{height:10px;background:var(--soft);border-radius:99px;position:relative;margin-top:3px}
-.track i{display:block;height:100%;border-radius:99px}.track u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink);opacity:.55}
-.exp{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--line);font-size:.9rem}
-.exp button{border:0;background:transparent;color:var(--muted);cursor:pointer;font-size:1.1rem}
-.tips{margin:8px 0 0;padding-left:18px;color:var(--ink);font-size:.92rem}.tips li{margin:5px 0}
-.chat{display:flex;flex-direction:column;gap:10px;max-height:280px;overflow:auto;margin-bottom:12px}
-.msg{padding:10px 14px;border-radius:14px;max-width:90%;font-size:.93rem}
-.msg.ai{background:var(--soft);align-self:flex-start}.msg.me{background:var(--brand);color:var(--brand-ink);align-self:flex-end}
-.ask{display:flex;gap:8px}.ask input{margin:0;flex:1}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
-.svc{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px}.svc h3{margin:6px 0 4px;font-size:1rem}.svc p{margin:0;color:var(--muted);font-size:.9rem}
-@media(max-width:760px){.two{grid-template-columns:1fr}}
-
-#quanh{padding-top:36px}
-#q{flex:1 1 220px;width:auto;margin:0}
-.skip{position:absolute;left:-999px;top:8px;background:var(--accent);color:#0d1b3d;padding:8px 14px;border-radius:8px;z-index:9;font-weight:700}
-.skip:focus{left:8px}
-@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+:root{
+  --ink:#eef7ff;--ink2:#cfe6f7;--mute:#93b4cf;--mute2:#6d8fab;
+  --line:rgba(232,196,121,.30);--line2:rgba(150,196,232,.18);
+  --panel:rgba(6,26,48,.72);--panel2:rgba(9,34,60,.55);
+  --field:rgba(3,17,34,.78);--field2:rgba(10,38,66,.55);
+  --gold:#e8c479;--gold2:#f3d58f;--gold-deep:#c99a4b;
+  --aqua:#7fd6f5;--ok:#5fe0b5;--warn:#f0a850;--bad:#ff8a93;
+  --ease:cubic-bezier(.22,.8,.24,1);
+  --r-lg:26px;--r-md:18px;--r-sm:13px;
+  --shadow:0 18px 55px rgba(0,6,18,.55),inset 0 1px 0 rgba(255,255,255,.07);
+  color-scheme:dark;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 84px);scroll-behavior:smooth}
+body{margin:0;min-height:100vh;color:var(--ink);font:15px/1.65 "Be Vietnam Pro",system-ui,sans-serif;background:#03101f;padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0);overflow-x:hidden;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+::selection{background:rgba(232,196,121,.85);color:#1b1204}
+button{font:inherit;color:inherit}
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:
+  radial-gradient(ellipse 90% 55% at 18% -5%,rgba(64,156,216,.34),transparent 58%),
+  radial-gradient(ellipse 70% 50% at 95% 108%,rgba(232,196,121,.13),transparent 55%),
+  radial-gradient(ellipse 55% 40% at 80% 12%,rgba(127,214,245,.08),transparent 60%),
+  linear-gradient(180deg,#073059 0%,#041c36 42%,#020e1d 100%)}
+body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;background-image:radial-gradient(rgba(180,220,250,.055) 1px,transparent 1px);background-size:26px 26px;mask-image:linear-gradient(180deg,rgba(0,0,0,.7),transparent 70%);-webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.7),transparent 70%)}
+.app{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:0 22px}
+/* ---------- Header ---------- */
+header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin:0 -22px;padding:14px 22px 12px;background:linear-gradient(180deg,rgba(3,16,32,.96),rgba(3,16,32,.93));backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border-bottom:1px solid rgba(150,196,232,.12);box-shadow:0 10px 30px rgba(0,5,15,.35)}
+.metal{background:linear-gradient(180deg,#fff 0,#d5f0ff 44%,#f3dca8 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;filter:drop-shadow(0 0 12px rgba(120,210,255,.35))}
+.logo{display:flex;align-items:center;gap:7px;font:700 33px/1 "Cormorant Garamond",Georgia,serif;letter-spacing:.5px}
+.logo svg{width:23px;height:23px;fill:var(--gold);filter:drop-shadow(0 0 7px rgba(232,196,121,.65));animation:spin 28s linear infinite}
+.brand{display:flex;align-items:center;gap:13px;min-width:0}
+.brandimg{display:grid;place-items:center;height:58px;width:58px;flex:none;border-radius:16px;background:linear-gradient(155deg,#0e4069,#062540 70%);box-shadow:0 0 0 1.5px rgba(232,196,121,.55),0 8px 24px rgba(0,5,15,.5),0 0 22px rgba(127,214,245,.28),inset 0 1px 0 rgba(255,255,255,.14)}
+.brandimg svg{width:32px;height:32px;fill:var(--gold)}
+.team{display:block;margin-top:5px;font:600 11px/1.2 "Be Vietnam Pro",sans-serif;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold);opacity:.92}
+@keyframes spin{to{transform:rotate(360deg)}}
+nav.tabs{display:flex;gap:4px;background:rgba(3,16,32,.66);border:1px solid var(--line2);border-radius:99px;padding:4px;box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 8px 22px rgba(0,5,15,.35)}
+nav.tabs button{display:flex;align-items:center;gap:7px;background:none;border:0;border-radius:99px;padding:9px 17px;font-weight:600;font-size:14px;color:var(--mute);cursor:pointer;transition:background .3s var(--ease),color .3s,box-shadow .3s;white-space:nowrap}
+nav.tabs button svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none}
+nav.tabs button:hover{color:var(--ink)}
+nav.tabs button.on{background:linear-gradient(180deg,rgba(190,225,250,.22),rgba(120,175,220,.14));color:#fff;box-shadow:inset 0 0 0 1px rgba(190,225,250,.22),0 2px 10px rgba(0,5,15,.35)}
+main{padding:20px 0 12px}
+.view{display:none}.view.on{display:block;animation:in .55s var(--ease)}
+@keyframes in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.enter{animation:in .55s var(--ease)}
+[hidden]{display:none!important}
+/* ---------- Stepper ---------- */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:min(600px,100%);margin:2px 0 26px}
+.steps button{position:relative;display:block;background:rgba(4,20,40,.45);border:1px solid var(--line2);border-radius:14px;padding:26px 14px 11px;text-align:left;cursor:pointer;font-size:13px;color:var(--mute);transition:color .35s,border-color .35s,background .35s;overflow:hidden}
+.steps button:hover{color:var(--ink);border-color:rgba(232,196,121,.45)}
+.steps button:before{content:"";position:absolute;top:11px;left:14px;right:14px;height:4px;border-radius:4px;background:linear-gradient(90deg,var(--gold),#fff3cf) left/0 100% no-repeat,rgba(143,190,225,.20);transition:background-size .65s var(--ease)}
+.steps button.on:before{background-size:100% 100%}
+.steps button.on{border-color:rgba(232,196,121,.35)}
+.steps button.cur{color:#fff;font-weight:700;background:rgba(10,38,66,.6);border-color:rgba(232,196,121,.55);box-shadow:0 6px 18px rgba(0,5,15,.35)}
+/* ---------- Type ---------- */
+h1{font:700 clamp(31px,5.2vw,47px)/1.14 "Playfair Display",Georgia,serif;margin:0 0 8px;letter-spacing:-.3px}
+h1 em{font-style:italic;-webkit-text-fill-color:transparent;background:linear-gradient(180deg,#e9f8ff,#7fd6f5 58%,#f1dcaa);-webkit-background-clip:text;background-clip:text}
+h1.metal{display:inline-block}
+.sub{color:var(--mute);margin:0 0 22px;max-width:68ch}
+label,.lab{display:block;font-weight:600;font-size:13px;margin:0 0 8px;color:var(--ink2);letter-spacing:.15px}
+.hint{font-size:12.5px;color:var(--mute);margin:8px 0 0;line-height:1.55}
+.err{color:var(--bad);font-size:13.5px;margin-top:10px;min-height:0;font-weight:500}
+/* ---------- Layout ---------- */
+.s1grid{display:grid;grid-template-columns:minmax(310px,412px) minmax(0,1fr);gap:34px;align-items:start}
+.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(258px,1fr));gap:20px 28px;align-content:start}
+.fields>div{min-width:0}
+.col{display:flex;flex-direction:column;gap:18px}
+.row3{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+/* ---------- Inputs ---------- */
+input,select,textarea{width:100%;font:inherit;color:var(--ink);background:var(--field);border:1px solid var(--line2);border-radius:var(--r-sm);padding:12px 15px;min-height:48px;transition:border-color .25s,box-shadow .25s,background .25s}
+input::placeholder,textarea::placeholder{color:#5f7f9c}
+input:hover,textarea:hover{border-color:rgba(160,205,235,.38)}
+input:focus,select:focus,textarea:focus{outline:0;border-color:var(--gold);background:var(--field2);box-shadow:0 0 0 3.5px rgba(232,196,121,.16),0 0 18px rgba(232,196,121,.08)}
+button:focus-visible,.drop:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+input[type=number]{-moz-appearance:textfield;appearance:textfield}
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.unit{position:relative}.unit i{position:absolute;right:15px;top:50%;transform:translateY(-50%);color:var(--mute);font-style:normal;font-size:13px;font-weight:600;pointer-events:none}
+.unit input{padding-right:42px}
+/* Segmented */
+.seg{position:relative;display:flex;background:var(--field);border:1px solid var(--line2);border-radius:15px;padding:4px;box-shadow:inset 0 1px 3px rgba(0,4,12,.45)}
+.seg .ind{position:absolute;left:4px;top:4px;bottom:4px;border-radius:11px;background:linear-gradient(180deg,rgba(150,195,225,.42),rgba(85,135,175,.32));box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 2px 8px rgba(0,5,15,.3);transition:transform .4s var(--ease),opacity .25s}
+.seg button{position:relative;flex:1;background:none;border:0;padding:9px 6px;font-size:13.5px;color:var(--mute);cursor:pointer;border-radius:11px;transition:color .25s;min-height:40px}
+.seg button.on{color:#fff;font-weight:600}
+/* Swatches & chips */
+.swatches{display:flex;gap:11px;flex-wrap:wrap;padding:3px 1px}
+.swatch{width:40px;height:40px;border-radius:50%;padding:0;border:2px solid rgba(255,255,255,.24);cursor:pointer;box-shadow:inset 0 -6px 10px rgba(0,0,0,.16),0 3px 8px rgba(0,5,15,.35);transition:transform .3s var(--ease),box-shadow .3s,border-color .3s}
+.swatch:hover{transform:scale(1.09)}
+.swatch.on{transform:scale(1.12);border-color:#fff;box-shadow:0 0 0 3px rgba(232,196,121,.8),0 0 18px rgba(232,196,121,.4)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid rgba(143,179,207,.32);background:rgba(2,14,30,.48);padding:9px 16px;border-radius:99px;cursor:pointer;font-size:13.5px;transition:background .3s,color .3s,border-color .3s,transform .2s,box-shadow .3s}
+.chip:hover{border-color:var(--gold);color:var(--ink)}
+.chip:active{transform:scale(.96)}
+.chip.on{background:linear-gradient(180deg,#f6dc9b,#c99a4b);border-color:transparent;color:#1b1204;font-weight:700;box-shadow:0 4px 14px rgba(201,154,75,.35)}
+.chip:disabled{opacity:.4;cursor:not-allowed}.chip:disabled:hover{border-color:rgba(143,179,207,.32);color:inherit}
+/* Accordion */
+.acc{border:1px solid var(--line2);border-radius:var(--r-md);background:linear-gradient(180deg,rgba(10,38,66,.5),rgba(4,20,40,.55));overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
+.acc>button{width:100%;display:flex;align-items:center;gap:10px;background:none;border:0;padding:16px 18px;font-weight:600;font-size:14.5px;cursor:pointer;text-align:left;min-height:52px}
+.acc>button:before{content:"";width:8px;height:8px;flex:none;border-right:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:rotate(-45deg);transition:transform .35s var(--ease);margin:0 4px 0 2px}
+.acc.open>button:before{transform:rotate(45deg)}
+.acc>button span{font-weight:400;color:var(--mute);font-size:13px}
+.accb{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s var(--ease)}
+.acc.open .accb{grid-template-rows:1fr}
+.accb>div{min-height:0;overflow:hidden}
+.accb .in{padding:2px 18px 18px;opacity:0;transition:opacity .35s}
+.acc.open .accb .in{opacity:1;transition-delay:.12s}
+/* Buttons */
+.actions{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;align-items:center}
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:50px;padding:0 32px;border:0;border-radius:99px;font-weight:700;font-size:15px;color:#0a1f38;cursor:pointer;background:linear-gradient(100deg,#d3f0fd 0,#a9dff5 42%,#efdcab 100%);box-shadow:0 8px 26px rgba(127,214,245,.24),inset 0 1px 0 rgba(255,255,255,.65);transition:transform .25s var(--ease),box-shadow .3s,filter .3s;text-decoration:none}
+.btn:hover{transform:translateY(-2px);box-shadow:0 13px 32px rgba(160,225,250,.36),inset 0 1px 0 rgba(255,255,255,.65)}
+.btn:active{transform:scale(.97)}
+.btn.ghost{background:rgba(3,18,36,.72);color:var(--ink);border:1px solid var(--line2);box-shadow:none}
+.btn.ghost:hover{border-color:var(--gold);box-shadow:0 8px 22px rgba(0,5,15,.35)}
+.btn:disabled{opacity:.55;cursor:wait;transform:none}
+.link{background:none;border:0;color:var(--bad);cursor:pointer;font-size:13px;text-decoration:underline;text-underline-offset:3px;padding:8px 2px}
+/* ---------- Model stage ---------- */
+.stage{position:sticky;top:96px;background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:var(--r-lg);padding:16px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:var(--shadow)}
+.stbody{position:relative;margin-top:14px;aspect-ratio:300/470;border-radius:20px;overflow:hidden;background:radial-gradient(ellipse at 50% 16%,rgba(130,205,245,.17),rgba(3,18,36,.4) 72%),linear-gradient(180deg,rgba(16,62,100,.35),rgba(2,12,26,.3));border:1px solid var(--line2);box-shadow:inset 0 1px 0 rgba(255,255,255,.06),inset 0 -30px 50px rgba(0,5,15,.35)}
+.stbody>*{position:absolute;inset:0;width:100%;height:100%;transition:opacity .45s var(--ease),transform .45s var(--ease)}
+.stbody .off{opacity:0;transform:scale(.97);pointer-events:none}
+#man{display:block}
+.stat{display:grid;grid-template-columns:repeat(3,1fr);text-align:center;font-size:12px;color:var(--mute);margin-top:14px;gap:8px}
+.stat>div{background:rgba(2,14,30,.42);border:1px solid rgba(150,196,232,.12);border-radius:14px;padding:9px 4px 8px}
+.stat b{display:block;font:700 21px/1.2 "Cormorant Garamond",serif;color:var(--gold)}
+.stat b.sm{font-size:15.5px;padding-top:3px;font-family:"Be Vietnam Pro",sans-serif;font-weight:700}
+.mtools{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.mtools .chip{padding:7px 13px;font-size:12.5px}
+.stbody #man.flip{transform:scaleX(.02);transition-duration:.18s}
+#delta{color:var(--aqua)}
+/* ---------- Upload drops ---------- */
+.drop{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:11px;border:1.5px dashed rgba(127,214,245,.5);border-radius:20px;padding:20px;text-align:center;color:var(--aqua);font-size:13.5px;font-weight:500;cursor:pointer;background:linear-gradient(180deg,rgba(22,96,140,.34),rgba(6,36,62,.52));transition:border-color .3s,background .3s,transform .3s var(--ease),box-shadow .3s}
+.drop:hover,.drop.over{border-color:var(--gold);transform:translateY(-2px);box-shadow:0 12px 28px rgba(0,5,15,.4);background:linear-gradient(180deg,rgba(28,110,155,.42),rgba(8,44,74,.55))}
+.drop svg{width:27px;height:27px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 8px rgba(127,214,245,.5))}
+.drop.tall{aspect-ratio:3/4}.drop.short{min-height:118px;margin-top:16px}
+.drop.stbd{border:0;border-radius:0;background:rgba(6,40,66,.5);box-shadow:none}
+.drop.stbd:hover{transform:none}
+.drop.has{padding:0;border-style:solid;overflow:hidden}
+.drop img{width:100%;height:100%;object-fit:cover;display:block;animation:in .45s var(--ease)}
+.drop .x{position:absolute;top:9px;right:9px;width:32px;height:32px;border-radius:50%;border:1px solid rgba(255,255,255,.18);background:rgba(2,12,26,.82);color:#fff;cursor:pointer;font-size:16px;line-height:1;transition:background .25s;z-index:2}
+.drop .x:hover{background:#b3394a}
+.hist{margin-top:8px}
+/* ---------- Result ---------- */
+.res{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:var(--r-lg);padding:28px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:var(--shadow)}
+.size-big{font:700 88px/1 "Cormorant Garamond",Georgia,serif;display:inline-block}
+.rthumb{float:right;width:100px;aspect-ratio:3/4;object-fit:cover;border-radius:14px;border:1px solid var(--line);margin:0 0 10px 14px;box-shadow:0 8px 22px rgba(0,5,15,.45)}
+.meter{height:10px;border-radius:99px;overflow:hidden;background:rgba(255,255,255,.11);margin:12px 0;clear:both;box-shadow:inset 0 1px 3px rgba(0,4,12,.5)}
+.meter div{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--aqua),var(--ok));transform-origin:left;animation:grow 1s var(--ease) both .15s}
+@keyframes grow{from{transform:scaleX(0)}}
+.tag{display:inline-block;padding:4px 12px;border-radius:99px;font-size:12.5px;font-weight:600;background:rgba(127,214,245,.15);color:var(--aqua);margin:0 6px 6px 0;border:1px solid rgba(127,214,245,.18)}
+.tag.ok{background:rgba(95,224,181,.14);color:var(--ok);border-color:rgba(95,224,181,.2)}.tag.warn{background:rgba(240,168,80,.16);color:var(--warn);border-color:rgba(240,168,80,.22)}
+ul.clean{padding-left:19px;margin:6px 0}
+ul.clean li{margin:3px 0}
+ul.clean li::marker{color:var(--gold)}
+.empty{text-align:center;color:var(--mute);padding:42px 12px}
+.compass{display:block;width:46px;height:46px;margin:0 auto 14px;fill:var(--gold);animation:spin 3s linear infinite;filter:drop-shadow(0 0 9px rgba(232,196,121,.6))}
+.tryimg{width:100%;max-width:420px;border-radius:18px;border:1px solid var(--line);display:block;animation:in .6s var(--ease);box-shadow:0 14px 36px rgba(0,5,15,.5)}
+input[type=range]{padding:0;height:26px;accent-color:var(--gold);background:none;border:0;min-height:26px;cursor:pointer}
+.wrap-m canvas{width:100%;max-width:220px;border-radius:14px;border:1px solid var(--line);display:block}
+/* ---------- Stylist chat ---------- */
+.chatbox{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:var(--r-lg);padding:26px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:var(--shadow)}
+.chat{display:flex;flex-direction:column;gap:11px;min-height:260px;max-height:55vh;overflow-y:auto;padding:6px 4px;scroll-behavior:smooth;scrollbar-width:thin}
+.msg{max-width:85%;padding:11px 15px;border-radius:17px;white-space:pre-wrap;animation:in .35s var(--ease);font-size:14.5px;line-height:1.6;box-shadow:0 4px 14px rgba(0,5,15,.28)}
+.msg.u{align-self:flex-end;background:linear-gradient(180deg,#f6dc9b,#c99a4b);color:#1b1204;border-bottom-right-radius:5px;font-weight:500}
+.msg.a{align-self:flex-start;background:rgba(2,14,30,.58);border:1px solid var(--line2);border-bottom-left-radius:5px}
+.send{display:flex;gap:10px;margin-top:14px}.send .btn{min-height:48px;padding:0 26px;flex:none}
+.send input{border-radius:99px;padding-left:20px}
+/* ---------- Closet ---------- */
+.wardrobe{display:grid;grid-template-columns:repeat(auto-fill,minmax(205px,1fr));gap:18px}
+.item{padding:13px;background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:20px;animation:in .45s var(--ease) both;transition:transform .3s var(--ease),box-shadow .3s,border-color .3s}
+.item:hover{transform:translateY(-3px);border-color:rgba(232,196,121,.5);box-shadow:0 14px 32px rgba(0,5,15,.45)}
+.ph{position:relative;aspect-ratio:3/4;border-radius:14px;overflow:hidden;background:rgba(2,14,30,.6);display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:34px;margin-bottom:11px;border:1px solid var(--line2)}
+.ph img{width:100%;height:100%;object-fit:cover}
+.ph em{position:absolute;top:9px;right:9px;font:700 20px/1 "Cormorant Garamond",serif;font-style:normal;background:linear-gradient(180deg,#f6dc9b,#c8973f);color:#1b1204;border-radius:9px;padding:5px 11px;box-shadow:0 4px 12px rgba(0,5,15,.4)}
+footer{position:relative;z-index:1;text-align:center;color:var(--mute2);font-size:12.5px;letter-spacing:.4px;padding:34px 20px calc(42px + env(safe-area-inset-bottom,0px))}
+.dots span{animation:b 1s infinite;display:inline-block}.dots span:nth-child(2){animation-delay:.15s}.dots span:nth-child(3){animation-delay:.3s}
+@keyframes b{50%{opacity:.2}}
+/* ---------- Size tables ---------- */
+.sz{overflow-x:auto;border:1px solid var(--line2);border-radius:16px;background:rgba(2,14,30,.4);padding:10px 10px 4px;scrollbar-width:thin}
+.sz table{width:100%;min-width:460px;border-collapse:separate;border-spacing:0 6px}
+.sz th{font-size:11.5px;font-weight:600;color:var(--mute);text-align:left;padding:0 5px;letter-spacing:.3px;text-transform:uppercase}
+.sz td{padding:0 3px}
+.sz td:first-child{width:21%}
+.sz .rg{display:flex;align-items:center;gap:4px}
+.sz .rg span{color:var(--mute)}
+.sz .rg input{min-width:0}
+.sz td.dl{width:34px;text-align:center}
+.sz .rm{width:29px;height:29px;border-radius:50%;border:1px solid var(--line2);background:rgba(2,12,26,.78);color:var(--mute);cursor:pointer;font-size:16px;line-height:1;padding:0;transition:background .25s,color .25s}
+.sz .rm:hover{background:#b3394a;color:#fff;border-color:transparent}
+.sz input{padding:9px 7px;font-size:13.5px;border-radius:10px;text-align:center;min-height:40px}
+.sz td:first-child input{font-weight:700;color:var(--gold)}
+.sz .addrow{margin:2px 0 8px}
+/* ---------- Responsive ---------- */
+@media(min-width:901px){.stage{max-height:calc(100vh - 112px);overflow-y:auto;scrollbar-width:thin}}
+@media(max-width:900px){
+  .s1grid,.s2grid{grid-template-columns:1fr!important}
+  .stage{position:static!important;max-height:none}
+  .stbody{max-width:430px;margin-left:auto;margin-right:auto}
+}
+@media(max-width:640px){
+  .app{padding:0 15px}
+  header{margin:0 -15px;padding:11px 15px 10px;gap:10px}
+  .brandimg{height:48px;width:48px;border-radius:13px}
+  .brandimg svg{width:27px;height:27px}
+  .logo{font-size:27px}
+  .team{font-size:10px;letter-spacing:1.1px}
+  nav.tabs{width:100%;padding:3px}
+  nav.tabs button{flex:1;justify-content:center;padding:9px 6px;font-size:13.5px;min-height:42px}
+  main{padding:16px 0 8px}
+  .steps{gap:7px;margin-bottom:20px}
+  .steps button{padding:23px 10px 9px;font-size:12px;border-radius:12px}
+  .steps button:before{left:10px;right:10px;top:9px}
+  .fields{grid-template-columns:1fr;gap:16px}
+  .col{gap:15px}
+  .row3{grid-template-columns:repeat(3,1fr);gap:8px}
+  .res,.chatbox{padding:19px 16px;border-radius:22px}
+  .size-big{font-size:68px}
+  .rthumb{width:82px}
+  .actions .btn{flex:1 1 auto}
+  .sz{padding:8px 7px 2px}
+  .sz table{min-width:0;border-spacing:0 5px}
+  .sz th{font-size:10px;padding:0 3px}
+  .sz td{padding:0 2px}
+  .sz input{padding:8px 3px;font-size:12.5px;border-radius:9px}
+  .sz .rg{gap:2px}
+  .sz td.dl{width:28px}
+  .sz .rm{width:26px;height:26px;font-size:14px}
+  .wardrobe{grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:13px}
+  .msg{max-width:92%}
+  .send{gap:8px}
+  .send .btn{padding:0 20px}
+  .drop.tall{aspect-ratio:4/4.6}
+  .stat b{font-size:19px}
+}
+@media(max-width:380px){
+  .row3{grid-template-columns:repeat(3,1fr)}
+  .logo{font-size:24px}
+  nav.tabs button svg{display:none}
+}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}html{scroll-behavior:auto}}
 </style>
-</head><body>
-<a class="skip" href="#main">Bỏ qua điều hướng</a>
-<div class="top"><div class="wrap"><div class="logo">Dynamic <b>NEU</b></div><nav><a href="#chitieu">Chi tiêu</a><a href="#vexe">Vé xe</a><a href="#angi">Ăn gì</a><a href="#hoi">Hỏi nhanh</a><a href="#quanh">Quanh NEU</a><a href="#xebuyt">Xe buýt</a></nav></div></div>
-<header class="hero"><div class="wrap">
-<h1>Tiêu sao cho đủ, chơi sao cho vui?</h1>
-<p>Ghi chi tiêu, nhận đánh giá tiết kiệm, rồi tìm quán ăn, chỗ học bài và nơi giải trí quanh NEU.</p>
-<a class="cta" href="#chitieu">Tính chi tiêu của tôi</a></div></header>
-
-<main id="main"><div class="wrap">
-<section id="chitieu"><h2>Sổ chi tiêu và đánh giá tiết kiệm</h2>
-<p class="lead">Ghi khoản chi trong tháng, trang tự phân tích tỷ lệ từng nhóm, dự báo cuối tháng và cho biết bạn đang tiết kiệm hay chi quá tay. Dữ liệu chỉ lưu trên trình duyệt của bạn.</p>
-<div class="two">
-<div class="panel"><h3>Thiết lập tháng này</h3>
-<label class="l" for="x-inc">Tiền sinh hoạt một tháng (đồng)</label><input type="text" id="x-inc" value="3.000.000" inputmode="numeric" autocomplete="off">
-<label class="l" for="x-goal">Mục tiêu tiết kiệm <b id="x-gv">20%</b></label><input type="range" id="x-goal" min="0" max="50" step="5" value="20" style="width:100%;margin:8px 0 14px">
-<h3 style="margin-top:8px">Thêm khoản chi</h3>
-<label class="l" for="x-amt">Số tiền (đồng)</label><input type="text" id="x-amt" inputmode="numeric" autocomplete="off" placeholder="Ví dụ 35.000">
-<label class="l" for="x-cat">Nhóm</label><select id="x-cat" class="sel"></select>
-<label class="l" for="x-note">Ghi chú (không bắt buộc)</label><input type="text" id="x-note" placeholder="Ví dụ cơm trưa">
-<button class="btn full" id="x-add">Thêm khoản chi</button>
-<div style="display:flex;gap:8px;margin-top:10px"><button class="btn ghost" id="x-demo">Nạp dữ liệu mẫu</button><button class="btn ghost" id="x-clear">Xóa tất cả</button></div>
-<p class="sub" id="x-msg" aria-live="polite" style="margin-top:10px"></p>
-<h3 style="margin-top:10px">Khoản chi gần đây</h3><div id="x-list"></div></div>
-<div class="panel"><h3>Phân tích</h3><div id="x-verdict"></div><div class="kpis" id="x-kpi"></div>
-<div class="donut" id="x-donut" role="img" aria-label="Biểu đồ tỷ lệ chi tiêu theo nhóm"></div>
-<div id="x-bars"></div><p class="sub" style="margin:10px 0 0">Vạch đen là mức gợi ý tham khảo cho sinh viên, không phải quy định.</p>
-<h3 style="margin-top:14px">Nhận xét</h3><ul class="tips" id="x-tips"></ul></div></div></section>
-<section id="vexe"><h2>Vé xe buýt: lượt hay tháng?</h2><p class="lead">Tính nhanh chi phí đi lại để biết mua vé nào có lợi hơn.</p><div class="panel" style="max-width:560px"><h3>Vé lượt hay vé tháng?</h3><p class="sub">Sửa giá theo thực tế rồi so sánh.</p>
-<label class="l" for="f-tp">Giá vé lượt (đồng)</label><input type="text" id="f-tp" value="7.000" inputmode="numeric" autocomplete="off">
-<label class="l" for="f-mp">Giá vé tháng (đồng)</label><input type="text" id="f-mp" value="100.000" inputmode="numeric" autocomplete="off">
-<label class="l" for="f-td">Số chuyến mỗi ngày <b id="f-tdv">2</b></label><input type="range" id="f-td" min="1" max="8" value="2" style="width:100%;margin:8px 0 12px">
-<label class="l" for="f-dm">Số ngày đi mỗi tháng <b id="f-dmv">22</b></label><input type="range" id="f-dm" min="1" max="30" value="22" style="width:100%;margin:8px 0 12px">
-<b id="f-res"></b></div>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="cs" viewBox="-12 -12 24 24"><path d="M0-11 2-2 11 0 2 2 0 11-2 2-11 0-2-2Z"/><path d="M-6.5-6.5-1-1.3 0 0-1.3-1Zm13 0L1.3-1 0 0 1 1.3Zm0 13L1 1.3 0 0 1.3 1Zm-13 0L-1 1.3 0 0-1.3 1Z" opacity=".55"/></symbol></svg>
+<div class="app">
+<header>
+  <div class="brand"><div class="brandimg" aria-hidden="true"><svg><use href="#cs"/></svg></div><div class="wm"><div class="logo metal"><span>fitme</span><svg><use href="#cs"/></svg><span>AI</span></div><span class="team">Team 1-One hit wonder</span></div></div>
+  <nav class="tabs" role="tablist" aria-label="Chức năng">
+    <button class="on" data-tab="tryon"><svg viewBox="0 0 24 24"><path d="M8 3 3 6l2 4 2-1v12h10V9l2 1 2-4-5-3a4 4 0 0 1-8 0Z"/></svg>Thử đồ</button>
+    <button data-tab="stylist"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4Z"/></svg>Stylist</button>
+    <button data-tab="closet"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M12 3v18M9 11v2M15 11v2"/></svg>Tủ đồ</button>
+  </nav>
+</header>
+<main>
+<section class="view on" id="tryon">
+  <div class="steps" id="steps"><button type="button" class="on cur">1 · Vóc dáng</button><button type="button">2 · Sản phẩm</button><button type="button">3 · Kết quả</button></div>
+  <div id="s1" class="enter">
+    <h1 class="metal">Mặc thử trước, <em>mua sau</em></h1>
+    <div class="s1grid">
+      <aside class="stage" aria-label="Mô hình vóc dáng">
+        <div class="seg" id="viewSeg"></div>
+        <div class="stbody">
+          <svg viewBox="0 0 300 470" id="man" role="img" aria-label="Hình người minh họa theo số đo"></svg>
+          <div class="drop stbd off" id="bdrop" tabindex="0" role="button" aria-label="Tải ảnh toàn thân"></div>
+        </div>
+        <div class="stat" id="stat"><div><b id="bmi">–</b><span id="bmiCat">BMI</span></div><div><b id="whr">–</b>Eo/Mông</div><div><b class="sm" id="shapeName">–</b>Phom</div></div>
+        <div class="mtools" id="mtools">
+          <button type="button" class="chip" id="mBack" aria-pressed="false">Xoay mặt sau</button>
+          <button type="button" class="chip on" id="mDims" aria-pressed="true">Hiện số đo</button>
+          <button type="button" class="chip" id="mGhost" aria-pressed="false">So với lần lưu trước</button>
+        </div>
+        <p class="hint" id="delta" hidden></p>
+      </aside>
+      <div>
+        <input id="bfile" type="file" accept="image/*" hidden>
+        <div class="fields">
+          <div class="col">
+            <div><label for="h">Chiều cao</label><div class="unit"><input id="h" type="number" inputmode="decimal" min="120" max="220" placeholder="165"><i>cm</i></div></div>
+            <div><label for="w">Cân nặng</label><div class="unit"><input id="w" type="number" inputmode="decimal" min="30" max="200" placeholder="55"><i>kg</i></div></div>
+            <div><span class="lab">Giới tính</span><div id="sexSeg"></div></div>
+          </div>
+          <div class="col">
+            <div><label for="note">Ghi chú thay đổi</label><input id="note" placeholder="VD: vừa tăng 2kg, đang tập gym" maxlength="60">
+              <p class="hint hist" id="hist" hidden></p><p class="hint">Hồ sơ và lịch sử lưu trên trình duyệt này.</p></div>
+            <div><span class="lab">Tông da</span><div class="swatches" id="skinChips"></div></div>
+            <div><span class="lab">Undertone</span><div id="underSeg"></div>
+              <p class="hint">Mẹo: gân cổ tay xanh dương/tím là lạnh, xanh lục là ấm, lẫn lộn là trung tính. Chỉ dùng lựa chọn bạn xác nhận; để trống thì Stylist sẽ không đoán tông da.</p></div>
+          </div>
+        </div>
+        <div class="acc" id="acc" style="margin-top:20px">
+          <button type="button" id="accBtn" aria-expanded="false" aria-controls="accIn">Số đo 3 vòng <span>(không bắt buộc, tư vấn chuẩn hơn)</span></button>
+          <div class="accb" id="accIn" inert><div><div class="in">
+            <div class="row3">
+              <div class="unit"><input id="bust" type="number" inputmode="decimal" placeholder="Ngực" aria-label="Vòng ngực"><i>cm</i></div>
+              <div class="unit"><input id="waist" type="number" inputmode="decimal" placeholder="Eo" aria-label="Vòng eo"><i>cm</i></div>
+              <div class="unit"><input id="hip" type="number" inputmode="decimal" placeholder="Mông" aria-label="Vòng mông"><i>cm</i></div>
+            </div>
+            <span class="lab" style="margin-top:16px">Phom dáng</span><div class="chips" id="shapeChips"></div>
+            <p class="hint">Để trống thì hình vẽ tự ước tính. Nhập đủ 3 vòng, phom sẽ được gợi ý tự động.</p>
+          </div></div></div>
+        </div>
+        <div class="actions">
+          <button class="btn" id="to2">Tiếp tục</button>
+          <button class="link" id="wipe">Xóa toàn bộ dữ liệu của tôi</button>
+        </div>
+        <div class="err" id="e1" role="alert"></div>
+      </div>
+    </div>
+  </div>
+  <div id="s2" hidden>
+    <h1 class="metal">Chọn món <em>muốn thử</em></h1>
+    <p class="sub">Tải ảnh sản phẩm trên Shopee, TikTok Shop hoặc Instagram (có thể dán Ctrl+V). Ảnh món đồ rõ, nền sạch cho ảnh mặc thử đẹp hơn.</p>
+    <div class="s1grid s2grid">
+      <div>
+        <input id="file" type="file" accept="image/*" hidden>
+        <div class="drop tall" id="drop" tabindex="0" role="button" aria-label="Tải ảnh món 1"></div>
+        <input id="file2" type="file" accept="image/*" hidden>
+        <div class="drop short" id="drop2" tabindex="0" role="button" aria-label="Tải ảnh món 2"></div>
+      </div>
+      <div>
+        <div class="col">
+          <div><label for="link">Link sản phẩm (tùy chọn)</label><input id="link" type="url" placeholder="Dán link để ghi nhớ"><p class="hint">Các sàn chặn đọc link tự động, nên AI sẽ đọc từ ảnh của bạn.</p></div>
+          <div><span class="lab">Bảng size món 1 (nếu có)</span><div class="sz" id="t1"></div><p class="hint">Điền theo bảng của shop. Shop chỉ ghi cân nặng (kg) thì điền cột Cân nặng, cột hay size nào không có thì để trống.</p></div>
+          <div><span class="lab">Bảng size món 2: quần/váy (nếu có)</span><div class="sz" id="t2"></div></div>
+          <p class="hint">Món 1 là áo/đầm. Thêm món 2 (quần/váy) nếu muốn mặc thử cả bộ.</p>
+        </div>
+        <div class="actions" style="flex-direction:column;align-items:stretch;max-width:340px">
+          <button class="btn" id="go">Thử đồ ngay</button>
+          <button class="btn ghost" id="back1">Quay lại</button>
+        </div>
+        <div class="err" id="e2" role="alert"></div>
+      </div>
+    </div>
+  </div>
+  <div id="s3" hidden>
+    <div class="res">
+      <div id="loading" class="empty" hidden><svg class="compass"><use href="#cs"/></svg>AI đang phân tích<span class="dots"><span>.</span><span>.</span><span>.</span></span></div>
+      <div id="result"></div>
+      <div id="fit" hidden>
+        <label style="margin-top:18px">Bạn mặc món này trông thế nào?</label>
+        <div id="maskBox" class="wrap-m" hidden>
+          <p class="hint" style="margin:0 0 6px">Vùng tô đỏ là chỗ AI sẽ vẽ quần/váy. Kéo cho phủ từ eo tới cổ chân, chừa giày ra.</p>
+          <canvas id="mprev"></canvas>
+          <label for="mTop" style="margin-top:10px">Từ eo trở xuống</label><input id="mTop" type="range" min="25" max="60" value="38">
+          <label for="mBot">Đến cổ chân</label><input id="mBot" type="range" min="70" max="99" value="90">
+        </div>
+        <button class="btn" id="aiBtn" type="button" style="margin-top:14px">Mặc thử bằng AI (miễn phí)</button>
+        <div id="aiOut" style="margin:14px 0"></div>
+        <p class="hint">Ảnh do AI tạo, chỉ để hình dung kiểu dáng và màu sắc, không cho biết có vừa size hay không. Hãy chọn size theo gợi ý ở trên. Mô hình miễn phí làm tốt nhất với áo và đầm. Khi ghép cả bộ, AI mặc lần lượt từng món nên lâu hơn, còn quần/váy được mặc vào vùng từ eo xuống chân, ước lượng theo ảnh đứng thẳng thấy đủ chân.</p>
+      </div>
+      <div class="err" id="e4" role="alert"></div>
+      <div class="actions"><button class="btn ghost" id="again">Chọn lại món</button><button class="btn" id="save">Lưu vào tủ đồ</button></div>
+    </div>
+  </div>
 </section>
-<section id="angi"><h2>Hôm nay ăn gì?</h2><p class="lead">Chọn ngân sách một bữa và nhu cầu, trợ lý gợi ý nhanh vài món. Giá là mức tham khảo.</p>
-<div class="panel" style="max-width:560px">
-<label class="l" for="m-b">Ngân sách một bữa <b id="m-bv">35.000đ</b></label>
-<input type="range" id="m-b" min="15000" max="80000" step="5000" value="35000" style="width:100%;margin:8px 0 14px">
-<div id="m-chips" role="group" aria-label="Nhu cầu"><button class="chip" aria-pressed="false" data-t="nhanh">Nhanh gọn</button><button class="chip" aria-pressed="false" data-t="lanh">Lành mạnh</button><button class="chip" aria-pressed="false" data-t="nuoc">Có nước</button><button class="chip" aria-pressed="false" data-t="cay">Cay cay</button></div>
-<button class="btn full" id="m-go">Gợi ý cho tôi</button><div id="m-res" aria-live="polite"></div></div></section>
-
-<section id="hoi"><h2>Hỏi nhanh trợ lý</h2><p class="lead">Trợ lý trả lời theo từ khóa, dựa trên số liệu sổ chi tiêu và danh sách quán quanh NEU của bạn.</p>
-<div class="panel" style="max-width:640px"><div class="chat" id="c-chat" aria-live="polite"><div class="msg ai">Chào bạn! Bạn cần hỏi về ăn uống, chi tiêu, xe buýt hay quán quanh NEU?</div></div>
-<div id="c-quick"><button class="chip">Phân tích chi tiêu</button><button class="chip">Ăn gì rẻ mà no?</button><button class="chip">Xe buýt đến NEU</button><button class="chip">Quán học bài</button></div>
-<div class="ask"><input type="text" id="c-q" placeholder="Nhập câu hỏi" aria-label="Câu hỏi"><button class="btn" id="c-send">Gửi</button></div></div></section>
-<div id="quanh"><h2>Quanh NEU có gì?</h2><p class="lead">Quán ăn, cà phê học bài, chỗ giải trí và cây xăng quanh 207 Giải Phóng.</p><div class="tools">
-<div class="tabs" id="tabs" role="group" aria-label="Loại địa điểm">
-<button class="tab" aria-pressed="true" data-k="all">Tất cả</button>
-<button class="tab" aria-pressed="false" data-k="food">Đồ ăn</button>
-<button class="tab" aria-pressed="false" data-k="cafe">Cà phê học bài</button>
-<button class="tab" aria-pressed="false" data-k="fun">Giải trí</button>
-<button class="tab" aria-pressed="false" data-k="xang">Cây xăng</button></div>
-<div class="row"><input type="search" id="q" placeholder="Tìm quán, món, địa chỉ" aria-label="Tìm địa điểm"><label for="rng">Trong vòng <b id="rv">6.000 m</b></label>
-<input type="range" id="rng" min="300" max="6000" step="100" value="6000">
-<span class="count" id="cnt" aria-live="polite"></span></div></div>
-<section style="padding-top:22px"><div class="list" id="list"></div>
-<p class="note">Khoảng cách là đường chim bay từ 207 Giải Phóng, đi thực tế sẽ dài hơn. Giá lấy từ đánh giá của khách trên Google Maps và bài viết ẩm thực, có thể đã đổi, nên hãy hỏi lại quán. Giá xăng thay đổi theo kỳ điều chỉnh, hãy xem bảng giá niêm yết tại trạm. Các quán không có tọa độ được xếp cuối danh sách. Nguồn: Google Maps, Mytour.</p></section>
-
-
+<section class="view" id="stylist">
+  <div class="chatbox">
+    <h1 class="metal">Stylist <em>AI</em></h1>
+    <p class="sub">Hỏi phối đồ, màu hợp, đi tiệc/đi làm mặc gì. Stylist dựa trên hồ sơ của bạn.</p>
+    <div class="chips" id="quick" style="margin-bottom:14px"></div>
+    <div class="chat" id="chat" aria-live="polite"></div>
+    <div class="send"><input id="q" placeholder="Hỏi Stylist..." aria-label="Câu hỏi" maxlength="500"><button class="btn" id="ask">Gửi</button></div>
+    <button class="link" id="clr" style="color:var(--mute)">Xóa cuộc trò chuyện</button>
+    <div class="err" id="e3" role="alert"></div>
+  </div>
+</section>
+<section class="view" id="closet">
+  <h1 class="metal" style="margin-bottom:16px">Tủ <em>đồ</em></h1>
+  <div class="wardrobe" id="wardrobe"></div>
+</section>
+</main>
 </div>
-<section id="xebuyt"><h2>Xe buýt đến NEU</h2>
-<p class="lead">Các tuyến đi qua khu vực 207 Giải Phóng, lấy từ nguồn công khai. Hãy kiểm tra lại giờ chạy và giá vé trên ứng dụng xe buýt Hà Nội.</p>
-<div class="bus">
-<div class="route"><span class="no">18</span><strong>ĐH Kinh tế Quốc dân – Long Biên</strong><small>Tuyến vòng, quay lại NEU</small></div>
-<div class="route"><span class="no">47B</span><strong>ĐH Kinh tế Quốc dân – Kiêu Kỵ</strong><small>Đi về phía Gia Lâm</small></div>
-<div class="route"><span class="no">21A</span><strong>Bến xe Giáp Bát – Bến xe Yên Nghĩa</strong><small>Chạy dọc Giải Phóng</small></div>
-<div class="route"><span class="no">21B</span><strong>Duyên Thái – Bến xe Mỹ Đình</strong><small>Kết nối bến xe Mỹ Đình</small></div>
-<div class="route"><span class="no">25</span><strong>BV Nhiệt đới TW cơ sở 2 – Bến xe Giáp Bát</strong><small>Đi qua Giải Phóng</small></div>
-<div class="route"><span class="no">32</span><strong>Giáp Bát – Nhổn</strong><small>Tuyến dài qua trung tâm</small></div>
-<div class="route"><span class="no">23</span><strong>Nguyễn Công Trứ – Vân Hồ</strong><small>Tuyến vòng</small></div></div>
-<p class="note">Các tuyến khác cũng đi qua khu vực trường: 03, 03B, 08, 19, 24, 26, 28, 41.</p></section>
-
-<section id="dichvu"><h2>Sắp có thêm</h2><p class="lead">Các tính năng đang được lên kế hoạch, chưa dùng được.</p><div class="grid">
-<div class="svc"><div>🏠</div><h3>Tìm phòng trọ</h3><p>So sánh giá, diện tích và khoảng cách đến trường.</p></div>
-<div class="svc"><div>🧺</div><h3>Giặt là, photo, in ấn</h3><p>Điểm dịch vụ gần nhất cùng bảng giá để tham khảo.</p></div>
-<div class="svc"><div>📅</div><h3>Lịch học và nhắc việc</h3><p>Nhắc giờ học, hạn nộp bài và lịch thi trước một ngày.</p></div>
-<div class="svc"><div>💬</div><h3>Hỏi đáp thủ tục</h3><p>Học bổng, ký túc xá, thẻ sinh viên: hỏi là có hướng dẫn.</p></div></div></section>
-</div></main>
-<footer><div class="wrap">Dynamic NEU – trang demo hỗ trợ sinh viên. Mã nguồn mở theo giấy phép MIT. Danh sách địa điểm nằm trong biến items trong file này.</div></footer>
+<footer>✦ Be yourself · FitMe AI</footer>
 <script>
-var items=[{"t": "fun", "n": "Bi-a Batuna", "a": "72 Trần Đại Nghĩa", "m": 208, "h": "Mở 24 giờ", "p": "Chưa có bảng giá, hỏi quán", "x": "Bi-a, 30 bàn", "l": "https://www.google.com/maps/search/?api=1&query=Bi-a%20Batuna%2072%20Tr%E1%BA%A7n%20%C4%90%E1%BA%A1i%20Ngh%C4%A9a%20H%C3%A0%20N%E1%BB%99i"}, {"t": "cafe", "n": "Cà phê vườn ngõ 128C Đại La", "a": "ngách 51 ngõ 128C Đại La", "m": 213, "h": "7:00–23:00", "p": "Giá rẻ (mức 1/4 trên Google)", "x": "Nhiều cây xanh, hợp ngồi trò chuyện", "l": "https://www.google.com/maps/search/?api=1&query=C%C3%A0%20ph%C3%AA%20v%C6%B0%E1%BB%9Dn%20ng%C3%B5%20128C%20%C4%90%E1%BA%A1i%20La%20ng%C3%A1ch%2051%20ng%C3%B5%20128C%20%C4%90%E1%BA%A1i%20La%20H%C3%A0%20N%E1%BB%99i"}, {"t": "food", "n": "Mì cay Seoul", "a": "76 Trần Đại Nghĩa", "m": 233, "h": "8:00–22:00", "p": "Giá rẻ (mức 1/4 trên Google)", "x": "Mì cay Hàn Quốc", "l": "https://www.google.com/maps/search/?api=1&query=M%C3%AC%20cay%20Seoul%2076%20Tr%E1%BA%A7n%20%C4%90%E1%BA%A1i%20Ngh%C4%A9a%20H%C3%A0%20N%E1%BB%99i"}, {"t": "food", "n": "Ơn Giời Tahu Ngon Đây Rồi", "a": "65 Lê Thanh Nghị", "m": 263, "h": "8:00–23:00", "p": "Giá rẻ (mức 1/4 trên Google)", "x": "Tào phớ, đồ ngọt", "l": "https://www.google.com/maps/search/?api=1&query=%C6%A0n%20Gi%E1%BB%9Di%20Tahu%20Ngon%20%C4%90%C3%A2y%20R%E1%BB%93i%2065%20L%C3%AA%20Thanh%20Ngh%E1%BB%8B%20H%C3%A0%20N%E1%BB%99i"}, {"t": "food", "n": "Umai29", "a": "129 Trần Đại Nghĩa", "m": 271, "h": "10:00–21:00", "p": "Cơm 60.000–69.000đ, lẩu 1 người 96.000đ (theo đánh giá)", "x": "Cơm, lẩu Nhật", "l": "https://www.google.com/maps/search/?api=1&query=Umai29%20129%20Tr%E1%BA%A7n%20%C4%90%E1%BA%A1i%20Ngh%C4%A9a%20H%C3%A0%20N%E1%BB%99i"}, {"t": "cafe", "n": "Babetta Coffee & Tea House", "a": "159 Trần Đại Nghĩa", "m": 284, "h": "7:00–1:00", "p": "Giá rẻ (mức 1/4 trên Google)", "x": "Cà phê và trà, mở khuya", "l": "https://www.google.com/maps/search/?api=1&query=Babetta%20Coffee%20%26%20Tea%20House%20159%20Tr%E1%BA%A7n%20%C4%90%E1%BA%A1i%20Ngh%C4%A9a%20H%C3%A0%20N%E1%BB%99i"}, {"t": "food", "n": "Busan Yori", "a": "147 Trần Đại Nghĩa", "m": 291, "h": "Chưa rõ giờ mở", "p": "Bibimbap khoảng 39.000đ (theo đánh giá)", "x": "Món Hàn", "l": "https://www.google.com/maps/search/?api=1&query=Busan%20Yori%20147%20Tr%E1%BA%A7n%20%C4%90%E1%BA%A1i%20Ngh%C4%A9a%20H%C3%A0%20N%E1%BB%99i"}, {"t": "cafe", "n": "coffee later?", "a": "103 K11A Nguyễn Hiền, khu tập thể Bách Khoa", "m": 373, "h": "7:00–23:00", "p": "Giá sinh viên (theo đánh giá)", "x": "Quán nhỏ, yên tĩnh, hợp học bài", "l": "https://www.google.com/maps/search/?api=1&query=coffee%20later%3F%20103%20K11A%20Nguy%E1%BB%85n%20Hi%E1%BB%81n%2C%20khu%20t%E1%BA%ADp%20th%E1%BB%83%20B%C3%A1ch%20Khoa%20H%C3%A0%20N%E1%BB%99i"}, {"t": "food", "n": "Bếp nhà Mắm", "a": "5 ngõ 213 Trần Đại Nghĩa", "m": 385, "h": "Mở 24 giờ", "p": "60.000–100.000đ/người (theo đánh giá)", "x": "Mì Indo, bàn xiển", "l": "https://www.google.com/maps/search/?api=1&query=B%E1%BA%BFp%20nh%C3%A0%20M%E1%BA%AFm%205%20ng%C3%B5%20213%20Tr%E1%BA%A7n%20%C4%90%E1%BA%A1i%20Ngh%C4%A9a%20H%C3%A0%20N%E1%BB%99i"}, {"t": "food", "n": "Mukbang 239", "a": "239 Trần Đại Nghĩa", "m": 425, "h": "9:00–22:00", "p": "Giá trung bình (mức 2/4 trên Google)", "x": "Mì lẩu Hàn Quốc", "l": "https://www.google.com/maps/search/?api=1&query=Mukbang%20239%20239%20Tr%E1%BA%A7n%20%C4%90%E1%BA%A1i%20Ngh%C4%A9a%20H%C3%A0%20N%E1%BB%99i"}, {"t": "cafe", "n": "Canopy StudySpace", "a": "89 ngõ 183 Trần Đại Nghĩa", "m": 459, "h": "Mở 24 giờ", "p": "Giá rẻ (mức 1/4 trên Google)", "x": "Không gian học bài, mở xuyên đêm", "l": "https://www.google.com/maps/search/?api=1&query=Canopy%20StudySpace%2089%20ng%C3%B5%20183%20Tr%E1%BA%A7n%20%C4%90%E1%BA%A1i%20Ngh%C4%A9a%20H%C3%A0%20N%E1%BB%99i"}, {"t": "food", "n": "Tiệm Dũng Béo", "a": "108Y9 tập thể NEU, Trần Đại Nghĩa", "m": 462, "h": "Mở 24 giờ", "p": "Giá rẻ (mức 1/4 trên Google)", "x": "Ăn vặt sinh viên", "l": "https://www.google.com/maps/search/?api=1&query=Ti%E1%BB%87m%20D%C5%A9ng%20B%C3%A9o%20108Y9%20t%E1%BA%ADp%20th%E1%BB%83%20NEU%2C%20Tr%E1%BA%A7n%20%C4%90%E1%BA%A1i%20Ngh%C4%A9a%20H%C3%A0%20N%E1%BB%99i"}, {"t": "cafe", "n": "Bee Coffee", "a": "K8 cầu thang 1, khu tập thể Bách Khoa", "m": 491, "h": "7:30–22:30", "p": "Giá cạnh tranh (theo đánh giá)", "x": "Yên tĩnh, ngồi nhóm nhỏ", "l": "https://www.google.com/maps/search/?api=1&query=Bee%20Coffee%20K8%20c%E1%BA%A7u%20thang%201%2C%20khu%20t%E1%BA%ADp%20th%E1%BB%83%20B%C3%A1ch%20Khoa%20H%C3%A0%20N%E1%BB%99i"}, {"t": "cafe", "n": "Đông Tây Cafe Sách", "a": "103 K2 ngõ 48 Tạ Quang Bửu", "m": 607, "h": "7:00–22:30", "p": "Giá rẻ (mức 1/4 trên Google)", "x": "Có sách, không gian rộng", "l": "https://www.google.com/maps/search/?api=1&query=%C4%90%C3%B4ng%20T%C3%A2y%20Cafe%20S%C3%A1ch%20103%20K2%20ng%C3%B5%2048%20T%E1%BA%A1%20Quang%20B%E1%BB%ADu%20H%C3%A0%20N%E1%BB%99i"}, {"t": "cafe", "n": "DoFé Cafe", "a": "42 ngõ 178 Giải Phóng", "m": 624, "h": "7:30–22:30", "p": "Giá rẻ (mức 1/4 trên Google)", "x": "Có sân thượng ngắm hoàng hôn", "l": "https://www.google.com/maps/search/?api=1&query=DoF%C3%A9%20Cafe%2042%20ng%C3%B5%20178%20Gi%E1%BA%A3i%20Ph%C3%B3ng%20H%C3%A0%20N%E1%BB%99i"}, {"t": "xang", "n": "Cây xăng Bách Khoa", "a": "29 Tạ Quang Bửu", "m": 694, "h": "Chưa rõ giờ mở", "p": "Giá xăng theo niêm yết tại trạm", "x": "Đổ xăng, trạm nhỏ, hay đông xe", "l": "https://www.google.com/maps/search/?api=1&query=C%C3%A2y%20x%C4%83ng%20B%C3%A1ch%20Khoa%2029%20T%E1%BA%A1%20Quang%20B%E1%BB%ADu%20H%C3%A0%20N%E1%BB%99i"}, {"t": "food", "n": "Quán ăn sinh viên", "a": "3B Tạ Quang Bửu", "m": 846, "h": "Chưa rõ giờ mở", "p": "Giá sinh viên (theo đánh giá)", "x": "Cơm, bún, phở", "l": "https://www.google.com/maps/search/?api=1&query=Qu%C3%A1n%20%C4%83n%20sinh%20vi%C3%AAn%203B%20T%E1%BA%A1%20Quang%20B%E1%BB%ADu%20H%C3%A0%20N%E1%BB%99i"}, {"t": "cafe", "n": "Book In Bar", "a": "B5 phố Hoàng Tích Trí, khu tập thể Kim Liên", "m": 1197, "h": "7:30–22:30", "p": "Cà phê sữa đá 35.000–38.000đ (theo đánh giá)", "x": "Rất yên tĩnh, hợp ôn thi", "l": "https://www.google.com/maps/search/?api=1&query=Book%20In%20Bar%20B5%20ph%E1%BB%91%20Ho%C3%A0ng%20T%C3%ADch%20Tr%C3%AD%2C%20khu%20t%E1%BA%ADp%20th%E1%BB%83%20Kim%20Li%C3%AAn%20H%C3%A0%20N%E1%BB%99i"}, {"t": "fun", "n": "Canada Billiards Club", "a": "8 ngõ 198 Xã Đàn", "m": 1405, "h": "Mở 24 giờ", "p": "Giá theo giờ, hỏi quán", "x": "Bi-a, có đồ ăn", "l": "https://www.google.com/maps/search/?api=1&query=Canada%20Billiards%20Club%208%20ng%C3%B5%20198%20X%C3%A3%20%C4%90%C3%A0n%20H%C3%A0%20N%E1%BB%99i"}, {"t": "fun", "n": "CGV Vincom Bà Triệu", "a": "191 Bà Triệu", "m": 1406, "h": "8:00–24:00", "p": "Giá vé xem trên ứng dụng của rạp", "x": "Rạp chiếu phim", "l": "https://www.google.com/maps/search/?api=1&query=CGV%20Vincom%20B%C3%A0%20Tri%E1%BB%87u%20191%20B%C3%A0%20Tri%E1%BB%87u%20H%C3%A0%20N%E1%BB%99i"}, {"t": "fun", "n": "Sân bóng Airforce", "a": "Lê Trọng Tấn, Phương Liệt", "m": 1445, "h": "5:15–24:00", "p": "Chưa có bảng giá, hỏi sân", "x": "Sân 7, 9 và 11 người", "l": "https://www.google.com/maps/search/?api=1&query=S%C3%A2n%20b%C3%B3ng%20Airforce%20L%C3%AA%20Tr%E1%BB%8Dng%20T%E1%BA%A5n%2C%20Ph%C6%B0%C6%A1ng%20Li%E1%BB%87t%20H%C3%A0%20N%E1%BB%99i"}, {"t": "fun", "n": "Rạp Beta Giải Phóng", "a": "Tầng 3 IP2 Imperial, 360 Giải Phóng", "m": 1609, "h": "Mở 24 giờ (theo Google)", "p": "Giá vé xem trên ứng dụng của rạp", "x": "Rạp chiếu phim, cách NEU tiện đường Giải Phóng", "l": "https://www.google.com/maps/search/?api=1&query=R%E1%BA%A1p%20Beta%20Gi%E1%BA%A3i%20Ph%C3%B3ng%20T%E1%BA%A7ng%203%20IP2%20Imperial%2C%20360%20Gi%E1%BA%A3i%20Ph%C3%B3ng%20H%C3%A0%20N%E1%BB%99i"}, {"t": "xang", "n": "Petrolimex cửa hàng số 53", "a": "Km6 Giải Phóng, Tương Mai", "m": 1681, "h": "5:00–24:00", "p": "Giá xăng theo niêm yết tại trạm", "x": "Đổ xăng dọc đường Giải Phóng", "l": "https://www.google.com/maps/search/?api=1&query=Petrolimex%20c%E1%BB%ADa%20h%C3%A0ng%20s%E1%BB%91%2053%20Km6%20Gi%E1%BA%A3i%20Ph%C3%B3ng%2C%20T%C6%B0%C6%A1ng%20Mai%20H%C3%A0%20N%E1%BB%99i"}, {"t": "fun", "n": "The Root Boardgame Cafe", "a": "72 Trần Xuân Soạn", "m": 2122, "h": "9:00–23:00", "p": "Đồ uống giá hợp lý, tiền chơi tính riêng (theo đánh giá)", "x": "Quán board game, có nhân viên hướng dẫn", "l": "https://www.google.com/maps/search/?api=1&query=The%20Root%20Boardgame%20Cafe%2072%20Tr%E1%BA%A7n%20Xu%C3%A2n%20So%E1%BA%A1n%20H%C3%A0%20N%E1%BB%99i"}, {"t": "xang", "n": "Petrolimex Nguyễn Lương Bằng", "a": "185 Nguyễn Lương Bằng, Đống Đa", "m": 2239, "h": "Mở 24 giờ", "p": "Giá xăng theo niêm yết tại trạm", "x": "Trạm lớn, có quầy thanh toán hiện đại", "l": "https://www.google.com/maps/search/?api=1&query=Petrolimex%20Nguy%E1%BB%85n%20L%C6%B0%C6%A1ng%20B%E1%BA%B1ng%20185%20Nguy%E1%BB%85n%20L%C6%B0%C6%A1ng%20B%E1%BA%B1ng%2C%20%C4%90%E1%BB%91ng%20%C4%90a%20H%C3%A0%20N%E1%BB%99i"}, {"t": "xang", "n": "Petrolimex cửa hàng số 04", "a": "9 Trần Hưng Đạo, Hai Bà Trưng", "m": 2648, "h": "Mở 24 giờ", "p": "Giá xăng theo niêm yết tại trạm", "x": "Đổ xăng, mở xuyên đêm", "l": "https://www.google.com/maps/search/?api=1&query=Petrolimex%20c%E1%BB%ADa%20h%C3%A0ng%20s%E1%BB%91%2004%209%20Tr%E1%BA%A7n%20H%C6%B0ng%20%C4%90%E1%BA%A1o%2C%20Hai%20B%C3%A0%20Tr%C6%B0ng%20H%C3%A0%20N%E1%BB%99i"}, {"t": "xang", "n": "Petrolimex cửa hàng số 31", "a": "111 Láng, Đống Đa", "m": 2738, "h": "Mở 24 giờ", "p": "Giá xăng theo niêm yết tại trạm", "x": "Đổ xăng, hay đông giờ cao điểm", "l": "https://www.google.com/maps/search/?api=1&query=Petrolimex%20c%E1%BB%ADa%20h%C3%A0ng%20s%E1%BB%91%2031%20111%20L%C3%A1ng%2C%20%C4%90%E1%BB%91ng%20%C4%90a%20H%C3%A0%20N%E1%BB%99i"}, {"t": "fun", "n": "CGV Vincom Royal City", "a": "Tầng B2, 72A Nguyễn Trãi, Royal City", "m": 2881, "h": "9:00–23:00", "p": "Giá vé xem trên ứng dụng của rạp", "x": "Rạp chiếu phim, cùng trung tâm với bowling", "l": "https://www.google.com/maps/search/?api=1&query=CGV%20Vincom%20Royal%20City%20T%E1%BA%A7ng%20B2%2C%2072A%20Nguy%E1%BB%85n%20Tr%C3%A3i%2C%20Royal%20City%20H%C3%A0%20N%E1%BB%99i"}, {"t": "fun", "n": "Heroworld Bowling & Games", "a": "Tầng B2, Royal City, 72 Nguyễn Trãi", "m": 2947, "h": "10:00–22:00", "p": "Bowling 70.000đ/lượt, thuê giày 20.000đ (theo đánh giá)", "x": "Bowling, game", "l": "https://www.google.com/maps/search/?api=1&query=Heroworld%20Bowling%20%26%20Games%20T%E1%BA%A7ng%20B2%2C%20Royal%20City%2C%2072%20Nguy%E1%BB%85n%20Tr%C3%A3i%20H%C3%A0%20N%E1%BB%99i"}, {"t": "fun", "n": "Fantasy Billiards Club", "a": "35 Nhà Chung, Hoàn Kiếm", "m": 3069, "h": "Mở 24 giờ", "p": "Khoảng 80.000đ/giờ (theo đánh giá)", "x": "Bi-a", "l": "https://www.google.com/maps/search/?api=1&query=Fantasy%20Billiards%20Club%2035%20Nh%C3%A0%20Chung%2C%20Ho%C3%A0n%20Ki%E1%BA%BFm%20H%C3%A0%20N%E1%BB%99i"}, {"t": "fun", "n": "Minipolo Board Game Cafe", "a": "4-F5 ngõ 171 Thái Hà", "m": 3260, "h": "9:00–23:00", "p": "Chỉ trả tiền đồ uống, ly thứ hai giảm 30% (theo đánh giá)", "x": "Board game, có phòng riêng", "l": "https://www.google.com/maps/search/?api=1&query=Minipolo%20Board%20Game%20Cafe%204-F5%20ng%C3%B5%20171%20Th%C3%A1i%20H%C3%A0%20H%C3%A0%20N%E1%BB%99i"}, {"t": "xang", "n": "Petrolimex cửa hàng số 01", "a": "1 Trần Quang Khải, Hoàn Kiếm", "m": 3356, "h": "Mở 24 giờ", "p": "Giá xăng theo niêm yết tại trạm", "x": "Trạm lớn, tách khu ô tô và xe máy", "l": "https://www.google.com/maps/search/?api=1&query=Petrolimex%20c%E1%BB%ADa%20h%C3%A0ng%20s%E1%BB%91%2001%201%20Tr%E1%BA%A7n%20Quang%20Kh%E1%BA%A3i%2C%20Ho%C3%A0n%20Ki%E1%BA%BFm%20H%C3%A0%20N%E1%BB%99i"}, {"t": "fun", "n": "Trung tâm Chiếu phim Quốc gia", "a": "87 Láng Hạ", "m": 3401, "h": "8:00–24:00", "p": "Vé khoảng 50.000–70.000đ (theo đánh giá)", "x": "Rạp chiếu phim, giá mềm", "l": "https://www.google.com/maps/search/?api=1&query=Trung%20t%C3%A2m%20Chi%E1%BA%BFu%20phim%20Qu%E1%BB%91c%20gia%2087%20L%C3%A1ng%20H%E1%BA%A1%20H%C3%A0%20N%E1%BB%99i"}, {"t": "fun", "n": "Timezone Hanoi Centre", "a": "Tầng B2, 175 Nguyễn Thái Học", "m": 3645, "h": "9:30–21:30", "p": "Chưa có bảng giá, hỏi quán", "x": "Khu game, bowling mini", "l": "https://www.google.com/maps/search/?api=1&query=Timezone%20Hanoi%20Centre%20T%E1%BA%A7ng%20B2%2C%20175%20Nguy%E1%BB%85n%20Th%C3%A1i%20H%E1%BB%8Dc%20H%C3%A0%20N%E1%BB%99i"}, {"t": "fun", "n": "KOEM Billiards Club", "a": "27 Lâm Du, Bồ Đề, Long Biên", "m": 5022, "h": "Mở 24 giờ", "p": "Giá theo giờ, hỏi quán", "x": "Bi-a", "l": "https://www.google.com/maps/search/?api=1&query=KOEM%20Billiards%20Club%2027%20L%C3%A2m%20Du%2C%20B%E1%BB%93%20%C4%90%E1%BB%81%2C%20Long%20Bi%C3%AAn%20H%C3%A0%20N%E1%BB%99i"}, {"t": "food", "n": "Bánh tráng trộn 74", "a": "1 ngách 98 ngõ Tự Do", "m": null, "h": "Chưa rõ", "p": "Chưa có bảng giá, hỏi quán", "x": "Bánh tráng trộn, bánh tráng nướng", "l": "https://www.google.com/maps/search/?api=1&query=B%C3%A1nh%20tr%C3%A1ng%20tr%E1%BB%99n%2074%201%20ng%C3%A1ch%2098%20ng%C3%B5%20T%E1%BB%B1%20Do%20H%C3%A0%20N%E1%BB%99i"}, {"t": "food", "n": "Nem nướng Nha Trang Hà Anh", "a": "108-D1, 98 ngõ Tự Do", "m": null, "h": "Chưa rõ", "p": "Khoảng 40.000đ/suất", "x": "Nem nướng", "l": "https://www.google.com/maps/search/?api=1&query=Nem%20n%C6%B0%E1%BB%9Bng%20Nha%20Trang%20H%C3%A0%20Anh%20108-D1%2C%2098%20ng%C3%B5%20T%E1%BB%B1%20Do%20H%C3%A0%20N%E1%BB%99i"}, {"t": "food", "n": "Mì trộn Indomie Bếp mẹ Bống", "a": "63 ngõ Tự Do", "m": null, "h": "8:30–21:00", "p": "Chưa có bảng giá, hỏi quán", "x": "Mì Indomie", "l": "https://www.google.com/maps/search/?api=1&query=M%C3%AC%20tr%E1%BB%99n%20Indomie%20B%E1%BA%BFp%20m%E1%BA%B9%20B%E1%BB%91ng%2063%20ng%C3%B5%20T%E1%BB%B1%20Do%20H%C3%A0%20N%E1%BB%99i"}, {"t": "food", "n": "Kombo cơm niêu Singapore", "a": "46 Trần Đại Nghĩa", "m": null, "h": "9:30–22:00", "p": "Chưa có bảng giá, hỏi quán", "x": "Cơm niêu", "l": "https://www.google.com/maps/search/?api=1&query=Kombo%20c%C6%A1m%20ni%C3%AAu%20Singapore%2046%20Tr%E1%BA%A7n%20%C4%90%E1%BA%A1i%20Ngh%C4%A9a%20H%C3%A0%20N%E1%BB%99i"}, {"t": "food", "n": "Chewy Junior", "a": "64 Trần Đại Nghĩa", "m": null, "h": "7:30–22:00", "p": "Giá cao hơn quán sinh viên", "x": "Bánh su kem", "l": "https://www.google.com/maps/search/?api=1&query=Chewy%20Junior%2064%20Tr%E1%BA%A7n%20%C4%90%E1%BA%A1i%20Ngh%C4%A9a%20H%C3%A0%20N%E1%BB%99i"}, {"t": "food", "n": "Vịt Việt Trinh", "a": "233 Trần Đại Nghĩa", "m": null, "h": "Chưa rõ", "p": "Chưa có bảng giá, hỏi quán", "x": "Lẩu vịt", "l": "https://www.google.com/maps/search/?api=1&query=V%E1%BB%8Bt%20Vi%E1%BB%87t%20Trinh%20233%20Tr%E1%BA%A7n%20%C4%90%E1%BA%A1i%20Ngh%C4%A9a%20H%C3%A0%20N%E1%BB%99i"}, {"t": "food", "n": "Ô BBQ cơm sườn phố cổ", "a": "241 Trần Đại Nghĩa", "m": null, "h": "Chưa rõ", "p": "Chưa có bảng giá, hỏi quán", "x": "Cơm sườn nướng", "l": "https://www.google.com/maps/search/?api=1&query=%C3%94%20BBQ%20c%C6%A1m%20s%C6%B0%E1%BB%9Dn%20ph%E1%BB%91%20c%E1%BB%95%20241%20Tr%E1%BA%A7n%20%C4%90%E1%BA%A1i%20Ngh%C4%A9a%20H%C3%A0%20N%E1%BB%99i"}, {"t": "food", "n": "VNA Vua Ốc", "a": "147 Trần Đại Nghĩa", "m": null, "h": "11:00–23:30", "p": "Chưa có bảng giá, hỏi quán", "x": "Ốc, hải sản", "l": "https://www.google.com/maps/search/?api=1&query=VNA%20Vua%20%E1%BB%90c%20147%20Tr%E1%BA%A7n%20%C4%90%E1%BA%A1i%20Ngh%C4%A9a%20H%C3%A0%20N%E1%BB%99i"}, {"t": "food", "n": "Chè Sài Gòn", "a": "P1-B2, ký túc xá NEU", "m": null, "h": "8:30–21:30", "p": "Chưa có bảng giá, hỏi quán", "x": "Chè, kem", "l": "https://www.google.com/maps/search/?api=1&query=Ch%C3%A8%20S%C3%A0i%20G%C3%B2n%20P1-B2%2C%20k%C3%BD%20t%C3%BAc%20x%C3%A1%20NEU%20H%C3%A0%20N%E1%BB%99i"}];
-var kind="all",max=6000,q="",L=document.getElementById("list");
-var lab={food:"Đồ ăn",cafe:"Cà phê",fun:"Giải trí",xang:"Cây xăng"};
-function norm(s){return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/đ/g,"d")}
-function fmt(m){return m<1000?m+" m":(m/1000).toFixed(1).replace(".",",")+" km"}
-function render(){
- L.innerHTML="";var n=0,shown=false;
- items.forEach(function(i){
-  if(kind!=="all"&&i.t!==kind)return;
-  if(q&&norm([i.n,i.a,i.x].join(" ")).indexOf(q)<0)return;
-  if(i.m!==null&&i.m>max)return;
-  if(i.m===null&&max<6000)return;
-  if(i.m===null&&!shown){var s=document.createElement("div");s.className="sep";s.textContent="Chưa có khoảng cách (cùng khu Trần Đại Nghĩa, ngõ Tự Do)";L.appendChild(s);shown=true}
-  var c=document.createElement("div");c.className="card";
-  c.innerHTML='<div class="dist"></div><div><h3></h3><div class="a"></div><div class="meta"></div></div><a class="map" target="_blank" rel="noopener">Xem bản đồ</a>';
-  var d=c.querySelector(".dist");
-  if(i.m===null){d.textContent="?";d.innerHTML+="<small>chưa rõ</small>"}else{d.textContent=fmt(i.m);d.innerHTML+="<small>từ NEU</small>"}
-  c.querySelector("h3").textContent=i.n;
-  c.querySelector(".a").textContent=i.a;
-  var m=c.querySelector(".meta");
-  var t=document.createElement("span");t.className="tag";t.textContent=lab[i.t];m.appendChild(t);
-  m.appendChild(document.createTextNode(i.x+" · "+i.h+" · "+i.p));
-  c.querySelector(".map").href=i.l;
-  L.appendChild(c);n++});
- document.getElementById("cnt").textContent=n+" địa điểm";
- if(!n)L.innerHTML='<p class="lead">Không tìm thấy địa điểm phù hợp. Hãy tăng khoảng cách hoặc đổi từ khóa.</p>';
-}
-document.querySelectorAll("#tabs .tab").forEach(function(b){b.onclick=function(){
- document.querySelectorAll("#tabs .tab").forEach(function(o){o.setAttribute("aria-pressed",o===b)});kind=b.dataset.k;render()}});
-var r=document.getElementById("rng");
-r.oninput=function(){max=+r.value;document.getElementById("rv").textContent=max.toLocaleString("vi-VN")+" m";render()};
-document.getElementById("q").oninput=function(){q=norm(this.value.trim());render()};
-render();
+const API_BASE = location.hostname.endsWith(".workers.dev") ? "" : "https://yellow-grass-933f.nguyenduyhung190108.workers.dev";
+const WORKER_URL = API_BASE + "/api/chat";
 
-(function(){
-var vnd=function(n){return Math.round(n).toLocaleString("vi-VN")+"đ"};
-var today=function(){var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
-var $=function(i){return document.getElementById(i)};
-var num=function(e){return +String(e.value).replace(/\D/g,"")||0};
-var money=function(e){var n=num(e);e.value=n?n.toLocaleString("vi-VN"):""};
-/* Gợi ý món */
-var dishes=[{n:"Cơm tấm sườn trứng",p:35000,t:["nhanh"],w:"Quán cơm bình dân"},{n:"Bún riêu cua",p:30000,t:["nuoc"],w:"Quán bún"},{n:"Bánh mì trứng ốp la",p:15000,t:["nhanh"],w:"Xe bánh mì đầu ngõ"},{n:"Phở gà",p:35000,t:["nuoc","lanh"],w:"Quán phở"},{n:"Cơm rau luộc, đậu sốt cà",p:25000,t:["lanh","nhanh"],w:"Cơm chay"},{n:"Mì cay hải sản",p:45000,t:["cay","nuoc"],w:"Quán mì cay"},{n:"Bún chả",p:40000,t:["nhanh"],w:"Quán bún chả"},{n:"Salad gà áp chảo",p:55000,t:["lanh","nhanh"],w:"Tiệm ăn healthy"},{n:"Bánh tráng trộn",p:20000,t:["cay","nhanh"],w:"Xe ăn vặt"},{n:"Cháo trứng bắc thảo",p:25000,t:["nuoc","lanh"],w:"Quán cháo"},{n:"Lẩu thái mini",p:70000,t:["cay","nuoc"],w:"Quán lẩu sinh viên"},{n:"Xôi mặn thập cẩm",p:20000,t:["nhanh"],w:"Xôi sáng"}];
-var sel={},bud=35000;
-$("m-b").oninput=function(){bud=+this.value;$("m-bv").textContent=vnd(bud)};
-document.querySelectorAll("#m-chips .chip").forEach(function(c){c.onclick=function(){var k=c.dataset.t;sel[k]=!sel[k];c.setAttribute("aria-pressed",!!sel[k])}});
-function suggest(){var ks=Object.keys(sel).filter(function(k){return sel[k]});
- var l=dishes.filter(function(d){return d.p<=bud&&ks.every(function(k){return d.t.indexOf(k)>-1})}).sort(function(){return Math.random()-.5});
- var r=$("m-res");r.innerHTML="";
- if(!l.length){r.innerHTML='<p class="sub" style="margin-top:10px">Chưa có món hợp. Thử tăng ngân sách hoặc bỏ bớt một nhu cầu.</p>';return}
- l.slice(0,3).forEach(function(d){var e=document.createElement("div");e.className="dish";e.innerHTML="<div><strong></strong><small></small></div><span class='price'></span>";
-  e.querySelector("strong").textContent=d.n;e.querySelector("small").textContent=d.w;e.querySelector(".price").textContent=vnd(d.p);r.appendChild(e)})}
-$("m-go").onclick=suggest;suggest();
-/* Sổ chi tiêu */
-var cats=[["an","Ăn uống",35,"#e8452c"],["tro","Nhà trọ, điện nước",30,"#0b2a6f"],["dilai","Đi lại",8,"#2e8bff"],["hoc","Học tập",10,"#18a37b"],["giaitri","Giải trí",8,"#8b5cf6"],["muasam","Mua sắm",5,"#ffc21a"],["khac","Khác",4,"#7a8499"]];
-var tipmap={an:"Ăn uống chiếm tỷ lệ cao. Thử nấu chung vài bữa mỗi tuần hoặc chọn quán dưới 35.000đ.",tro:"Tiền trọ chiếm phần lớn. Cân nhắc ở ghép hoặc hỏi lại giá điện nước.",dilai:"Đi lại tốn khá nhiều. Hãy so sánh vé tháng xe buýt ở mục Xe buýt.",hoc:"Chi cho học tập khá cao. Kiểm tra xem có thể mượn giáo trình ở thư viện không.",giaitri:"Giải trí vượt mức gợi ý. Đặt hạn mức cho mỗi cuối tuần.",muasam:"Mua sắm vượt mức gợi ý. Đợi 24 giờ trước khi mua món chưa thật cần.",khac:"Nhóm Khác khá lớn. Hãy ghi chú rõ để biết tiền đi đâu."};
-var S={inc:3000000,goal:20,ex:[]};
-var cs=$("x-cat");cats.forEach(function(c){var o=document.createElement("option");o.value=c[0];o.textContent=c[1];cs.appendChild(o)});
-try{var raw=localStorage.getItem("neu_expense");if(raw){var p=JSON.parse(raw);if(p&&p.ex)S=p}}catch(e){}
-function save(){try{localStorage.setItem("neu_expense",JSON.stringify(S))}catch(e){}}
-$("x-inc").value=S.inc.toLocaleString("vi-VN");$("x-goal").value=S.goal;$("x-gv").textContent=S.goal+"%";
-$("x-inc").oninput=function(){money(this);S.inc=num(this);save();calc()};
-$("x-goal").oninput=function(){S.goal=+this.value;$("x-gv").textContent=S.goal+"%";save();calc()};
-function msg(t){$("x-msg").textContent=t}
-function add(a,c,n){S.ex.push({id:Date.now()+Math.random(),a:a,c:c,n:n||"",d:today()});save();calc()}
-$("x-add").onclick=function(){var a=num($("x-amt"));if(!(a>0)){msg("Nhập số tiền lớn hơn 0 để thêm khoản chi.");return}
- add(a,cs.value,$("x-note").value.trim());$("x-amt").value="";$("x-note").value="";msg("Đã thêm khoản chi.")};
-$("x-amt").oninput=function(){money(this)};
-$("x-amt").onkeydown=function(e){if(e.key==="Enter")$("x-add").onclick()};
-$("x-demo").onclick=function(){S.ex=[];[[1000000,"tro","Tiền trọ"],[220000,"an","Ăn uống tuần đầu"],[40000,"dilai","Xe buýt"],[60000,"hoc","Giáo trình, in ấn"],[50000,"giaitri","Xem phim, cà phê"],[60000,"muasam","Đồ dùng cá nhân"],[20000,"khac","Linh tinh"]].forEach(function(x){S.ex.push({id:Date.now()+Math.random(),a:x[0],c:x[1],n:x[2],d:today()})});save();calc();msg("Đã nạp dữ liệu mẫu.")};
-$("x-clear").onclick=function(){S.ex=[];save();calc();msg("Đã xóa tất cả khoản chi.")};
-var last=null;
-function calc(){
- var now=new Date(),ym=today().slice(0,7),dim=new Date(now.getFullYear(),now.getMonth()+1,0).getDate(),day=now.getDate();
- var ex=S.ex.filter(function(e){return e.d.slice(0,7)===ym});
- var tot={};cats.forEach(function(c){tot[c[0]]=0});ex.forEach(function(e){tot[e.c]=(tot[e.c]||0)+e.a});
- var spent=0;cats.forEach(function(c){spent+=tot[c[0]]});
- var fixed=tot.tro,varSp=spent-fixed,proj=fixed+varSp+varSp/Math.max(day,7)*(dim-day);
- var limit=S.inc*(1-S.goal/100),left=limit-spent,perDay=Math.max(0,left)/(dim-day+1);
- var ratio=limit>0?proj/limit:0,score=ratio<=1?Math.max(80,Math.round(100-Math.max(0,ratio-.8)*100)):Math.max(0,Math.round(80-(ratio-1)*160));
- var v=$("x-verdict");
- if(!spent){v.className="verdict v-mid";v.textContent="Chưa có khoản chi nào. Thêm khoản chi hoặc nạp dữ liệu mẫu để xem phân tích."}
- else if(proj<=limit){v.className="verdict v-good";v.textContent="Tiết kiệm tốt: với nhịp chi này, cuối tháng bạn dự kiến để dành khoảng "+vnd(S.inc-proj)+". Điểm "+score+"/100."}
- else if(proj<=S.inc){v.className="verdict v-mid";v.textContent="Cân bằng nhưng chưa đạt mục tiêu: dự kiến chi "+vnd(proj)+", vượt hạn mức tiết kiệm "+vnd(proj-limit)+". Điểm "+score+"/100."}
- else{v.className="verdict v-bad";v.textContent="Chi quá tay: dự kiến chi "+vnd(proj)+", vượt tiền sinh hoạt "+vnd(proj-S.inc)+". Điểm "+score+"/100."}
- $("x-kpi").innerHTML="";
- [["Đã chi",vnd(spent)],["Hạn mức chi",vnd(limit)],["Còn lại",vnd(left)],["Dự báo cuối tháng",vnd(proj)],["Nên chi mỗi ngày",vnd(perDay)]].forEach(function(k){var d=document.createElement("div");d.className="kpi";d.innerHTML="<small></small><b></b>";d.querySelector("small").textContent=k[0];d.querySelector("b").textContent=k[1];$("x-kpi").appendChild(d)});
- var acc=0,st=[];cats.forEach(function(c){var s=spent?tot[c[0]]/spent*100:0;if(s>0){st.push(c[3]+" "+acc+"% "+(acc+s)+"%");acc+=s}});
- $("x-donut").style.background=st.length?"conic-gradient("+st.join(",")+")":"var(--soft)";
- var B=$("x-bars");B.innerHTML="";var tips=[];
- cats.forEach(function(c){var s=spent?tot[c[0]]/spent*100:0,r=document.createElement("div");r.className="brow";
-  r.innerHTML='<div class="t"><span></span><span></span></div><div class="track"><i></i><u></u></div>';
-  r.querySelector(".t span").textContent=c[1];r.querySelectorAll(".t span")[1].textContent=Math.round(s)+"% · "+vnd(tot[c[0]]);
-  var i=r.querySelector("i");i.style.width=Math.min(100,s)+"%";i.style.background=c[3];r.querySelector("u").style.left=c[2]+"%";B.appendChild(r);
-  if(spent&&s>=c[2]+8)tips.push(tipmap[c[0]])});
- if(spent&&left<0)tips.unshift("Bạn đã chi vượt hạn mức tháng này "+vnd(-left)+". Tạm dừng các khoản chưa cần thiết.");
- if(spent&&!tips.length)tips.push("Cơ cấu chi tiêu khá hợp lý so với mức gợi ý. Giữ nhịp chi hiện tại để đạt mục tiêu tiết kiệm.");
- if(!spent)tips.push("Ghi lại mọi khoản chi trong vài ngày để phân tích chính xác hơn.");
- if(spent&&day<7)tips.push("Mới đầu tháng nên dự báo có thể chưa chính xác, hãy theo dõi thêm.");
- $("x-tips").innerHTML="";tips.forEach(function(t){var li=document.createElement("li");li.textContent=t;$("x-tips").appendChild(li)});
- var L2=$("x-list");L2.innerHTML="";
- if(!ex.length)L2.innerHTML='<p class="sub">Chưa có khoản chi nào.</p>';
- ex.slice(-8).reverse().forEach(function(e){var cn=cats.filter(function(c){return c[0]===e.c})[0][1],r=document.createElement("div");r.className="exp";
-  r.innerHTML='<span></span><span><b></b> <button aria-label="Xóa khoản chi">×</button></span>';
-  r.querySelector("span").textContent=cn+(e.n?" · "+e.n:"");r.querySelector("b").textContent=vnd(e.a);
-  r.querySelector("button").onclick=function(){S.ex=S.ex.filter(function(x){return x.id!==e.id});save();calc()};L2.appendChild(r)});
- last={spent:spent,proj:proj,limit:limit,left:left,tot:tot,score:score,perDay:perDay};
+const $ = s => document.querySelector(s);
+const REDUCE = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const mem = {};
+const store = {
+get(k, d){ if (k in mem) return mem[k]; try{ const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; }catch{ return d; } },
+set(k, v){ mem[k] = v; try{ localStorage.setItem(k, JSON.stringify(v)); }catch{} },
+del(k){ delete mem[k]; try{ localStorage.removeItem(k); }catch{} }
+};
+const SHAPES = ["Quả lê","Đồng hồ cát","Chữ nhật","Tam giác ngược","Quả táo"];
+const SKINS = [["Rất sáng","#f8e0d0"],["Sáng","#efc9ab"],["Trung bình","#deae88"],["Rám","#c68e65"],["Ngăm","#9c6a47"],["Nâu đậm","#6b4430"]];
+const UNDERS = ["Ấm","Lạnh","Trung tính"];
+const SEXES = ["Nữ","Nam","Unisex"];
+let P = Object.assign({h:"",w:"",bust:"",waist:"",hip:"",sex:"",shape:"",skin:"",under:"",note:""}, store.get("fm_profile", {}));
+let HIST = store.get("fm_hist", []);
+let img = null, thumb = null, img2 = null, thumb2 = null, body = null, busy = false, last = null, history = store.get("fm_chat", []);
+document.querySelectorAll("nav.tabs button").forEach(b => b.onclick = () => {
+document.querySelectorAll("nav.tabs button").forEach(x => x.classList.toggle("on", x === b));
+document.querySelectorAll(".view").forEach(v => v.classList.toggle("on", v.id === b.dataset.tab));
+if (b.dataset.tab === "closet") renderCloset();
+if (b.dataset.tab === "stylist") drawChat();
+});
+let curStep = 1;
+function step(n){
+curStep = n;
+if (n === 1 && typeof syncGhostBtn === "function"){ syncGhostBtn(); updateMan(); }
+["s1","s2","s3"].forEach((id, i) => { const el = $("#"+id), on = i+1 === n; el.hidden = !on; if (on){ el.classList.remove("enter"); void el.offsetWidth; el.classList.add("enter"); } });
+[...$("#steps").children].forEach((s, i) => { s.classList.toggle("on", i < n); s.classList.toggle("cur", i+1 === n); });
+window.scrollTo({top:0, behavior: REDUCE ? "auto" : "smooth"});
 }
-calc();
-/* Vé xe buýt */
-function fare(){money($("f-tp"));money($("f-mp"));var tp=num($("f-tp")),mp=num($("f-mp")),t=+$("f-td").value,d=+$("f-dm").value;$("f-tdv").textContent=t;$("f-dmv").textContent=d;
- var s=tp*t*d;$("f-res").textContent=s>mp?"Nên mua vé tháng, tiết kiệm "+vnd(s-mp):"Mua vé lượt, rẻ hơn "+vnd(mp-s)}
-["f-tp","f-mp","f-td","f-dm"].forEach(function(i){$(i).oninput=fare});fare();
-/* Chat */
-function reply(t){t=t.toLowerCase();
- if(/phân tích|chi tiêu|tiết kiệm|tiền/.test(t)){if(!last||!last.spent)return "Bạn chưa ghi khoản chi nào. Vào mục Sổ chi tiêu để thêm khoản chi hoặc nạp dữ liệu mẫu.";
-  var top=cats.slice().sort(function(a,b){return last.tot[b[0]]-last.tot[a[0]]})[0];
-  return "Bạn đã chi "+vnd(last.spent)+", dự báo cuối tháng "+vnd(last.proj)+" (hạn mức "+vnd(last.limit)+"). Nhóm chi nhiều nhất là "+top[1]+". Điểm tiết kiệm "+last.score+"/100, nên chi khoảng "+vnd(last.perDay)+" mỗi ngày."}
- if(/xe buýt|bus|đi lại|tuyến/.test(t))return "Các tuyến đi qua NEU gồm 18, 47B, 21A, 21B, 25, 32, 23 và vài tuyến khác. Xem mục Xe buýt để so sánh vé lượt với vé tháng.";
- if(/học bài|cà phê|cafe/.test(t))return "Mục Quanh NEU có Canopy StudySpace (mở 24 giờ), Bee Coffee, coffee later? và các quán học bài khác, xếp theo khoảng cách.";
- if(/ăn|đói|cơm|bún|phở|rẻ/.test(t))return "Kéo thanh ngân sách ở mục Hôm nay ăn gì? để nhận gợi ý, hoặc xem quán thật quanh NEU kèm địa chỉ.";
- return "Mình chưa hiểu rõ. Bạn thử hỏi về chi tiêu, ăn uống, xe buýt hoặc quán học bài nhé."}
-function ask(t){if(!t.trim())return;var c=$("c-chat"),m=document.createElement("div");m.className="msg me";m.textContent=t;c.appendChild(m);
- var r=document.createElement("div");r.className="msg ai";r.textContent=reply(t);c.appendChild(r);c.scrollTop=c.scrollHeight}
-$("c-send").onclick=function(){ask($("c-q").value);$("c-q").value=""};
-$("c-q").onkeydown=function(e){if(e.key==="Enter"){ask($("c-q").value);$("c-q").value=""}};
-document.querySelectorAll("#c-quick .chip").forEach(function(c){c.onclick=function(){ask(c.textContent)}});
+function seg(el, items, key, onChange){
+el.className = "seg";
+el.innerHTML = '<i class="ind"></i>' + items.map(t => `<button type="button">${t}</button>`).join("");
+const btns = [...el.querySelectorAll("button")], ind = el.querySelector(".ind");
+const sync = () => {
+const i = items.indexOf(P[key]);
+btns.forEach((b, j) => { b.classList.toggle("on", j === i); b.setAttribute("aria-pressed", j === i); });
+ind.style.opacity = i < 0 ? 0 : 1; ind.style.width = `calc((100% - 6px) / ${items.length})`; ind.style.transform = `translateX(${Math.max(i,0)*100}%)`;
+};
+btns.forEach((b, i) => b.onclick = () => { P[key] = P[key] === items[i] ? "" : items[i]; sync(); (onChange || persist)(); });
+sync(); return sync;
+}
+function chips(el, items, key){
+el.innerHTML = "";
+items.forEach(name => {
+const b = document.createElement("button"); b.type = "button"; b.className = "chip" + (P[key] === name ? " on" : ""); b.textContent = name; b.setAttribute("aria-pressed", P[key] === name);
+b.onclick = () => { P[key] = P[key] === name ? "" : name; el.querySelectorAll(".chip").forEach(c => { const on = c.textContent === P[key]; c.classList.toggle("on", on); c.setAttribute("aria-pressed", on); }); persist(); };
+el.appendChild(b);
+});
+}
+function swatches(el){
+el.innerHTML = "";
+SKINS.forEach(([name, col]) => {
+const b = document.createElement("button"); b.type = "button"; b.className = "swatch" + (P.skin === name ? " on" : ""); b.style.background = col; b.title = name; b.setAttribute("aria-label", "Tông da " + name); b.setAttribute("aria-pressed", P.skin === name);
+b.onclick = () => { P.skin = P.skin === name ? "" : name; [...el.children].forEach(c => { const on = c.title === P.skin; c.classList.toggle("on", on); c.setAttribute("aria-pressed", on); }); persist(); };
+el.appendChild(b);
+});
+}
+$("#accBtn").onclick = () => { const o = $("#acc").classList.toggle("open"); $("#accBtn").setAttribute("aria-expanded", o); $("#accIn").inert = !o; };
+const FIELDS = ["h","w","bust","waist","hip"];
+function histText(){ return HIST.slice(0, 4).map(x => `${x.d} · ${x.w}kg${x.n ? " (" + x.n + ")" : ""}`).join(" | "); }
+function showHist(){ const el = $("#hist"), t = histText(); el.hidden = !t; el.textContent = t ? "Lịch sử: " + t : ""; }
+let saveT = 0;
+function persist(){
+FIELDS.forEach(k => P[k] = $("#"+k).value); P.note = $("#note").value;
+clearTimeout(saveT); saveT = setTimeout(() => store.set("fm_profile", P), 200);
+updateMan();
+}
+FIELDS.forEach(k => { $("#"+k).value = P[k]; $("#"+k).addEventListener("input", persist); });
+$("#note").value = P.note || ""; $("#note").addEventListener("input", persist);
+const syncSex = seg($("#sexSeg"), SEXES, "sex");
+seg($("#underSeg"), UNDERS, "under");
+chips($("#shapeChips"), SHAPES, "shape");
+swatches($("#skinChips"));
+showHist();
+if (P.bust || P.waist || P.hip || P.shape) $("#accBtn").click();
+
+/*MAN-START*/
+const SC=2,CX=150,FLOOR=452,f1=n=>Math.round(n*10)/10,lerp=(a,b,t)=>a+(b-a)*t,cl=(v,a,b)=>Math.max(a,Math.min(b,v));
+const PAL=["#16507c","#eef1f5","#0b2a4d","#1c1c24","#b5444f","#4f8a5b","#e8c479","#e58aa8"];
+const HAIRS=[["Đen","#2a1b16"],["Nâu","#5b3a29"],["Vàng","#c79a4b"],["Đỏ","#8a3324"]];
+const EASE=[.8,2,4.5,8];
+const dk=(c,k)=>"#"+[1,3,5].map(i=>Math.min(255,Math.round(parseInt(c.substr(i,2),16)*k)).toString(16).padStart(2,"0")).join("");
+function cr(P){let d="";for(let i=0;i<P.length-1;i++){const a=P[i-1]||P[i],b=P[i],c=P[i+1],e=P[i+2]||c;d+=`C${f1(b[0]+(c[0]-a[0])/6)} ${f1(b[1]+(c[1]-a[1])/6)} ${f1(c[0]-(e[0]-b[0])/6)} ${f1(c[1]-(e[1]-b[1])/6)} ${f1(c[0])} ${f1(c[1])}`}return d}
+function ribbon(C,W){const L=[],R=[];C.forEach((p,i)=>{const a=C[Math.max(0,i-1)],b=C[Math.min(C.length-1,i+1)],dx=b[0]-a[0],dy=b[1]-a[1],n=Math.hypot(dx,dy)||1,nx=dy/n,ny=-dx/n;L.push([p[0]+nx*W[i],p[1]+ny*W[i]]);R.push([p[0]-nx*W[i],p[1]-ny*W[i]])});R.reverse();return`M${f1(L[0][0])} ${f1(L[0][1])}`+cr(L)+`L${f1(R[0][0])} ${f1(R[0][1])}`+cr(R)+"Z"}
+function geom(p){
+const h=p.h,m=p.sx,d=p.d,Hp=p.Hp,y=f=>FLOOR-f*h*SC,hf=c=>c*SC/2,s=cl(h/165,.72,1.3);
+const bw=hf(p.B*.32),ww=hf(p.W*.355),hw=hf(Hp*.345);
+const topD=(lerp(8.6,10.6,m)+d*.5)*s,sw=Math.max(hf(h*lerp(.232,.255,m)*p.shK+d*.35*s),bw*1.1+3,hw*.98),nw=hf((lerp(9.6,11.4,m)+d*.25)*s);
+const bF=lerp(.715,.725,m),wF=lerp(.628,.618,m),R0=topD*SC/2,Sx=sw-R0;
+const T=[[nw,y(.887)],[nw*1.02,y(.858)],[lerp(nw,Sx,.45),y(.841)],[lerp(nw,Sx,.8),y(.831)],[Sx*.92,y(.8235)],[Sx*.97,y(.81)],[bw*1.07,y(.775)],[bw,y(bF)],[lerp(bw,ww,.55),y(.668)],[ww,y(wF)],[lerp(ww,hw,.5),y(.575)],[hw,y(.528)],[hw*.985,y(.495)]];
+const LG=[[.47,.088,.087],[.40,.087,.081],[.33,.085,.066],[.285,.083,.056],[.20,.078,.060],[.11,.073,.041],[.045,.07,.034]];
+const out=[...T,...LG.map(([f,c,r])=>[(c+r)*Hp*SC,y(f)])],inn=LG.map(([f,c,r])=>[Math.max(.25*SC,(c-r)*Hp*SC),y(f)]).reverse();
+const Ax=out[out.length-1][0],Ix=inn[0][0];
+const body=`M0 ${f1(out[0][1])}L${f1(nw)} ${f1(out[0][1])}`+cr(out)+`L${f1(Ax)} ${f1(y(.012))}L${f1(Ix)} ${f1(y(.012))}L${f1(Ix)} ${f1(y(.045))}`+cr(inn)+`L0 ${f1(y(.47))}Z`;
+const elbD=topD*.8,foreD=topD*.86,wrD=(lerp(4.8,5.8,m)+d*.12)*s,handW=lerp(7,8.4,m)*s;
+const th=.09+m*.03+Math.max(0,d)*.005+Math.max(0,hw-sw*.78)/(h*SC*.3),Sy=y(.8),Ey=y(.63),Wy=y(.485),Ty=y(.377);
+const Ex=Sx+(Ey-Sy)*Math.tan(th),Wx=Ex+(Wy-Ey)*Math.tan(th+.03),Tx=Wx+(Ty-Wy)*Math.tan(th+.07);
+const pt=(a,b,t)=>[lerp(a[0],b[0],t),lerp(a[1],b[1],t)],S_=[Sx,Sy],E_=[Ex,Ey],W_=[Wx,Wy],T_=[Tx,Ty],dl=Math.hypot(Tx-Wx,Ty-Wy)||1;
+const cap=[[.98,.2],[.85,.53],[.6,.8],[.3,.95]].map(([q,w])=>[[Sx-Math.sin(th)*R0*q,Sy-Math.cos(th)*R0*q],R0*w]);
+const AC=[...cap.map(c=>c[0]),S_,pt(S_,E_,.4),pt(S_,E_,.8),E_,pt(E_,W_,.25),pt(E_,W_,.7),W_,pt(W_,T_,.1)];
+const AW=[...cap.map(c=>c[1]),R0,R0,R0*.82,elbD*SC/2,foreD*SC/2,lerp(foreD,wrD,.6)*SC/2,wrD*SC/2,wrD*SC/2*1.04];
+const W2=handW*SC/2,wr=wrD*SC/2,L=dl;
+return{y,s,bw,ww,hw,sw,nw,bF,wF,R0,body,arm:ribbon(AC,AW),W2,wr,L,Ex,Ey,ew:elbD*SC/2,Wx,Wy,Sy,hemX:lerp(Sx,Ex,.52),hemY:lerp(Sy,Ey,.52),hdeg:f1(-th*180/Math.PI),ang:Math.atan2(Ty-Wy,Tx-Wx)*180/Math.PI-90};
+}
+/* Bàn tay: lòng bàn tay + 4 ngón + ngón cái, tọa độ cục bộ: gốc ở cổ tay, +y hướng xuống, -x hướng vào thân */
+function handSVG(W2,wr,L,bk,skin,skinD){
+const fw=Math.max(3,W2*.5),r=fw/2,fx=[-.62,-.21,.2,.6].map(v=>v*W2),ft=[.93,1,.95,.8].map(v=>f1(v*L-r)),y0=f1(L*.42);
+const palm=`M${f1(-wr)} 0C${f1(-W2*1.02)} ${f1(L*.1)} ${f1(-W2*.98)} ${f1(L*.34)} ${f1(-W2*.82)} ${f1(L*.5)}L${f1(W2*.82)} ${f1(L*.5)}C${f1(W2*.98)} ${f1(L*.34)} ${f1(W2*1.02)} ${f1(L*.1)} ${f1(wr)} 0Z`;
+const fing=fx.map((x,i)=>`<line x1="${f1(x)}" y1="${y0}" x2="${f1(x)}" y2="${ft[i]}"/>`).join("");
+const th=bk?"":`<line x1="${f1(-W2*.72)}" y1="${f1(L*.2)}" x2="${f1(-W2*1.0)}" y2="${f1(L*.48)}"/>`;
+const sep=fx.slice(0,3).map((x,i)=>{const mx=f1((x+fx[i+1])/2);return`<line x1="${mx}" y1="${f1(L*.55)}" x2="${mx}" y2="${f1(Math.min(+ft[i],+ft[i+1])+r*.3)}"/>`}).join("");
+const ex=bk
+?fx.map((x,i)=>`<circle cx="${f1(x)}" cy="${f1(L*.47)}" r=".8" fill="${skinD}" fill-opacity=".35"/><ellipse cx="${f1(x)}" cy="${f1(+ft[i]+r*.1)}" rx="${f1(r*.55)}" ry="${f1(r*.8)}" fill="#fff" fill-opacity=".22"/><line x1="${f1(x*.45)}" y1="${f1(L*.06)}" x2="${f1(x)}" y2="${f1(L*.44)}" stroke="${skinD}" stroke-opacity=".22" stroke-width=".6"/>`).join("")
+:fx.map(x=>`<line x1="${f1(x-r*.5)}" y1="${f1(L*.66)}" x2="${f1(x+r*.5)}" y2="${f1(L*.66)}" stroke="${skinD}" stroke-opacity=".3" stroke-width=".6"/>`).join("");
+return`<g stroke-linecap="round" stroke-linejoin="round" fill="${skinD}" stroke="${skinD}" stroke-width="${f1(fw+1.2)}"><path d="${palm}" stroke-width="1.2"/>${fing}${th.replace("<line",`<line stroke-width="${f1(fw*1.1+1.2)}"`)}</g>`
++`<g stroke-linecap="round" stroke-linejoin="round" fill="${skin}" stroke="${skin}" stroke-width="${f1(fw)}"><path d="${palm}" stroke-width="0"/>${fing}${th.replace("<line",`<line stroke-width="${f1(fw*1.1)}"`)}</g>`
++`<g stroke="${skinD}" stroke-opacity=".5" stroke-width=".6" stroke-linecap="round">${sep}</g>`+ex;
+}
+
+function manSVG(p,o){
+o=o||{};
+const G=geom(p),{y,s,bw,ww,hw,sw,nw,bF,wF,R0,body,arm,Ex,Ey,ew,Wx,Wy,hemX,hemY,hdeg,ang}=G,h=p.h,m=p.sx,Hp=p.Hp;
+const bk=!!o.back,e=EASE[o.ease==null?1:o.ease],sw2=f1(2*e),topT=o.top||"Thun",botT=o.bot||"Short",tc=o.topC||PAL[0],bc=o.botC||PAL[2],hc=o.hair||HAIRS[0][1];
+const skin=`rgb(${p.sk.map(Math.round)})`,skinD=`rgb(${p.sk.map(v=>Math.round(v*.76))})`,gold="#e8c479",lh=cl(1-m*2,0,1);
+const rt=`translate(${CX} 0)`,mir=`translate(${CX} 0) scale(-1 1)`,sides=q=>`<g transform="${rt}">${q}</g><g transform="${mir}">${q}</g>`;
+const hT=b=>`${b} translate(${f1(Wx)} ${f1(Wy)}) rotate(${f1(ang)})`;
+const defs=[];let cid=0;
+const band=(y0,y1,q)=>{const id="k"+cid++;defs.push(`<clipPath id="${id}"><rect x="0" y="${f1(y0)}" width="300" height="${f1(Math.max(1,y1-y0))}"/></clipPath>`);return`<g clip-path="url(#${id})">${q}</g>`};
+const tU=c=>`<use href="#half" fill="${c}" stroke="${c}" stroke-width="${sw2}" stroke-linejoin="round"/>`;
+const skirt=c=>{const P=[[ww+e+1,y(.6)],[lerp(ww,hw,.55)+e+1,y(.56)],[hw+e,y(.528)],[hw+e+5,y(.45)],[hw+e+12,y(.36)]];return sides(`<path d="M0 ${f1(P[0][1])}L${f1(P[0][0])} ${f1(P[0][1])}${cr(P)}L0 ${f1(P[4][1])}Z" fill="${c}" stroke="${dk(c,.7)}" stroke-width=".8"/>`)};
+const neckP=`M${f1(CX-nw*1.3)} ${f1(y(.862))}Q${CX} ${f1(y(.772))} ${f1(CX+nw*1.3)} ${f1(y(.862))}`;
+const shoe=g=>{const cx=CX+g*(.075*Hp*SC+1),cy=y(.013),rx=.052*Hp*SC,ry=2.9*s*SC;return`<g transform="rotate(${g*9} ${f1(cx)} ${f1(cy)})"><ellipse cx="${f1(cx)}" cy="${f1(cy)}" rx="${f1(rx)}" ry="${f1(ry)}" fill="#eef3f8" stroke="#9fb2c4" stroke-width=".8"/><ellipse cx="${f1(cx)}" cy="${f1(cy+ry*.55)}" rx="${f1(rx*.95)}" ry="${f1(ry*.35)}" fill="#c3d0dc"/>${bk?`<path d="M${f1(cx-rx*.45)} ${f1(cy+ry*.1)}Q${f1(cx)} ${f1(cy-ry*.95)} ${f1(cx+rx*.45)} ${f1(cy+ry*.1)}" stroke="#9fb2c4" stroke-width=".9" fill="none"/>`:`<path d="M${f1(cx-rx*.3)} ${f1(cy-ry*.5)}h${f1(rx*.6)}M${f1(cx-rx*.25)} ${f1(cy-ry*.1)}h${f1(rx*.5)}" stroke="#9fb2c4" stroke-width=".8" fill="none"/>`}</g>`};
+let g="";
+if(topT==="Đầm")g+=skirt(tc);
+else if(botT==="Váy")g+=skirt(bc);
+else{const end=botT==="Short"?.40:.06;g+=band(y(.59),y(end),sides(tU(bc)))+band(y(.59),y(.572),sides(tU(dk(bc,.7))))+band(y(end)-1.6,y(end),sides(tU(dk(bc,.7))));}
+const strap=q=>sides(`<path d="M${f1(nw*1.55)} ${f1(y(.858))}L${f1(bw*.66)} ${f1(y(.772))}" stroke="${q}" stroke-width="5" stroke-linecap="round" fill="none"/>`);
+const neck=bk?`<path d="M${f1(CX-nw*1.25)} ${f1(y(.86))}Q${CX} ${f1(y(.85))} ${f1(CX+nw*1.25)} ${f1(y(.86))}" stroke="${dk(tc,.7)}" stroke-width="1.6" fill="none"/>`:`<path d="${neckP}Z" fill="${skin}"/><path d="${neckP}" stroke="${dk(tc,.7)}" stroke-width="2" fill="none"/>`;
+if(topT==="Ba lỗ"||topT==="Đầm")g+=band(y(.775),y(topT==="Đầm"?.575:.555),sides(tU(tc)))+strap(tc);
+else g+=band(y(.857),y(.555),sides(tU(tc)))+band(y(.565),y(.555),sides(tU(dk(tc,.7))))+neck;
+const sd=dk(tc,.6),bd=dk(bc,.6),LH=Hp*SC,lx=v=>f1(v*LH);
+if(topT==="Thun"){
+if(bk)g+=`<path d="M${CX} ${f1(y(.852))}L${CX} ${f1(y(.572))}" stroke="${sd}" stroke-opacity=".4" stroke-width="1" fill="none"/><rect x="${CX-3.5}" y="${f1(y(.846))}" width="7" height="4.5" rx="1" fill="#fff" fill-opacity=".55"/>`+sides(`<path d="M${f1(bw*.22)} ${f1(y(.79))}Q${f1(bw*.65)} ${f1(y(.775))} ${f1(bw*.8)} ${f1(y(.735))}Q${f1(bw*.62)} ${f1(y(.695))} ${f1(bw*.25)} ${f1(y(.705))}" stroke="${sd}" stroke-opacity=".28" stroke-width="1.2" fill="none" stroke-linecap="round"/>`);
+else g+=sides(`<path d="M${f1(bw*.98)} ${f1(y(.742))}Q${f1(bw*.82)} ${f1(y(.70))} ${f1(ww*1.04)} ${f1(y(.655))}M${f1(ww*.3)} ${f1(y(.612))}Q${f1(ww*.62)} ${f1(y(.598))} ${f1(ww*.95)} ${f1(y(.616))}" stroke="${sd}" stroke-opacity=".3" stroke-width="1" fill="none" stroke-linecap="round"/>`);
+}
+if(botT==="Short"&&topT!=="Đầm"){
+g+=bk
+?`<path d="M${CX} ${f1(y(.585))}L${CX} ${f1(y(.47))}" stroke="${bd}" stroke-opacity=".5" stroke-width="1" fill="none"/>`+sides(`<path d="M${f1(hw*.2)} ${f1(y(.55))}L${f1(hw*.8)} ${f1(y(.55))}L${f1(hw*.8)} ${f1(y(.505))}L${f1(hw*.5)} ${f1(y(.488))}L${f1(hw*.2)} ${f1(y(.505))}Z" stroke="${bd}" stroke-opacity=".6" stroke-width=".9" fill="none" stroke-linejoin="round"/>`)
+:`<path d="M${CX} ${f1(y(.572))}L${CX} ${f1(y(.50))}" stroke="${bd}" stroke-opacity=".5" stroke-width="1" fill="none"/>`+sides(`<path d="M${f1(ww*.8)} ${f1(y(.585))}Q${f1(ww*1.05)} ${f1(y(.55))} ${f1(hw*.96)} ${f1(y(.515))}" stroke="${bd}" stroke-opacity=".55" stroke-width=".9" fill="none" stroke-linecap="round"/>`)+`<path d="M${CX-1.5} ${f1(y(.58))}q-3 6-3.5 11M${CX+1.5} ${f1(y(.58))}q3 6 3.5 11" stroke="#eef1f5" stroke-width="1" fill="none" stroke-linecap="round"/>`;
+}
+g+=bk
+?sides(`<path d="M${lx(.037)} ${f1(y(.293))}Q${lx(.083)} ${f1(y(.279))} ${lx(.129)} ${f1(y(.293))}M${lx(.052)} ${f1(y(.272))}Q${lx(.083)} ${f1(y(.265))} ${lx(.114)} ${f1(y(.272))}" stroke="${skinD}" stroke-opacity=".45" stroke-width="1" fill="none" stroke-linecap="round"/><ellipse cx="${lx(.08)}" cy="${f1(y(.2))}" rx="${lx(.042)}" ry="${f1(h*SC*.04)}" fill="#fff" fill-opacity=".08"/><path d="M${lx(.078)} ${f1(y(.25))}L${lx(.076)} ${f1(y(.145))}M${lx(.058)} ${f1(y(.115))}L${lx(.061)} ${f1(y(.05))}M${lx(.082)} ${f1(y(.115))}L${lx(.079)} ${f1(y(.05))}" stroke="${skinD}" stroke-opacity=".3" stroke-width=".8" fill="none" stroke-linecap="round"/>`)
+:sides(`<ellipse cx="${lx(.083)}" cy="${f1(y(.287))}" rx="${lx(.032)}" ry="${f1(h*SC*.018)}" fill="#fff" fill-opacity=".07" stroke="${skinD}" stroke-opacity=".38" stroke-width=".8"/><path d="M${lx(.078)} ${f1(y(.262))}Q${lx(.072)} ${f1(y(.15))} ${lx(.068)} ${f1(y(.06))}" stroke="#fff" stroke-opacity=".12" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="${lx(.047)}" cy="${f1(y(.04))}" r="1.6" fill="${skinD}" fill-opacity=".25"/><circle cx="${lx(.094)}" cy="${f1(y(.034))}" r="1.6" fill="${skinD}" fill-opacity=".25"/>`);
+if(bk)g+=`<ellipse cx="${CX}" cy="${f1(y(.866))}" rx="2.4" ry="1.7" fill="${skinD}" fill-opacity=".3"/>`;
+const armU=(c,x)=>`<use href="#arm" transform="${rt}" fill="${c}" ${x||""}/><use href="#arm" transform="${mir}" fill="${c}" ${x||""}/>`;
+g+=armU(skin,`stroke="${skinD}" stroke-opacity=".5" stroke-width=".7"`);
+const sx=`stroke="${tc}" stroke-width="${sw2}" stroke-linejoin="round"`;
+if(topT==="Thun")defs.push(`<clipPath id="sl">${[rt,mir].map(t=>`<rect transform="${t} rotate(${hdeg} ${f1(hemX)} ${f1(hemY)})" x="-20" y="${f1(y(.93))}" width="190" height="${f1(hemY-y(.93))}"/>`).join("")}</clipPath>`),g+=`<g clip-path="url(#sl)">${armU(tc,sx)}</g>`;
+else if(topT==="Dài tay")g+=armU(tc,sx);
+const elb=q=>[rt,mir].map(t=>`<g transform="${t} rotate(${hdeg} ${f1(Ex)} ${f1(Ey)})">${q}</g>`).join("");
+g+=bk
+?elb(`<ellipse cx="${f1(Ex)}" cy="${f1(Ey+ew*.1)}" rx="${f1(ew*.5)}" ry="${f1(ew*.42)}" fill="${skinD}" fill-opacity=".14" stroke="${skinD}" stroke-opacity=".3" stroke-width=".7"/>`)
+:elb(`<path d="M${f1(Ex-ew*.55)} ${f1(Ey+ew*.1)}Q${f1(Ex)} ${f1(Ey+ew*.6)} ${f1(Ex+ew*.55)} ${f1(Ey+ew*.1)}" stroke="${skinD}" stroke-opacity=".4" stroke-width=".9" fill="none" stroke-linecap="round"/>`);
+g+=[rt,mir].map(b=>`<g transform="${hT(b)}">${handSVG(G.W2,G.wr,G.L,bk,skin,skinD)}</g>`).join("");
+
+const hk=lerp(.15,.1325,cl((h-110)/60,0,1))*h*SC/100,HG=`translate(${CX} ${f1(y(1))}) scale(${hk.toFixed(4)})`;
+const long=`<path d="M-40 36C-47-4-22-10 0-10S47-4 40 36C49 90 47 160 38 205H-38C-47 160-49 90-40 36Z" fill="url(#hg)"/>`;
+const ear=`<ellipse cx="-38" cy="52" rx="5" ry="10"/><ellipse cx="38" cy="52" rx="5" ry="10"/>`;
+const face=`<path d="M0 0C22 0 38 18 38 42C38 66 26 92 0 100C-26 92-38 66-38 42C-38 18-22 0 0 0Z"/>`;
+const strand=`<g fill="none" stroke="${dk(hc,.5)}" stroke-opacity=".55" stroke-width="1.3" stroke-linecap="round"><path d="M0 -6C-1 24 -2 60 0 100"/><path d="M-18 -4C-26 20 -30 56 -28 96"/><path d="M18 -4C26 20 30 56 28 96"/><path d="M-32 6C-40 28 -42 56 -37 86"/><path d="M32 6C40 28 42 56 37 86"/><path d="M-4 4C-9 8 -3 15 2 11C6 8 3 1 -1 3"/></g><path d="M-30 86Q0 110 30 86Q22 104 0 106Q-22 104 -30 86Z" fill="#000" opacity=".12"/>`;
+const longStrands=`<g fill="none" stroke="${dk(hc,.5)}" stroke-opacity=".5" stroke-width="1.3" stroke-linecap="round"><path d="M-30 60C-35 110 -34 160 -30 200"/><path d="M-12 100C-14 140 -14 170 -12 202"/><path d="M12 100C14 140 14 170 12 202"/><path d="M30 60C35 110 34 160 30 200"/></g>`;
+const head=bk
+?`<g transform="${HG}"><g fill="${skin}" stroke="${skinD}" stroke-opacity=".5" stroke-width=".8">${ear}</g>${face.replace("<path",`<path fill="${skin}"`)}<path d="M-41 44C-46 0-22-10 0-10C24-10 46 0 41 44C45 72 32 100 0 103C-32 100-45 72-41 44Z" fill="url(#hg)"/><g opacity="${lh.toFixed(2)}">${long}${longStrands}</g>${strand}</g>`
+:`<g transform="${HG}"><ellipse cx="0" cy="104" rx="24" ry="7" fill="#000" opacity=".1"/><g fill="${skin}" stroke="${skinD}" stroke-opacity=".5" stroke-width=".8">${ear}</g>${face.replace("<path",`<path fill="${skin}"`)}${face.replace("<path",'<path fill="url(#sh)"')}
+<path d="M-30 74Q0 104 30 74Q22 94 0 100Q-22 94-30 74Z" fill="#000" opacity=".07"/>
+<g fill="#d9667a" opacity="${(lh*.16).toFixed(2)}"><ellipse cx="-22" cy="64" rx="9" ry="5"/><ellipse cx="22" cy="64" rx="9" ry="5"/></g>
+<path d="M-25 38Q-14 31-5 36M25 38Q14 31 5 36" stroke="${hc}" stroke-width="${(2.2+m*1.2).toFixed(1)}" fill="none" stroke-linecap="round"/>
+<ellipse cx="-14" cy="46" rx="6.2" ry="3" fill="#f4f1ee"/><ellipse cx="14" cy="46" rx="6.2" ry="3" fill="#f4f1ee"/>
+<circle cx="-14" cy="46" r="2.6" fill="#3a2a22"/><circle cx="14" cy="46" r="2.6" fill="#3a2a22"/><circle cx="-14" cy="46" r="1.2" fill="#000"/><circle cx="14" cy="46" r="1.2" fill="#000"/><circle cx="-13" cy="45" r=".7" fill="#fff"/><circle cx="15" cy="45" r=".7" fill="#fff"/>
+<path d="M-20.5 45Q-14 41-7.5 45M20.5 45Q14 41 7.5 45" stroke="#2a1b16" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+<path d="M0 50Q-5 62-4 66Q0 68.5 4 66Q5 62 0 50" fill="none" stroke="#000" stroke-opacity=".2" stroke-width="1.4" stroke-linecap="round"/>
+<path d="M-10 78Q-4 74 0 76Q4 74 10 78Q0 80-10 78Z" fill="#b5544f"/><path d="M-9.5 78Q0 87 9.5 78Q0 80.5-9.5 78Z" fill="#c9706b"/>
+<g fill="none" stroke-linecap="round"><path d="M-19.5 40.5Q-14 36.5-8 40M19.5 40.5Q14 36.5 8 40" stroke="${skinD}" stroke-opacity=".55" stroke-width=".8"/><path d="M-18 49.5Q-14 51.8-10 49.5M18 49.5Q14 51.8 10 49.5" stroke="${skinD}" stroke-opacity=".25" stroke-width=".7"/><path d="M-20.5 45l-1.8-1.2M20.5 45l1.8-1.2" stroke="#2a1b16" stroke-width="1.1"/><path d="M40.5 46Q44 52 40.5 58M-40.5 46Q-44 52-40.5 58" stroke="${skinD}" stroke-opacity=".5" stroke-width=".8"/><path d="M0 48Q-1 56 0 62" stroke="#fff" stroke-opacity=".12" stroke-width="2"/></g>
+<ellipse cx="-3.4" cy="66.3" rx="1.5" ry=".9" fill="#000" opacity=".25"/><ellipse cx="3.4" cy="66.3" rx="1.5" ry=".9" fill="#000" opacity=".25"/><ellipse cx="0" cy="92" rx="6" ry="3" fill="#fff" opacity=".06"/>
+<g opacity="${lh.toFixed(2)}" fill="url(#hg)"><path d="M-40 46C-46 4-22-8 2-8C26-8 46 6 40 46C38 30 30 18 14 14C2 22-22 26-40 46Z"/><path d="M-40 40C-45 70-44 96-38 112C-36 90-36 66-33 44Z"/><path d="M40 40C45 70 44 96 38 112C36 90 36 66 33 44Z"/></g>
+<g opacity="${(1-lh).toFixed(2)}" fill="url(#hg)"><path d="M-40 42C-45 2-22-9 0-9C24-9 45 2 40 42C38 26 28 17 12 14C-4 16-26 22-40 42Z"/></g></g>`;
+const hairBehind=bk?"":`<g transform="${HG}" opacity="${lh.toFixed(2)}">${long}</g>`;
+let ruler=`<line x1="16" x2="16" y1="${y(0)}" y2="${y(220/h)}" stroke="#8fb3cf" stroke-opacity=".5"/>`;
+for(let c=0;c<=220;c+=10){const yy=FLOOR-c*SC,big=c%50===0;ruler+=`<line x1="${big?9:12}" x2="16" y1="${yy}" y2="${yy}" stroke="#8fb3cf" stroke-opacity=".6" stroke-width="${big?1:.7}"/>`+(big&&c?`<text x="20" y="${yy+3}" font-size="7.5" fill="#8fb3cf" font-family="sans-serif">${c}</text>`:"")}
+const topY=y(1);ruler+=`<line x1="16" x2="${CX+34}" y1="${topY}" y2="${topY}" stroke="${gold}" stroke-opacity=".6" stroke-dasharray="3 3" stroke-width=".8"/><text x="44" y="${topY-4}" font-size="9" fill="${gold}" font-family="sans-serif">${Math.round(h)} cm</text>`;
+const gl=(f,t,v,gu,wd)=>{const yy=y(f);return`<circle cx="${f1(CX+wd)}" cy="${f1(yy)}" r="2" fill="${gold}"/><line x1="${f1(CX+wd)}" x2="294" y1="${f1(yy)}" y2="${f1(yy)}" stroke="${gold}" stroke-opacity=".55" stroke-dasharray="2 3" stroke-width=".8"/><text x="294" y="${f1(yy-4)}" text-anchor="end" font-size="9" fill="${gold}" font-family="sans-serif">${t} ${gu?"~":""}${Math.round(v)} cm</text>`};
+const dims=o.dims===false?"":gl(bF,"Ngực",p.B,p.gB,bw+4)+gl(wF,"Eo",p.W,p.gW,ww+4)+gl(.528,"Mông",p.Hp,p.gH,hw+4);
+let ghost="";
+if(o.ghost){const GG=geom(o.ghost);defs.push(`<path id="gh" d="${GG.body}"/>`);ghost=`<g fill="none" stroke="#7fd6f5" stroke-width="1.3" stroke-dasharray="4 3" opacity=".9"><use href="#gh" transform="${rt}" clip-path="url(#hx)"/><use href="#gh" transform="${mir}" clip-path="url(#hx)"/></g><text x="16" y="${FLOOR+14}" font-size="8.5" fill="#7fd6f5" font-family="sans-serif">Nét đứt: lần lưu trước</text>`}
+return`<defs>
+<linearGradient id="sh" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity=".2"/><stop offset=".42" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".3"/></linearGradient>
+<linearGradient id="hg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${dk(hc,1.5)}"/><stop offset="1" stop-color="${dk(hc,.6)}"/></linearGradient>
+<radialGradient id="fl" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#7fd6f5" stop-opacity=".4"/><stop offset="1" stop-color="#7fd6f5" stop-opacity="0"/></radialGradient>
+<clipPath id="hx"><rect x=".8" y="0" width="300" height="470"/></clipPath><path id="half" d="${body}"/><path id="arm" d="${arm}"/>${defs.join("")}</defs>
+<ellipse cx="${CX}" cy="${FLOOR+4}" rx="100" ry="11" fill="url(#fl)"/>${ruler}${hairBehind}
+<g fill="${skin}">${sides(`<use href="#half"/>`)}</g><g fill="none" stroke="${skinD}" stroke-opacity=".5" stroke-width=".7" stroke-linejoin="round">${sides(`<use href="#half" clip-path="url(#hx)"/>`)}</g>
+${shoe(1)}${shoe(-1)}${g}${sides(`<use href="#half" fill="url(#sh)"/>`)}${head}${ghost}${dims}`;
+}
+/*MAN-END*/
+const num=(v,a,b)=>{v=parseFloat(v);return v>=a&&v<=b?v:0};
+function shapeFrom(B,W,H){
+if(W/B<=.75&&W/H<=.75&&Math.abs(B-H)<=.07*H)return"Đồng hồ cát";
+if(H>B*1.05)return"Quả lê";
+if(B>H*1.05)return"Tam giác ngược";
+if(W>=B*.92&&W>=H*.92)return"Quả táo";
+return"Chữ nhật";
+}
+function targetParams(S){
+S=S||P;
+const h=cl(parseFloat(S.h)||165,120,220),w=cl(parseFloat(S.w)||55,30,200),bmi=w/((h/100)**2);
+const sx=S.sex==="Nam"?1:S.sex==="Nữ"?0:.5,sp=S.shape,d=cl(bmi-21,-5,16),s=h/165,f=cl((bmi-21)/21,-.25,1);
+let B=lerp(84,94,sx)*s*(1+.42*f),W=lerp(66,80,sx)*s*(1+.62*f),Hp=lerp(92,95,sx)*s*(1+.45*f);
+B+=(sp==="Tam giác ngược"?5:sp==="Quả lê"?-3:0)*s;
+W+=(sp==="Đồng hồ cát"?-6:sp==="Quả táo"?10:sp==="Chữ nhật"?4:0)*s;
+Hp+=(sp==="Quả lê"?7:sp==="Tam giác ngược"?-4:sp==="Đồng hồ cát"?3:0)*s;
+const bu=num(S.bust,55,170),wu=num(S.waist,45,170),hu=num(S.hip,60,170);
+B=bu||B;W=wu||W;Hp=hu||Hp;
+const hex=(SKINS.find(k=>k[0]===S.skin)||[0,"#dcb899"])[1];
+let sk=[1,3,5].map(i=>parseInt(hex.substr(i,2),16));
+const tint=S.under==="Ấm"?[255,170,90]:S.under==="Lạnh"?[225,150,185]:null;
+if(tint)sk=sk.map((v,i)=>lerp(v,tint[i],.07));
+return{h,B,W,Hp,sx,d,shK:sp==="Tam giác ngược"?1.08:sp==="Quả lê"?.95:1,sk,gB:!bu,gW:!wu,gH:!hu,bmi,auto:shapeFrom(B,W,Hp),have:!!(parseFloat(S.h)&&parseFloat(S.w))};
+}
+
+/* ---------- Giao diện mô hình: xoay, số đo, so sánh, tải ảnh ---------- */
+const M=Object.assign({back:false,dims:true,ghost:false},store.get("fm_man",{}));
+const snap=q=>({h:+q.h||0,w:+q.w||0,bust:+q.bust||0,waist:+q.waist||0,hip:+q.hip||0,sex:q.sex||"",shape:q.shape||""});
+const snapKey=q=>q?JSON.stringify(snap(q)):"";
+const saveM=()=>store.set("fm_man",M);
+const prevP=()=>HIST[0]&&HIST[0].p||null;
+function opts(){return{back:M.back,dims:M.dims,top:"Thun",bot:"Short",topC:PAL[0],botC:PAL[2],ease:1,hair:HAIRS[0][1],ghost:M.ghost&&prevP()?targetParams(prevP()):null}}
+let OP=opts();
+const renderMan=()=>{OP=opts();$("#man").innerHTML=manSVG(cur||targetParams(),OP)};
+const NUMK=["h","B","W","Hp","sx","d","shK"];
+let cur=null,raf=0;
+function updateMan(){
+const t=targetParams();statTween(t);
+if(!cur||REDUCE){cur=JSON.parse(JSON.stringify(t));renderMan();return}
+cancelAnimationFrame(raf);OP=opts();
+const from=JSON.parse(JSON.stringify(cur)),t0=performance.now(),dur=520;
+cur.gB=t.gB;cur.gW=t.gW;cur.gH=t.gH;
+const tick=now=>{const u=Math.min(1,(now-t0)/dur),e=1-Math.pow(1-u,3);
+NUMK.forEach(k=>cur[k]=lerp(from[k],t[k],e));cur.sk=from.sk.map((v,i)=>lerp(v,t.sk[i],e));
+$("#man").innerHTML=manSVG(cur,OP);if(u<1)raf=requestAnimationFrame(tick)};
+raf=requestAnimationFrame(tick);
+}
+const tw={};
+function tween(id,to,dec){
+const el=$("#"+id);if(to==null){el.textContent="–";tw[id]=null;return}
+const from=tw[id]==null?to:tw[id];tw[id]=to;
+if(REDUCE||from===to){el.textContent=to.toFixed(dec);return}
+const t0=performance.now();
+(function f(now){const u=Math.min(1,(now-t0)/450),e=1-Math.pow(1-u,3);el.textContent=(from+(to-from)*e).toFixed(dec);if(u<1)requestAnimationFrame(f)})(t0);
+}
+function statTween(t){
+tween("bmi",t.have?t.bmi:null,1);tween("whr",t.W/t.Hp,2);
+$("#bmiCat").textContent=t.have?(t.bmi<18.5?"Nhẹ cân":t.bmi<23?"Cân đối":t.bmi<25?"Hơi đầy đặn":"Đầy đặn"):"BMI";
+$("#shapeName").textContent=P.shape||(t.gB&&t.gW&&t.gH?"–":t.auto+" (gợi ý)");
+const q=prevP(),el=$("#delta"),dl=[];
+if(q&&+P.w&&q.w){const a=+P.w-q.w;dl.push("Cân nặng "+(a>0?"+":a<0?"−":"")+Math.abs(a).toFixed(1).replace(".",",")+" kg")}
+if(q&&+P.waist&&q.waist){const a=+P.waist-q.waist;dl.push("Eo "+(a>0?"+":a<0?"−":"")+Math.abs(a).toFixed(1).replace(".",",")+" cm")}
+el.hidden=!dl.length;el.textContent=dl.length?"So với lần lưu "+(HIST[0].d||"trước")+": "+dl.join(" · "):"";
+}
+/* Điều khiển */
+const press=(el,on)=>{el.classList.toggle("on",on);el.setAttribute("aria-pressed",on)};
+function syncGhostBtn(){const b=$("#mGhost"),has=!!prevP();b.disabled=!has;b.title=has?"":"Chưa có lần lưu nào. Bấm Tiếp tục để lưu số đo hiện tại.";press(b,M.ghost&&has)}
+press($("#mBack"),M.back);press($("#mDims"),M.dims);syncGhostBtn();
+$("#mBack").onclick=()=>{M.back=!M.back;press($("#mBack"),M.back);$("#mBack").textContent=M.back?"Xoay mặt trước":"Xoay mặt sau";saveM();
+const el=$("#man");if(REDUCE){renderMan();return}el.classList.add("flip");setTimeout(()=>{renderMan();el.classList.remove("flip")},190)};
+$("#mBack").textContent=M.back?"Xoay mặt trước":"Xoay mặt sau";
+$("#mDims").onclick=()=>{M.dims=!M.dims;press($("#mDims"),M.dims);saveM();renderMan()};
+$("#mGhost").onclick=()=>{M.ghost=!M.ghost;saveM();syncGhostBtn();renderMan()};
+let view = "Mô hình 2D";
+const viewSync = (function(){
+const items = ["Mô hình 2D", "Ảnh của bạn"], el = $("#viewSeg"); el.className = "seg";
+el.innerHTML = '<i class="ind"></i>' + items.map(t => `<button type="button">${t}</button>`).join("");
+const btns = [...el.querySelectorAll("button")], ind = el.querySelector(".ind");
+const sync = () => {
+const i = items.indexOf(view); btns.forEach((b, j) => { b.classList.toggle("on", j === i); b.setAttribute("aria-pressed", j === i); });
+ind.style.width = "calc((100% - 6px) / 2)"; ind.style.transform = `translateX(${i*100}%)`;
+$("#man").classList.toggle("off", i === 1); $("#bdrop").classList.toggle("off", i === 0); $("#stat").style.opacity = i === 0 ? 1 : .4;
+};
+btns.forEach((b, i) => b.onclick = () => { view = items[i]; sync(); });
+sync(); return sync;
 })();
-</script></body></html>
+$("#to2").onclick = () => {
+persist(); store.set("fm_profile", P);
+if (!(+P.h >= 120 && +P.h <= 220 && +P.w >= 30 && +P.w <= 200)) { $("#e1").textContent = "Nhập chiều cao (120–220 cm) và cân nặng (30–200 kg) để tiếp tục."; return; }
+const note = (P.note || "").trim();
+if (!HIST.length || +HIST[0].w !== +P.w || note || snapKey(HIST[0].p) !== snapKey(P)){ HIST.unshift({ d: new Date().toLocaleDateString("vi-VN"), w: +P.w, n: note, p: snap(P) }); HIST = HIST.slice(0, 10); store.set("fm_hist", HIST); P.note = ""; $("#note").value = ""; store.set("fm_profile", P); showHist(); }
+$("#e1").textContent = ""; step(2);
+};
+$("#back1").onclick = () => step(1);
+[...$("#steps").children].forEach((b, i) => b.onclick = () => {
+const n = i + 1;
+if (n === curStep) return;
+if (n === 1) return step(1);
+if (curStep === 1){ $("#to2").click(); if (n === 3 && last && curStep === 2) step(3); return; }
+if (n === 2) return step(2);
+if (last) return step(3);
+$("#go").click();
+});
+$("#wipe").onclick = () => {
+if (!confirm("Xóa hồ sơ, tủ đồ, lịch sử cân nặng và lịch sử chat trên trình duyệt này?")) return;
+["fm_profile","fm_closet","fm_chat","fm_hist","fm_man"].forEach(k => store.del(k)); location.reload();
+};
+const readImg = (file, max = 1024) => new Promise((ok, no) => {
+if (!file || !file.type.startsWith("image/")) return no(new Error("Hãy chọn một file ảnh."));
+const r = new FileReader(); r.onerror = () => no(new Error("Không đọc được ảnh."));
+r.onload = () => { const im = new Image(); im.onerror = () => no(new Error("Ảnh không hợp lệ."));
+im.onload = () => { const sc = Math.min(1, max / Math.max(im.width, im.height)), c = document.createElement("canvas"); c.width = Math.round(im.width*sc); c.height = Math.round(im.height*sc);
+const x = c.getContext("2d"); x.fillStyle = "#fff"; x.fillRect(0, 0, c.width, c.height); x.drawImage(im, 0, 0, c.width, c.height); ok(c); };
+im.src = r.result; };
+r.readAsDataURL(file);
+});
+const mkThumb = c => { const sc = Math.min(1, 360 / Math.max(c.width, c.height)), t = document.createElement("canvas"); t.width = Math.round(c.width*sc); t.height = Math.round(c.height*sc); t.getContext("2d").drawImage(c, 0, 0, t.width, t.height); return t.toDataURL("image/jpeg", .7); };
+const UP = '<svg viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></svg>';
+const EMPTY = { "#drop": UP + "Chạm để tải ảnh sản phẩm (món 1)", "#drop2": UP + "Thêm ảnh quần/váy nếu muốn mặc thử cả bộ", "#bdrop": UP + "Ảnh toàn thân<br><small style='opacity:.75'>Đứng thẳng, chính diện, thấy rõ toàn thân</small>" };
+function setDrop(id, url, alt){
+const el = $(id); el.classList.toggle("has", !!url);
+el.innerHTML = url ? `<img src="${url}" alt="${alt}"><button type="button" class="x" aria-label="Xóa ảnh">×</button>` : EMPTY[id];
+const x = el.querySelector(".x"); if (x) x.onclick = e => { e.stopPropagation(); clearImg(id); };
+}
+function clearImg(id){
+if (id === "#drop"){ img = null; thumb = null; } else if (id === "#drop2"){ img2 = null; thumb2 = null; } else { body = null; }
+setDrop(id, null);
+}
+Object.keys(EMPTY).forEach(id => setDrop(id, null));
+function wireDrop(id, input, handler){
+const el = $(id), fi = $(input);
+el.onclick = () => fi.click();
+el.onkeydown = e => { if (e.key === "Enter" || e.key === " "){ e.preventDefault(); fi.click(); } };
+fi.onchange = e => { const f = e.target.files[0]; e.target.value = ""; if (f) handler(f); };
+el.ondragover = e => { e.preventDefault(); el.classList.add("over"); };
+el.ondragleave = () => el.classList.remove("over");
+el.ondrop = e => { e.preventDefault(); el.classList.remove("over"); const f = e.dataTransfer.files[0]; if (f) handler(f); };
+}
+async function loadImg(file, n = 1){
+try{
+const c = await readImg(file), url = c.toDataURL("image/jpeg", .85), th = mkThumb(c);
+if (n === 2){ img2 = url.split(",")[1]; thumb2 = th; } else { img = url.split(",")[1]; thumb = th; }
+setDrop(n === 2 ? "#drop2" : "#drop", url, "Ảnh sản phẩm " + n); $("#e2").textContent = "";
+}catch(e){ $("#e2").textContent = e.message; }
+}
+async function loadBody(file){
+try{ body = await readImg(file); setDrop("#bdrop", body.toDataURL("image/jpeg", .8), "Ảnh của bạn"); view = "Ảnh của bạn"; viewSync(); $("#e1").textContent = ""; }
+catch(e){ $("#e1").textContent = e.message; }
+}
+wireDrop("#drop", "#file", f => loadImg(f, 1));
+wireDrop("#drop2", "#file2", f => loadImg(f, 2));
+wireDrop("#bdrop", "#bfile", loadBody);
+document.addEventListener("paste", e => {
+if ($("#s2").hidden || !$("#tryon").classList.contains("on")) return;
+const f = [...(e.clipboardData?.files || [])].find(f => f.type.startsWith("image/")); if (f) loadImg(f, !img ? 1 : !img2 ? 2 : 1);
+});
+
+async function callAI(system, messages, max = 1200, temperature){
+let r;
+try { r = await fetch(WORKER_URL, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ system, messages, max_tokens: max, temperature }) }); }
+catch (e) { throw new Error("Không kết nối được tới " + (WORKER_URL.startsWith("http") ? WORKER_URL : location.origin + WORKER_URL) + ". Hãy mở web bằng địa chỉ Worker (dạng https://ten.ten-ban.workers.dev), không mở file trên máy."); }
+const d = await r.json().catch(() => ({}));
+if (!r.ok) throw new Error(d.error || "AI lỗi (" + r.status + ")");
+return d.text || "";
+}
+function profileText(){
+const l = [`Chiều cao ${P.h} cm, cân nặng ${P.w} kg`];
+if (P.sex) l.push("Giới tính: " + P.sex);
+const t = targetParams();
+if (P.shape) l.push("Phom dáng: " + P.shape); else if (!(t.gB && t.gW && t.gH)) l.push("Phom dáng gợi ý từ số đo: " + t.auto);
+if (P.bust || P.waist || P.hip) l.push(`Ba vòng: ngực ${P.bust||"?"}, eo ${P.waist||"?"}, mông ${P.hip||"?"} cm`);
+if (HIST.length > 1) l.push("Lịch sử cân nặng: " + histText());
+if (P.skin) l.push("Tông da (người dùng xác nhận): " + P.skin);
+if (P.under) l.push("Undertone (người dùng xác nhận): " + P.under);
+if (!P.skin && !P.under) l.push("Chưa xác nhận tông da/undertone: KHÔNG được đoán.");
+return l.join("; ");
+}
+const SYS = () => "Bạn là FitMe AI, stylist và chuyên gia chọn size quần áo cho người Việt. Trả lời tiếng Việt, ngắn gọn, thẳng thắn, không bịa số liệu. Hồ sơ người dùng: " + profileText();
+function localSize(bottom){
+const h = +P.h, w = +P.w, b = bottom ? +P.hip : +P.bust, order = ["XS","S","M","L","XL","XXL"];
+let i = b ? (bottom ? (b<86?0:b<92?1:b<98?2:b<104?3:b<110?4:5) : (b<82?0:b<88?1:b<94?2:b<100?3:b<106?4:5)) : (w<45?0:w<55?1:w<65?2:w<75?3:w<85?4:5);
+if (P.sex === "Nam") i++;
+if (h > 175) i++;
+if (h < 152) i--;
+return order[Math.max(0, Math.min(5, i))];
+}
+const arr = v => Array.isArray(v) ? v.map(String) : (v ? [String(v)] : []);
+function normalize(o){
+const f = String(o.fit || "vừa").toLowerCase(), ok = P.skin || P.under;
+return { product: String(o.product || "Sản phẩm của bạn"), size: String(o.size || "?").trim().toUpperCase(),
+confidence: Math.max(0, Math.min(100, parseInt(o.confidence) || 60)), fit: ["ôm","vừa","rộng","oversize"].find(x => f.includes(x)) || "vừa",
+reasons: arr(o.reasons), alt_size: String(o.alt_size || "").trim().toUpperCase(), warnings: arr(o.warnings), styling: arr(o.styling), colors: ok ? arr(o.colors) : [] };
+}
+async function analyze(imgData, text, link, bottom, pre){
+const prompt = `Chọn size cho người dùng. Link: ${link||"không có"}. Bảng size shop: ${text||"không có (hãy dùng bảng size chung, nói rõ nếu ước tính)"}.${pre ? ` Đã đối chiếu bảng size bằng phép tính chính xác: size ${pre}. Bắt buộc dùng đúng size này, không tự suy luận lại.` : ""}
+Chỉ trả về JSON hợp lệ, không markdown:
+{"product":"tên/loại món đồ","size":"size đề xuất","confidence":0-100,"fit":"ôm|vừa|rộng|oversize","reasons":["..."],"alt_size":"size dự phòng hoặc rỗng","warnings":["..."],"styling":["gợi ý phối đồ"],"colors":["màu hợp, chỉ khi đã có tông da/undertone xác nhận, nếu không để mảng rỗng"]}`;
+const content = [];
+if (imgData) content.push({type:"image", source:{type:"base64", media_type:"image/jpeg", data:imgData}});
+content.push({type:"text", text:prompt});
+try {
+const out = await callAI(SYS(), [{role:"user", content}], 1400, .2);
+const m = out.match(/\{[\s\S]*\}/);
+if (!m) throw new Error("AI trả về dữ liệu không đọc được.");
+const r = normalize(JSON.parse(m[0])); r.ai = true;
+return r;
+} catch (e) {
+const k = bottom ? P.hip : P.bust;
+return { product: bottom ? "Món 2 của bạn" : "Sản phẩm của bạn", size: localSize(bottom), confidence: 45, fit: "vừa", ai: false,
+reasons: ["Ước tính offline từ chiều cao/cân nặng" + (k ? (bottom ? " và vòng mông" : " và vòng ngực") : "") + "."],
+warnings: [e.message, "Kết quả chỉ mang tính tham khảo, hãy đối chiếu bảng size của shop."], styling: [], colors: [], alt_size: "" };
+}
+}
+const SIZES = ["M","L","XL"];
+function mkSizeTable(id, cols){
+const el = $(id);
+const cell = c => c[1] === "kg"
+? `<td><div class="rg"><input inputmode="decimal" placeholder="Từ" aria-label="Cân nặng từ" data-k="Cân nặng" data-r="a"><span>–</span><input inputmode="decimal" placeholder="Đến" aria-label="Cân nặng đến" data-k="Cân nặng" data-r="b"></div></td>`
+: `<td><input aria-label="${c[0]}" data-k="${c[0]}"></td>`;
+const row = n => `<tr><td><input value="${n}" aria-label="Size" maxlength="6"></td>${cols.map(cell).join("")}<td class="dl"><button type="button" class="rm" aria-label="Xóa size" title="Xóa size">×</button></td></tr>`;
+el.innerHTML = `<table><thead><tr><th>Size</th>${cols.map(c => `<th>${c[0]} (${c[1]})</th>`).join("")}<th></th></tr></thead><tbody>${SIZES.map(row).join("")}</tbody></table><button type="button" class="chip addrow" style="margin-top:4px">+ Thêm size</button>`;
+el.querySelector(".addrow").onclick = () => el.querySelector("tbody").insertAdjacentHTML("beforeend", row(""));
+el.onclick = e => { const b = e.target.closest(".rm"); if (b) b.closest("tr").remove(); };
+}
+function chartText(id){
+return [...$(id).querySelectorAll("tbody tr")].map(tr => {
+const ins = [...tr.querySelectorAll("input")], sz = ins[0].value.trim(), v = [];
+ins.slice(1).forEach(i => {
+const x = i.value.trim(); if (!x) return;
+if (i.dataset.r === "a"){ const b = i.parentNode.querySelector('[data-r="b"]').value.trim(); v.push("cân nặng " + (b ? x + "-" + b : "từ " + x) + " kg"); }
+else if (i.dataset.r === "b"){ if (!i.parentNode.querySelector('[data-r="a"]').value.trim()) v.push("cân nặng đến " + x + " kg"); }
+else v.push(i.dataset.k.toLowerCase() + " " + x);
+});
+return sz && v.length ? sz + ": " + v.join(", ") : "";
+}).filter(Boolean).join(" | ");
+}
+function clearTable(id){ $(id).querySelectorAll("input[data-k]").forEach(i => i.value = ""); }
+mkSizeTable("#t1", [["Ngực","cm"],["Eo","cm"],["Mông","cm"],["Cân nặng","kg"]]);
+mkSizeTable("#t2", [["Eo","cm"],["Mông","cm"],["Cân nặng","kg"]]);
+const num1 = x => parseFloat(String(x).replace(",", "."));
+const rng = t => { const n = (String(t).replace(/,/g, ".").match(/\d+(?:\.\d+)?/g) || []).map(Number); return n.length > 1 ? [Math.min(n[0], n[1]), Math.max(n[0], n[1])] : n.length ? [n[0], n[0]] : null; };
+function chartRows(id){
+return [...$(id).querySelectorAll("tbody tr")].map(tr => {
+const ins = [...tr.querySelectorAll("input")], o = { size: ins[0].value.trim().toUpperCase(), r: {} };
+let a = NaN, b = NaN;
+ins.slice(1).forEach(i => {
+const k = i.dataset.k, x = i.value.trim(); if (!x) return;
+if (i.dataset.r === "a") a = num1(x);
+else if (i.dataset.r === "b") b = num1(x);
+else { const g = rng(x); if (g) o.r[k] = g; }
+});
+if (!isNaN(a) || !isNaN(b)) o.r["Cân nặng"] = [isNaN(a) ? -Infinity : (isNaN(b) ? a : Math.min(a, b)), isNaN(b) ? Infinity : (isNaN(a) ? b : Math.max(a, b))];
+return o;
+});
+}
+const userVals = () => ({ "Ngực": +P.bust, "Eo": +P.waist, "Mông": +P.hip, "Cân nặng": +P.w });
+function matchChart(id){
+const U = userVals(), rows = chartRows(id).filter(r => r.size && Object.keys(r.r).length);
+const sc = rows.map(r => { let d = 0, n = 0; for (const k in r.r){ const u = U[k]; if (!u) continue; n++; const [lo, hi] = r.r[k]; d += u < lo ? lo - u : u > hi ? u - hi : 0; } return { r, d, n }; }).filter(x => x.n);
+if (!sc.length) return null;
+const m = Math.min(...sc.map(x => x.d)), best = sc.filter(x => x.d === m), pick = best[best.length - 1];
+return { size: pick.r.size, alt: best.length > 1 ? best[0].r.size : "", exact: m === 0, row: pick.r.r };
+}
+const fmtR = ([lo, hi]) => lo === -Infinity ? "tối đa " + hi : hi === Infinity ? "từ " + lo : lo === hi ? String(lo) : lo + "–" + hi;
+function chartReason(m){
+const U = userVals();
+const parts = Object.keys(m.row).filter(k => U[k]).map(k => { const u = U[k], [lo, hi] = m.row[k], ut = k === "Cân nặng" ? "kg" : "cm"; return `${k.toLowerCase()} ${u} ${ut} ${u >= lo && u <= hi ? "nằm trong" : "ngoài"} khoảng ${fmtR(m.row[k])} ${ut}`; });
+return `Size ${m.size} ${m.exact ? "khớp" : "gần khớp nhất với"} bảng của shop: ${parts.join(", ")}.`;
+}
+function applyChart(r, m){
+if (!m) return r;
+const bad = t => [...String(t).matchAll(/\bsize\s+([A-Za-z0-9]{1,4})\b/gi)].some(x => x[1].toUpperCase() !== m.size);
+r.size = m.size;
+r.reasons = [chartReason(m)].concat((r.reasons || []).filter(t => !bad(t) && !/\d+\s*[-–]\s*\d+\s*(kg|cm)/i.test(t)));
+const w = (r.warnings || []).filter(t => !bad(t));
+if (m.alt){ r.alt_size = m.alt; w.unshift(`Số đo của bạn nằm đúng ranh giới giữa size ${m.alt} và ${m.size}: thích ôm thì chọn ${m.alt}, thích rộng thì chọn ${m.size}.`); }
+else if (r.alt_size === m.size) r.alt_size = "";
+if (!m.exact) w.unshift("Số đo của bạn chưa nằm trọn trong size nào của bảng, đây là size gần nhất.");
+r.warnings = w;
+r.confidence = m.exact ? Math.max(r.confidence || 0, 85) : Math.min(r.confidence || 60, 65);
+return r;
+}
+
+$("#go").onclick = async () => {
+const text = chartText("#t1"), link = $("#link").value.trim(), text2 = chartText("#t2");
+if (!img && !text && !link) { $("#e2").textContent = "Thêm ít nhất một ảnh, bảng size hoặc link cho món 1."; return; }
+$("#e2").textContent = ""; $("#go").disabled = true; step(3);
+$("#result").innerHTML = ""; $("#loading").hidden = false; $("#save").hidden = true; $("#fit").hidden = true; $("#e4").textContent = "";
+const m1 = matchChart("#t1"), m2 = matchChart("#t2");
+const jobs = [analyze(img, text, link, false, m1 && m1.size).then(r => applyChart(r, m1))];
+if (img2 || text2) jobs.push(analyze(img2, text2, "", true, m2 && m2.size).then(r => applyChart(r, m2)));
+last = await Promise.all(jobs);
+const date = new Date().toLocaleDateString("vi-VN");
+last.forEach((r, i) => { r.date = date; r.link = i ? "" : link; r.thumb = i ? thumb2 : thumb; });
+$("#go").disabled = false;
+renderResult(); initFit(); $("#loading").hidden = true; $("#save").hidden = false;
+};
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const list = a => a && a.length ? `<ul class="clean">${a.map(x => `<li>${esc(x)}</li>`).join("")}</ul>` : "";
+function renderOne(r, i){
+const fitCls = r.fit === "vừa" ? "ok" : "warn";
+return `<div class="enter">
+${r.thumb ? `<img class="rthumb" src="${r.thumb}" alt="Ảnh sản phẩm">` : ""}
+<p class="sub" style="margin:0">${last.length > 1 ? `<b>Món ${i+1}</b> · ` : ""}${esc(r.product)}</p>
+<div style="display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap"><div class="size-big metal">${esc(r.size)}</div>
+<div><span class="tag ${fitCls}">Form ${esc(r.fit)}</span>${r.alt_size ? `<span class="tag">Dự phòng: ${esc(r.alt_size)}</span>` : ""}${r.ai ? "" : `<span class="tag warn">Offline</span>`}</div></div>
+<div class="meter" role="img" aria-label="Độ tin cậy ${+r.confidence||0}%"><div style="width:${+r.confidence||0}%"></div></div>
+<div class="hint">Độ tin cậy ${+r.confidence||0}%</div>
+<label style="margin-top:14px">Vì sao chọn size này</label>${list(r.reasons)}
+${r.warnings?.length ? `<label style="margin-top:14px">Lưu ý</label>${list(r.warnings)}` : ""}
+${r.styling?.length ? `<label style="margin-top:14px">Gợi ý phối đồ</label>${list(r.styling)}` : ""}
+${r.colors?.length ? `<label style="margin-top:14px">Màu hợp với bạn</label>${r.colors.map(c => `<span class="tag">${esc(c)}</span>`).join("")}` : ""}</div>`;
+}
+function renderResult(){
+$("#result").innerHTML = last.map(renderOne).join('<hr style="border:0;border-top:1px solid var(--line);margin:22px 0;clear:both">');
+}
+function initFit(){
+$("#aiOut").innerHTML = "";
+const ok = !!(body && img);
+$("#fit").hidden = !ok;
+$("#maskBox").hidden = !(ok && img2); if (ok && img2) drawMask();
+$("#e4").textContent = ok ? "" : "Muốn xem bạn mặc món này: quay lại và thêm ảnh toàn thân của bạn (bước 1) cùng ảnh sản phẩm (bước 2).";
+}
+const drawMask = () => {
+if (!body) return;
+const c = $("#mprev"), w = 240, h = Math.round(w * body.height / body.width), x = c.getContext("2d");
+c.width = w; c.height = h; x.drawImage(body, 0, 0, w, h);
+const t = $("#mTop").value / 100, b = $("#mBot").value / 100;
+x.fillStyle = "rgba(255,40,40,.4)"; x.fillRect(w * .2, h * t, w * .6, h * Math.max(.05, b - t));
+};
+["#mTop", "#mBot"].forEach(k => $(k).addEventListener("input", drawMask));
+const lowerMask = src => new Promise((res, rej) => {
+const im = new Image();
+im.onload = () => {
+const w = 384, h = Math.round(w * im.height / im.width), c = document.createElement("canvas");
+c.width = w; c.height = h;
+const x = c.getContext("2d"); x.fillStyle = "#000"; x.fillRect(0, 0, w, h);
+const t = $("#mTop").value / 100, b = $("#mBot").value / 100;
+x.fillStyle = "#fff"; x.fillRect(w * .2, h * t, w * .6, h * Math.max(.05, b - t));
+res(c.toDataURL("image/png"));
+};
+im.onerror = () => rej(new Error("Không tạo được vùng mặc quần/váy"));
+im.src = src;
+});
+const jpegOf = src => new Promise((res, rej) => {
+const im = new Image();
+im.onload = () => { const c = document.createElement("canvas"); c.width = im.width; c.height = im.height; c.getContext("2d").drawImage(im, 0, 0); res(c.toDataURL("image/jpeg", .9)); };
+im.onerror = () => rej(new Error("Không đọc được ảnh kết quả"));
+im.src = src;
+});
+$("#aiBtn").onclick = async () => {
+const err = $("#e4"); err.textContent = "";
+if (!body || !img) { err.textContent = "Cần ảnh toàn thân và ảnh sản phẩm."; return; }
+const steps = img2 ? [{ g: img2, low: true }, { g: img }] : [{ g: img }], n = steps.length;
+if (!confirm("Ảnh của bạn và ảnh sản phẩm sẽ được gửi tới Hugging Face (Space IDM-VTON) để tạo ảnh mặc thử" + (n > 1 ? ", lần lượt từng món" : "") + ". Tiếp tục?")) return;
+$("#aiBtn").disabled = true;
+const show = src => `<img class="tryimg" src="${src}" alt="Ảnh mặc thử do AI tạo">
+<div class="actions"><a class="btn ghost" href="${src}" download="fitme-mac-thu.png">Tải ảnh về</a></div>`;
+let person = body.toDataURL("image/jpeg", .9), out = null;
+try {
+for (let i = 0; i < n; i++) {
+$("#aiOut").innerHTML = '<div class="empty"><svg class="compass"><use href="#cs"/></svg>AI đang mặc thử' + (n > 1 ? " " + (steps[i].low ? "quần/váy" : "áo") + " (" + (i+1) + "/" + n + ")" : "") + ', có thể mất 1–3 phút<span class="dots"><span>.</span><span>.</span><span>.</span></span></div>';
+const r = await fetch(API_BASE + "/api/tryon", {
+method: "POST", headers: { "Content-Type": "application/json" },
+body: JSON.stringify({ person, garment: "data:image/jpeg;base64," + steps[i].g, mask: steps[i].low ? await lowerMask(person) : undefined })
+});
+const d = await r.json().catch(() => ({}));
+if (!r.ok || !d.image) throw new Error((n > 1 ? (steps[i].low ? "Quần/váy" : "Áo") + ": " : "") + (d.error || "Lỗi " + r.status));
+out = d.image;
+if (i < n - 1) person = await jpegOf(out);
+}
+$("#aiOut").innerHTML = show(out);
+} catch (e) {
+$("#aiOut").innerHTML = out ? show(out) : "";
+err.textContent = "Không tạo được ảnh: " + (e.message || "lỗi mạng") + "." + (out ? " Ảnh bên trên mới chỉ mặc được món trước đó." : "");
+}
+$("#aiBtn").disabled = false;
+};
+$("#again").onclick = () => { $("#aiOut").innerHTML = ""; $("#e2").textContent = ""; step(2); };
+$("#save").onclick = () => {
+if (!last) return;
+const c = store.get("fm_closet", []); c.unshift(...last); store.set("fm_closet", c.slice(0, 30));
+$("#save").textContent = "Đã lưu"; setTimeout(() => $("#save").textContent = "Lưu vào tủ đồ", 1500);
+};
+function renderCloset(){
+const c = store.get("fm_closet", []);
+$("#wardrobe").innerHTML = c.length ? c.map((x, i) => `<div class="item" style="animation-delay:${Math.min(i, 8)*40}ms"><div class="ph">${x.thumb ? `<img src="${x.thumb}" alt="${esc(x.product)}">` : "✦"}<em>${esc(x.size)}</em></div><b>${esc(x.product)}</b>
+<div class="hint">${esc(x.date)} · Form ${esc(x.fit)} · ${+x.confidence||0}%</div>
+${x.reasons && x.reasons[0] ? `<div class="hint">${esc(x.reasons[0])}</div>` : ""}
+${x.link ? `<div class="hint" style="word-break:break-all">${esc(x.link)}</div>` : ""}
+<button class="link" data-i="${i}">Xóa</button></div>`).join("")
+: `<div class="empty" style="grid-column:1/-1">Tủ đồ còn trống. Thử một món rồi nhấn “Lưu vào tủ đồ”.</div>`;
+$("#wardrobe").querySelectorAll("button").forEach(b => b.onclick = () => { c.splice(+b.dataset.i, 1); store.set("fm_closet", c); renderCloset(); });
+}
+const QUICK = ["Đi làm nên mặc gì?","Phối đồ đi hẹn hò","Màu nào hợp với tôi?","Áo che bụng cho phom của tôi"];
+$("#quick").innerHTML = QUICK.map(q => `<button class="chip" type="button">${q}</button>`).join("");
+$("#quick").querySelectorAll("button").forEach(b => b.onclick = () => { $("#q").value = b.textContent; sendQ(); });
+let drawn = -1;
+function drawChat(){
+const box = $("#chat");
+if (!history.length && !busy){ box.innerHTML = `<div class="empty">Chọn một câu hỏi nhanh hoặc tự hỏi bên dưới.</div>`; drawn = 0; return; }
+if (drawn < 1 || drawn > history.length) { box.innerHTML = ""; drawn = 0; }
+box.querySelectorAll(".typing").forEach(e => e.remove());
+history.slice(drawn).forEach(m => { const d = document.createElement("div"); d.className = "msg " + (m.role === "user" ? "u" : "a"); d.textContent = m.content; box.appendChild(d); });
+drawn = history.length;
+if (busy) box.insertAdjacentHTML("beforeend", '<div class="msg a typing dots"><span>.</span><span>.</span><span>.</span></div>');
+box.scrollTop = box.scrollHeight;
+}
+async function sendQ(){
+if (busy) return;
+const q = $("#q").value.trim(); if (!q) return;
+if (!(+P.h && +P.w)) { $("#e3").textContent = "Hãy nhập chiều cao và cân nặng ở tab Thử đồ trước."; return; }
+$("#e3").textContent = ""; $("#q").value = "";
+history.push({role:"user", content:q}); busy = true; drawChat(); $("#ask").disabled = true;
+try {
+const hh = history.slice(-12); while (hh.length && hh[0].role !== "user") hh.shift();
+const a = await callAI(SYS(), hh, 900, .6);
+if (!a.trim()) throw new Error("AI chưa trả lời, hãy thử lại.");
+history.push({role:"assistant", content:a});
+} catch (e) { $("#e3").textContent = e.message; history.pop(); drawn = -1; $("#q").value = q; }
+busy = false; store.set("fm_chat", history.slice(-30)); drawChat(); $("#ask").disabled = false;
+}
+$("#ask").onclick = sendQ;
+$("#clr").onclick = () => { history = []; drawn = -1; store.set("fm_chat", []); drawChat(); };
+$("#q").onkeydown = e => { if (e.key === "Enter") sendQ(); };
+drawChat();
+updateMan();
+</script>
+</body>
+</html>
