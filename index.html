@@ -150,6 +150,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 .m3dims{position:absolute;inset:0;pointer-events:none}
 .m3dims span{position:absolute;right:10px;transform:translateY(-50%);background:rgba(2,14,30,.72);border:1px solid rgba(232,196,121,.35);color:var(--gold);border-radius:99px;padding:3px 10px;font-size:11px;font-weight:600;white-space:nowrap;backdrop-filter:blur(4px)}
 .m3tag{position:absolute;left:10px;bottom:10px;background:rgba(2,14,30,.66);border:1px solid rgba(127,214,245,.3);color:var(--aqua);border-radius:99px;padding:3px 10px;font-size:11px;font-weight:600;pointer-events:none}
+.m3credit{position:absolute;right:10px;bottom:10px;max-width:60%;text-align:right;background:rgba(2,14,30,.66);border:1px solid rgba(232,196,121,.32);color:var(--gold);border-radius:99px;padding:3px 10px;font-size:10.5px;font-weight:600;pointer-events:none}
 #m3note{color:var(--warn);margin-top:10px}
 #delta{color:var(--aqua)}
 /* ---------- Thanh trượt chỉnh nhanh 3D ---------- */
@@ -328,7 +329,7 @@ footer{position:relative;z-index:1;text-align:center;color:var(--mute2);font-siz
         <div class="seg" id="viewSeg"></div>
         <div class="stbody">
           <svg viewBox="0 0 300 470" id="man" role="img" aria-label="Hình người minh họa theo số đo"></svg>
-          <div id="m3d" class="off" hidden aria-label="Mô hình 3D"><div id="m3dCanvas"></div><div class="m3dims" id="m3dims"><span id="d3b" style="top:26%">Ngực</span><span id="d3w" style="top:39%">Eo</span><span id="d3h" style="top:48%">Mông</span></div><span class="m3tag">Kéo để xoay 360°</span></div>
+          <div id="m3d" class="off" hidden aria-label="Mô hình 3D"><div id="m3dCanvas"></div><div class="m3dims" id="m3dims"><span id="d3b" style="top:26%">Ngực</span><span id="d3w" style="top:39%">Eo</span><span id="d3h" style="top:48%">Mông</span></div><span class="m3tag">Kéo để xoay 360°</span><span class="m3credit">Mô hình tham số kiểu ANNY (NAVER LABS, Apache 2.0)</span></div>
           <div class="drop stbd off" id="bdrop" tabindex="0" role="button" aria-label="Tải ảnh toàn thân" hidden></div>
         </div>
         <div class="m3sliders" id="m3sliders" hidden>
@@ -339,7 +340,10 @@ footer{position:relative;z-index:1;text-align:center;color:var(--mute2);font-siz
           <label class="s3row"><span class="s3lab">Eo</span><input type="range" id="s3wa" min="45" max="170" step="1" value="70" aria-label="Vòng eo mô hình 3D"><span class="s3val" id="v3wa">70 cm</span></label>
           <label class="s3row"><span class="s3lab">Mông</span><input type="range" id="s3hi" min="60" max="170" step="1" value="93" aria-label="Vòng mông mô hình 3D"><span class="s3val" id="v3hi">93 cm</span></label>
           <label class="s3row"><span class="s3lab">Vai (rộng)</span><input type="range" id="s3sh" min="34" max="58" step="0.5" value="42" aria-label="Chiều rộng vai mô hình 3D"><span class="s3val" id="v3sh">42 cm</span></label>
+          <label class="s3row"><span class="s3lab">Tuổi</span><input type="range" id="s3age" min="6" max="80" step="1" value="28" aria-label="Tuổi mô hình 3D"><span class="s3val" id="v3age">28 tuổi</span></label>
+          <label class="s3row"><span class="s3lab">Cơ bắp</span><input type="range" id="s3mus" min="0" max="100" step="1" value="35" aria-label="Mức cơ bắp mô hình 3D"><span class="s3val" id="v3mus">35%</span></label>
           <p class="hint" style="margin:2px 0 8px">Số có dấu ~ là đang ước tính từ chiều cao / cân nặng / phom. Kéo thanh trượt sẽ ghi thành số đo thật.</p>
+          <p class="hint" style="margin:0 0 8px">Mô hình tham số kiểu ANNY (NAVER LABS, Apache 2.0): một lưới người thống nhất duy nhất, dáng đổi theo blendshape phenotype — tuổi, giới tính, chiều cao, cân nặng, cơ bắp và từng vòng đo — nội suy mượt từng đoạn giữa các phom mẫu gầy / trung bình / đầy đặn, trẻ / trưởng thành.</p>
         </div>
         <p class="hint" id="m3note" hidden>Thiết bị này chưa chạy được 3D, đang hiển thị 2D</p>
         <div class="stat" id="stat"><div><b id="bmi">–</b><span id="bmiCat">BMI</span></div><div><b id="whr">–</b>Eo/Mông</div><div><b class="sm" id="shapeName">–</b>Phom</div></div>
@@ -473,7 +477,7 @@ const SHAPES = ["Quả lê","Đồng hồ cát","Chữ nhật","Tam giác ngư�
 const SKINS = [["Rất sáng","#f8e0d0"],["Sáng","#efc9ab"],["Trung bình","#deae88"],["Rám","#c68e65"],["Ngăm","#9c6a47"],["Nâu đậm","#6b4430"]];
 const UNDERS = ["Ấm","Lạnh","Trung tính"];
 const SEXES = ["Nữ","Nam","Unisex"];
-let P = Object.assign({h:"",w:"",bust:"",waist:"",hip:"",shoulder:"",sex:"",shape:"",skin:"",under:"",note:""}, store.get("fm_profile", {}));
+let P = Object.assign({h:"",w:"",bust:"",waist:"",hip:"",shoulder:"",age:"",muscle:"",sex:"",shape:"",skin:"",under:"",note:""}, store.get("fm_profile", {}));
 let HIST = store.get("fm_hist", []);
 let img = null, thumb = null, img2 = null, thumb2 = null, body = null, busy = false, last = null, history = store.get("fm_chat", []);
 document.querySelectorAll("nav.tabs button").forEach(b => b.onclick = () => {
@@ -696,11 +700,12 @@ const bu=num(S.bust,55,170),wu=num(S.waist,45,170),hu=num(S.hip,60,170);
 B=bu||B;W=wu||W;Hp=hu||Hp;
 let Sh=lerp(38.5,46.5,sx)*s*(1+.30*f)*(sp==="Tam giác ngược"?1.07:sp==="Quả lê"?.96:1);
 const shu=num(S.shoulder,30,65); Sh=shu||Sh;
+const ageV=parseFloat(S.age),musV=parseFloat(S.muscle);
 const hex=(SKINS.find(k=>k[0]===S.skin)||[0,"#dcb899"])[1];
 let sk=[1,3,5].map(i=>parseInt(hex.substr(i,2),16));
 const tint=S.under==="Ấm"?[255,170,90]:S.under==="Lạnh"?[225,150,185]:null;
 if(tint)sk=sk.map((v,i)=>lerp(v,tint[i],.07));
-return{h,w,B,W,Hp,Sh,sx,d,shK:sp==="Tam giác ngược"?1.08:sp==="Quả lê"?.95:1,sk,gB:!bu,gW:!wu,gH:!hu,gSh:!shu,bmi,auto:shapeFrom(B,W,Hp),have:!!(parseFloat(S.h)&&parseFloat(S.w))};
+return{h,w,B,W,Hp,Sh,sx,d,shK:sp==="Tam giác ngược"?1.08:sp==="Quả lê"?.95:1,sk,gB:!bu,gW:!wu,gH:!hu,gSh:!shu,age:cl(isNaN(ageV)?28:ageV,6,80),mus:cl(isNaN(musV)?35:musV,0,100),gAge:isNaN(ageV),gMus:isNaN(musV),bmi,auto:shapeFrom(B,W,Hp),have:!!(parseFloat(S.h)&&parseFloat(S.w))};
 }
 
 /* ---------- Giao diện mô hình: xoay, số đo, so sánh, tải ảnh ---------- */
@@ -712,7 +717,7 @@ const prevP=()=>HIST[0]&&HIST[0].p||null;
 function opts(){return{back:M.back,dims:M.dims,top:"Thun",bot:"Short",topC:PAL[0],botC:PAL[2],ease:1,hair:HAIRS[0][1],ghost:M.ghost&&prevP()?targetParams(prevP()):null}}
 let OP=opts();
 const renderMan=()=>{OP=opts();$("#man").innerHTML=manSVG(cur||targetParams(),OP);if(typeof schedule3D==="function")schedule3D()};
-const NUMK=["h","w","B","W","Hp","Sh","sx","d","shK"];
+const NUMK=["h","w","B","W","Hp","Sh","sx","d","shK","age","mus"];
 let cur=null,raf=0,s3Instant=false;
 function updateMan(){
 const t=targetParams();statTween(t);if(typeof syncSliders==="function")syncSliders(t);
@@ -775,11 +780,13 @@ view = items[i]; sync();
 sync(); return sync;
 })();
 
-/* ================= Mô hình 3D chân thực (Three.js) =================
-   Người parametric: tiết diện elip mịn theo đúng 3 vòng / vai / chiều cao,
-   đầu = 1/7.5 chiều cao, tay có ngón, tóc có khối + sợi, áo/quần ôm theo
-   người kèm nếp gấp & viền, da mềm (phát sáng nhẹ kiểu subsurface),
-   3 nguồn sáng + sàn navy hứng bóng mềm thật. */
+/* ================= Mô hình 3D tham số kiểu ANNY (Three.js) =================
+   Dịch thiết kế ANNY (NAVER LABS Europe, Apache 2.0 — bản gốc PyTorch) sang JS :
+   MỘT lưới người thống nhất kiểu MakeHuman (thân + cổ + đầu liền một loft,
+   tay/chân/bàn tay/bàn chân cùng hệ), hình dạng đổi bằng blendshape phenotype
+   có thể giải thích được (tuổi, giới, chiều cao, cân nặng/BMI, cơ bắp + từng
+   vòng ngực/eo/mông/vai) với nội suy từng đoạn giữa các prototype. Tư thế
+   A-pose nhẹ, da be nhạt mờ, 3 nguồn sáng + sàn navy hứng bóng mềm. */
 let T3=null,t3Pend=false,_s3sync=false;
 function t3Dims(){ const el=$("#m3dims"); if(el) el.style.display=M.dims?"":"none"; }
 function t3Flip(){ if(!T3) return false; T3.auto=false; T3.targetY+=Math.PI; return true; }
@@ -795,15 +802,21 @@ function syncSliders(t){
  set("#s3wa","#v3wa",cl(t.W,45,170),"cm",t.gW);
  set("#s3hi","#v3hi",cl(t.Hp,60,170),"cm",t.gH);
  set("#s3sh","#v3sh",cl(t.Sh,34,58),"cm",t.gSh);
+ set("#s3age","#v3age",cl(t.age||28,6,80),"tuổi",false);
+ set("#s3mus","#v3mus",cl(t.mus==null?35:t.mus,0,100),"%",false);
 }
 (function wireSliders(){
  const map=[["#s3h","h"],["#s3w","w"],["#s3b","bust"],["#s3wa","waist"],["#s3hi","hip"]];
  map.forEach(([sid,key])=>{ const s=$(sid); if(!s) return; s.addEventListener("input",()=>{ if(_s3sync) return; $("#"+key).value=s.value; s3Instant=true; persist();
    const t=targetParams(),lab={h:"#v3h",w:"#v3w",bust:"#v3b",waist:"#v3wa",hip:"#v3hi"}[key]; if(lab) $(lab).textContent=Math.round(+s.value)+(key==="w"?" kg":" cm"); }); });
  const sh=$("#s3sh"); if(sh) sh.addEventListener("input",()=>{ if(_s3sync) return; P.shoulder=sh.value; $("#v3sh").textContent=(+sh.value)+" cm"; s3Instant=true; clearTimeout(saveT); saveT=setTimeout(()=>store.set("fm_profile",P),200); updateMan(); });
+ [["#s3age","age","#v3age"," tuổi"],["#s3mus","muscle","#v3mus","%"]].forEach(([sid,key,lab,suf])=>{ const s=$(sid); if(!s) return; s.addEventListener("input",()=>{ if(_s3sync) return; P[key]=s.value; $(lab).textContent=Math.round(+s.value)+suf; s3Instant=true; clearTimeout(saveT); saveT=setTimeout(()=>store.set("fm_profile",P),200); updateMan(); }); });
 })();
 /* ---- Bộ dựng hình ---- */
 function crp(p0,p1,p2,p3,u){ return .5*((2*p1)+(-p0+p2)*u+(2*p0-5*p1+4*p2-p3)*u*u+(-p0+3*p1-3*p2+p3)*u*u*u); }
+/* Nội suy từng đoạn (piecewise) kiểu ANNY : phenotype được định nghĩa tại các
+   mốc prototype, giá trị ở giữa là pha tuyến tính của 2 mốc kề — đổi mượt, không nhảy cục */
+function pw(v,ks,vs){ if(v<=ks[0]) return vs[0]; for(let i=1;i<ks.length;i++){ if(v<=ks[i]){ const t=(v-ks[i-1])/(ks[i]-ks[i-1]); return vs[i-1]+(vs[i]-vs[i-1])*t; } } return vs[vs.length-1]; }
 function interpProf(ctrl,n){
  const out=[],L=ctrl.length,DEF={y:0,rx:0,rz:0,cx:0,cz:0,asym:0,bulge:0};
  for(let i=0;i<n;i++){ const t=i/(n-1)*(L-1),ix=Math.min(L-2,Math.floor(t)),u=t-ix;
@@ -889,7 +902,7 @@ const grp=new THREE.Group(); scene.add(grp);
 const fig=new THREE.Group(); grp.add(fig);
 const M3={
  /* Da mannequin : be nhạt, mờ (roughness cao), không bóng nhựa, không phát sáng cam */
- skin:new THREE.MeshStandardMaterial({color:0xe9c39a,roughness:.74,metalness:0}),
+ skin:new THREE.MeshStandardMaterial({color:0xe9c39a,roughness:.64,metalness:0}),
  skinD:new THREE.MeshStandardMaterial({color:0xc49a72,roughness:.78,metalness:0}),
  face:new THREE.MeshStandardMaterial({color:0xbd8f66,roughness:.8,metalness:0}),
  lipN:new THREE.MeshStandardMaterial({color:0xc08568,roughness:.72,metalness:0}),
@@ -955,54 +968,72 @@ const ell=C=>({rx:C*k*.204,rz:C*k*.133});
 const bE=ell(p.B),wE=ell(p.W),hE=ell(p.Hp),shHalf=p.Sh*k/2;
 const nR=(0.096+p.sx*.016)*(HT/5);
 const bF=lerp(.715,.725,p.sx),wF=lerp(.628,.618,p.sx);
+/* ===== Phenotype kiểu ANNY — nội suy từng đoạn giữa các prototype =====
+   fatK theo BMI (gầy → trung bình → đầy đặn), tuổi đổi tỉ lệ đầu/thân + vòng eo,
+   cơ bắp nở ngực/tay/chân và siết eo (chỉ khi eo đang ước tính, không đụng số đo thật).
+   Mọi đại lượng đều pha tuyến tính giữa 2 mốc kề nên kéo trượt là dáng đổi mượt. */
+const age=p.age||28, mus=(p.mus==null?35:p.mus)/100;
+const fatK=pw(p.bmi||21,[15,18.5,23,27,32,40],[.80,.90,1,1.12,1.28,1.48]);
+const fatT=cl((fatK-.8)/.68,0,1);
+if(p.gW){ const aw=pw(age,[6,18,35,55,80],[.93,.97,1,1.05,1.09])*(1-mus*.05); wE.rx*=aw; wE.rz*=aw; }
+bE.rx*=1+mus*.035; bE.rz*=1+mus*.02;
+const headFrac=pw(age,[6,12,18,30,80],[1/5.6,1/6.6,1/7.5,1/7.5,1/7.45]);
+const bFy=bF-pw(age,[16,30,50,70,80],[0,0,.006,.012,.016]);
+const bustForm=fem?pw(age,[6,12,16,20],[0,.25,.85,1]):1;
+const headH=HT*headFrac, hRy=headH/2, hRx=hRy*lerp(.68,.74,p.sx), hRz=hRy*lerp(.74,.80,p.sx), chinY=HT-headH, hcy=chinY+headH*.5;
+const shY=Math.min(Y(.812),chinY-HT*.028), trapY=lerp(shY,chinY,.45), neckY=lerp(shY,chinY,.78), shirtTopY=Math.min(Y(.840),chinY-HT*.03);
 const full=1+cl(p.d,-4,14)*.006, TH=.017*(HT/5); /* TH = độ dày lớp vải */
-/* ================= THÂN LIỀN KHỐI : một lưới duy nhất từ hông tới cổ =================
-   Tiết diện elip nội suy Catmull-Rom 64 lớp × 40 điểm, asym lệch trước/sau :
-   ngực đầy phía trước, mông cong phía sau, lưng phẳng hơn — chuyển cong mềm
-   vai → ngực → eo → hông, không một khớp nối nào */
+/* ============ LƯỚI NGƯỜI THỐNG NHẤT KIỂU ANNY : MỘT topology duy nhất ============
+   Thân + cổ + đầu là MỘT lưới loft duy nhất (56 điểm quanh × 120 lớp nội suy
+   Catmull-Rom, từ hông lên đỉnh đầu) : không khớp nối vai/cổ/đầu, chuyển cong
+   mềm hông → eo → ngực → vai → cổ → hàm → gò má → sọ. asym lệch tâm trước/sau
+   cho ngực đầy phía trước, mông cong phía sau, lưng phẳng hơn. Tay/chân là ống
+   quét bắt đầu từ TRONG thân, cùng vật liệu da, nên liền mạch như một cơ thể. */
 const torsoCtrl=[
- {y:Y(.452),rx:hE.rx*.78,rz:hE.rz*.80,asym:-.015},
+ {y:Y(.448),rx:hE.rx*.80,rz:hE.rz*.82,asym:-.014},
  {y:Y(.488),rx:hE.rx*.95,rz:hE.rz*.96,asym:-.032},
  {y:Y(.528),rx:hE.rx,rz:hE.rz,asym:-.036},
  {y:Y(.570),rx:lerp(hE.rx,wE.rx,.42),rz:lerp(hE.rz,wE.rz,.42),asym:-.012},
  {y:Y(wF),rx:wE.rx,rz:wE.rz,asym:0},
  {y:Y(.668),rx:lerp(wE.rx,bE.rx,.52),rz:lerp(wE.rz,bE.rz,.52),asym:.006},
- {y:Y(bF),rx:bE.rx,rz:bE.rz,asym:masc?.012:.02},
+ {y:Y(bFy),rx:bE.rx,rz:bE.rz,asym:masc?.012:.02,bulge:fem?.16*bustForm:masc?.04:.08},
  {y:Y(.772),rx:bE.rx*.955,rz:bE.rz*.93,asym:.008},
- {y:Y(.812),rx:shHalf*.985,rz:bE.rz*.70,asym:.002},
- {y:Y(.838),rx:lerp(shHalf*.985,nR*1.9,.55),rz:nR*1.55,asym:0},
- {y:Y(.862),rx:nR*1.55,rz:nR*1.24,asym:0},
- {y:Y(.884),rx:nR*1.07,rz:nR,asym:0}];
-add(new THREE.Mesh(tubeGeo(torsoCtrl,40,64),M3.skin));
-/* Cổ liền thân, hơi thu lên đầu */
-add(new THREE.Mesh(tubeGeo([
- {y:Y(.845),rx:nR*1.30,rz:nR*1.18,asym:0},
- {y:Y(.878),rx:nR*1.02,rz:nR*.96,asym:0},
- {y:Y(.905),rx:nR*.97,rz:nR*.92,asym:0},
- {y:Y(.920),rx:nR*.99,rz:nR*.94,asym:0}],20,10),M3.skin));
+ {y:Y(.792),rx:lerp(bE.rx*.955,shHalf*.985,.5),rz:bE.rz*.82,asym:.004},
+ {y:shY,rx:shHalf*.985,rz:bE.rz*.70,asym:.002},
+ {y:trapY,rx:lerp(shHalf*.985,nR*1.75,.55),rz:nR*1.50,asym:0},
+ {y:neckY,rx:nR*1.18,rz:nR*1.05,asym:0},
+ {y:chinY-HT*.004,rx:nR*1.0,rz:nR*.94,asym:0},
+ {y:chinY+headH*.05,rx:hRx*.70,rz:hRz*.78,asym:.004},
+ {y:chinY+headH*.22,rx:hRx*.90,rz:hRz*.92,asym:.008},
+ {y:chinY+headH*.40,rx:hRx*.99,rz:hRz*.99,asym:.010},
+ {y:chinY+headH*.60,rx:hRx*.95,rz:hRz*.96,asym:.006},
+ {y:chinY+headH*.80,rx:hRx*.90,rz:hRz*.92,asym:0},
+ {y:chinY+headH*.93,rx:hRx*.66,rz:hRz*.70,asym:0},
+ {y:chinY+headH*.995,rx:hRx*.30,rz:hRz*.32,asym:0}];
+add(new THREE.Mesh(tubeGeo(torsoCtrl,56,120),M3.skin));
 /* ================= ÁO THUN : lớp vải mỏng ôm sát theo thân ================= */
 const shirtCtrl=[
  {y:Y(.548),rx:lerp(hE.rx,wE.rx,.35)+TH*1.7,rz:lerp(hE.rz,wE.rz,.35)+TH*1.6,asym:-.01},
  {y:Y(.575),rx:lerp(hE.rx,wE.rx,.42)+TH,rz:lerp(hE.rz,wE.rz,.42)+TH,asym:-.012},
  {y:Y(wF),rx:wE.rx+TH,rz:wE.rz+TH,asym:0},
  {y:Y(.668),rx:lerp(wE.rx,bE.rx,.52)+TH,rz:lerp(wE.rz,bE.rz,.52)+TH,asym:.006},
- {y:Y(bF),rx:bE.rx+TH,rz:bE.rz+TH,asym:masc?.012:.02},
+ {y:Y(bFy),rx:bE.rx+TH,rz:bE.rz+TH,asym:masc?.012:.02},
  {y:Y(.772),rx:bE.rx*.955+TH,rz:bE.rz*.93+TH,asym:.008},
- {y:Y(.812),rx:shHalf*.97+TH,rz:bE.rz*.70+TH,asym:.002},
- {y:Y(.840),rx:lerp(shHalf*.97,nR*1.9,.55)+TH*.8,rz:nR*1.55+TH*.7,asym:0}];
+ {y:shY,rx:shHalf*.97+TH,rz:bE.rz*.70+TH,asym:.002},
+ {y:shirtTopY,rx:lerp(shHalf*.97,nR*1.9,.55)+TH*.8,rz:nR*1.55+TH*.7,asym:0}];
 add(new THREE.Mesh(tubeGeo(shirtCtrl,40,48),M3.shirt));
 add(new THREE.Mesh(tubeGeo([
  {y:Y(.546),rx:lerp(hE.rx,wE.rx,.35)+TH*1.9,rz:lerp(hE.rz,wE.rz,.35)+TH*1.8,asym:-.01},
  {y:Y(.560),rx:lerp(hE.rx,wE.rx,.38)+TH*1.7,rz:lerp(hE.rz,wE.rz,.38)+TH*1.6,asym:-.011}],40,6),M3.shirtD));
 const collar=new THREE.Mesh(new THREE.TorusGeometry(nR*1.40,HT*.0022,8,32),M3.shirtD);
-collar.rotation.x=Math.PI/2; collar.scale.y=.80; collar.position.y=Y(.840); add(collar);
+collar.rotation.x=Math.PI/2; collar.scale.y=.80; collar.position.y=shirtTopY; add(collar);
 /* Định hình ngực rất nhẹ qua lớp áo : nam cơ ngực phẳng · nữ bầu ngực mềm */
-if(fem){ const bR=cl((p.B-p.W)*k*.34,.030,.088);
- sph(M3.shirt,bR*1.35,bR*1.08,bR*1.02,-bE.rx*.40,Y(bF)-.015,bE.rz*.80);
- sph(M3.shirt,bR*1.35,bR*1.08,bR*1.02, bE.rx*.40,Y(bF)-.015,bE.rz*.80);
+if(fem){ const bR=cl((p.B-p.W)*k*.34,.030,.088)*lerp(.25,1,bustForm);
+ sph(M3.shirt,bR*1.35,bR*1.08,bR*1.02,-bE.rx*.40,Y(bFy)-.015,bE.rz*.80);
+ sph(M3.shirt,bR*1.35,bR*1.08,bR*1.02, bE.rx*.40,Y(bFy)-.015,bE.rz*.80);
 }else if(masc){
- sph(M3.shirt,bE.rx*.34,HT*.016,HT*.004,-bE.rx*.40,Y(bF)+.004,bE.rz*.985);
- sph(M3.shirt,bE.rx*.34,HT*.016,HT*.004, bE.rx*.40,Y(bF)+.004,bE.rz*.985);
+ sph(M3.shirt,bE.rx*.34,HT*.016,HT*.004,-bE.rx*.40,Y(bFy)+.004,bE.rz*.985);
+ sph(M3.shirt,bE.rx*.34,HT*.016,HT*.004, bE.rx*.40,Y(bFy)+.004,bE.rz*.985);
 }
 /* Nếp vải rất nhẹ ở eo / dưới ngực */
 [[-.5],[.42]].forEach(([fx])=>{
@@ -1017,11 +1048,12 @@ add(new THREE.Mesh(tubeGeo([
 const belt=new THREE.Mesh(new THREE.TorusGeometry(lerp(hE.rx,wE.rx,.30)+TH*1.2,HT*.0026,8,44),M3.shortD);
 belt.rotation.x=Math.PI/2; belt.scale.y=(lerp(hE.rz,wE.rz,.30)+TH)/(lerp(hE.rx,wE.rx,.30)+TH*1.2); belt.position.y=Y(.582); add(belt);
 /* ================= CHÂN : quét cong liền từ trong hông xuống cổ chân ================= */
-const thighC=p.Hp*.585*full,calfC=thighC*.635,kneeC=thighC*.70,ankC=thighC*.40;
+const thighC=p.Hp*.585*full*(1+mus*.10)*lerp(.94,1.06,fatT),calfC=thighC*.635*(1+mus*.08),kneeC=thighC*.70,ankC=thighC*.40;
 const legR=C=>C*k*.160, rTh=legR(thighC),rCa=legR(calfC),rKn=legR(kneeC),rAn=legR(ankC);
 const hipX=hE.rx*.50,kneeX=hE.rx*.465,ankX=hE.rx*.435;
 [-1,1].forEach(s=>{
  const legPts=[
+  {v:V(s*hipX*.90,Y(.556),0),rx:rTh*1.14,rz:rTh*1.10},
   {v:V(s*hipX*.94,Y(.578),0),rx:rTh*1.07,rz:rTh*1.03},
   {v:V(s*hipX,Y(.50),0),rx:rTh*1.03,rz:rTh},
   {v:V(s*hipX*.99,Y(.435),.002),rx:rTh*.93,rz:rTh*.90},
@@ -1050,7 +1082,7 @@ const hipX=hE.rx*.50,kneeX=hE.rx*.465,ankX=hE.rx*.435;
   sph(M3.skin,r*.92,r*.78,r*1.3,-s*tx*HT,HT*.010,HT*(.098+toeR[i]*.6),fg); });
 });
 /* ================= TAY A-POSE NHẸ ~13° : quét cong, lòng bàn tay hướng vào đùi ================= */
-const upC=cl(p.B*.30,22,40)*full,foC=upC*.86,wrC=upC*.52, armR=C=>C*k*.160;
+const upC=cl(p.B*.30,22,40)*full*(1+mus*.16)*lerp(.90,1.08,fatT),foC=upC*.86*(1+mus*.06),wrC=upC*.52, armR=C=>C*k*.160;
 const rUp=armR(upC),rFo=armR(foC),rWr=armR(wrC);
 const angA=(fem?12.5:13.5)*Math.PI/180, Lu=HT*.178, Lf=HT*.152;
 const shX0=shHalf*.90;
@@ -1067,7 +1099,9 @@ const shX0=shHalf*.90;
   {v:E.clone().addScaledVector(d2,Lf*.5),rx:rFo,rz:rFo*.95},
   {v:Wp.clone(),rx:rWr*1.06,rz:rWr},
   {v:Wp.clone().addScaledVector(d2,HT*.012),rx:rWr*.90,rz:rWr*.86}];
- add(new THREE.Mesh(sweepGeo(armPts,20,40),M3.skin));
+ add(new THREE.Mesh(sweepGeo(armPts,24,48),M3.skin));
+ /* Cơ delta phủ khớp vai : khối da cùng vật liệu ôm điểm nối tay–thân, xóa vệt khớp */
+ sph(M3.skin,rUp*1.30,rUp*1.44,rUp*1.24,S.x,S.y+HT*.004,0);
  /* Tay áo mỏng ôm bắp tay + gấu tay áo */
  const slPts=armPts.slice(0,3).map(q=>({v:q.v.clone(),rx:q.rx+TH,rz:q.rz+TH})).concat([{v:at(d1,Lu*.80),rx:rUp*.96+TH,rz:rUp*.92+TH}]);
  add(new THREE.Mesh(sweepGeo(slPts,20,14),M3.shirt));
@@ -1084,9 +1118,10 @@ const shX0=shHalf*.90;
  sph(M3.skin,HT*.004,HT*.0052,HT*.004,0,-HT*.022,0,tg);
 });
 /* ================= ĐẦU TRỌC MANNEQUIN : mặt trung tính, chi tiết chỉ gợi nhẹ ================= */
-const headH=HT/7.5, hRy=headH/2, hRx=hRy*.70, hRz=hRy*.76, hcy=HT-hRy+HT*.002;
+/* Đầu đã liền trong lưới thân thống nhất ở trên (cùng phenotype tuổi quyết định
+   tỉ lệ đầu/thân) — nhóm này chỉ mang chi tiết mặt riêng kiểu ANNY : tai, mũi,
+   mí khép hờ, môi gợi nhẹ bằng tông da sẫm, không mắt/môi búp bê */
 const hg2=new THREE.Group(); hg2.position.set(0,hcy,0); fig.add(hg2);
-const headMesh=new THREE.Mesh(headGeo(),M3.skin); headMesh.scale.set(hRx,hRy,hRz); headMesh.castShadow=true; hg2.add(headMesh);
 sph(M3.skin,HT*.0028,HT*.0068,HT*.0042,-hRx*.97,-hRy*.02,-hRz*.03,hg2);
 sph(M3.skin,HT*.0028,HT*.0068,HT*.0042, hRx*.97,-hRy*.02,-hRz*.03,hg2);
 /* Mũi : sống + đầu mũi + cánh mũi rất nhẹ */
@@ -1444,76 +1479,4 @@ const steps = img2 ? [{ g: img2, low: true }, { g: img }] : [{ g: img }], n = st
 if (!(await askConfirm("Ảnh của bạn và ảnh sản phẩm sẽ được gửi tới Hugging Face (Space IDM-VTON) để tạo ảnh mặc thử" + (n > 1 ? ", lần lượt từng món" : "") + ". Tiếp tục?"))) return;
 $("#aiBtn").disabled = true;
 const show = src => `<img class="tryimg" src="${src}" alt="Ảnh mặc thử do AI tạo">
-<div class="actions"><a class="btn ghost" href="${src}" download="fitme-mac-thu.png">Tải ảnh về</a></div>`;
-let person = body.toDataURL("image/jpeg", .9), out = null;
-try {
-for (let i = 0; i < n; i++) {
-$("#aiOut").innerHTML = '<div class="empty"><svg class="compass"><use href="#cs"/></svg>AI đang mặc thử' + (n > 1 ? " " + (steps[i].low ? "quần/váy" : "áo") + " (" + (i+1) + "/" + n + ")" : "") + ', có thể mất 1–3 phút<span class="dots"><span>.</span><span>.</span><span>.</span></span></div>';
-const r = await fetch(API_BASE + "/api/tryon", {
-method: "POST", headers: { "Content-Type": "application/json" },
-body: JSON.stringify({ person, garment: "data:image/jpeg;base64," + steps[i].g, mask: steps[i].low ? await lowerMask(person) : undefined })
-});
-const d = await r.json().catch(() => ({}));
-if (!r.ok || !d.image) throw new Error((n > 1 ? (steps[i].low ? "Quần/váy" : "Áo") + ": " : "") + (d.error || "Lỗi " + r.status));
-out = d.image;
-if (i < n - 1) person = await jpegOf(out);
-}
-$("#aiOut").innerHTML = show(out);
-} catch (e) {
-$("#aiOut").innerHTML = out ? show(out) : "";
-err.textContent = "Không tạo được ảnh: " + (e.message || "lỗi mạng") + "." + (out ? " Ảnh bên trên mới chỉ mặc được món trước đó." : "");
-}
-$("#aiBtn").disabled = false;
-};
-$("#again").onclick = () => { $("#aiOut").innerHTML = ""; $("#e2").textContent = ""; step(2); };
-$("#save").onclick = () => {
-if (!last) return;
-const c = store.get("fm_closet", []); c.unshift(...last); store.set("fm_closet", c.slice(0, 30));
-$("#save").textContent = "Đã lưu"; setTimeout(() => $("#save").textContent = "Lưu vào tủ đồ", 1500);
-};
-function renderCloset(){
-const c = store.get("fm_closet", []);
-$("#wardrobe").innerHTML = c.length ? c.map((x, i) => `<div class="item" style="animation-delay:${Math.min(i, 8)*40}ms"><div class="ph">${x.thumb ? `<img src="${x.thumb}" alt="${esc(x.product)}">` : "✦"}<em>${esc(x.size)}</em></div><b>${esc(x.product)}</b>
-<div class="hint">${esc(x.date)} · Form ${esc(x.fit)} · ${+x.confidence||0}%</div>
-${x.reasons && x.reasons[0] ? `<div class="hint">${esc(x.reasons[0])}</div>` : ""}
-${x.link ? `<div class="hint" style="word-break:break-all">${esc(x.link)}</div>` : ""}
-<button class="link" data-i="${i}">Xóa</button></div>`).join("")
-: `<div class="empty" style="grid-column:1/-1">Tủ đồ còn trống. Thử một món rồi nhấn “Lưu vào tủ đồ”.</div>`;
-$("#wardrobe").querySelectorAll("button").forEach(b => b.onclick = () => { c.splice(+b.dataset.i, 1); store.set("fm_closet", c); renderCloset(); });
-}
-const QUICK = ["Đi làm nên mặc gì?","Phối đồ đi hẹn hò","Màu nào hợp với tôi?","Áo che bụng cho phom của tôi"];
-$("#quick").innerHTML = QUICK.map(q => `<button class="chip" type="button">${q}</button>`).join("");
-$("#quick").querySelectorAll("button").forEach(b => b.onclick = () => { $("#q").value = b.textContent; sendQ(); });
-let drawn = -1;
-function drawChat(){
-const box = $("#chat");
-if (!history.length && !busy){ box.innerHTML = `<div class="empty">Chọn một câu hỏi nhanh hoặc tự hỏi bên dưới.</div>`; drawn = 0; return; }
-if (drawn < 1 || drawn > history.length) { box.innerHTML = ""; drawn = 0; }
-box.querySelectorAll(".typing").forEach(e => e.remove());
-history.slice(drawn).forEach(m => { const d = document.createElement("div"); d.className = "msg " + (m.role === "user" ? "u" : "a"); d.textContent = m.content; box.appendChild(d); });
-drawn = history.length;
-if (busy) box.insertAdjacentHTML("beforeend", '<div class="msg a typing dots"><span>.</span><span>.</span><span>.</span></div>');
-box.scrollTop = box.scrollHeight;
-}
-async function sendQ(){
-if (busy) return;
-const q = $("#q").value.trim(); if (!q) return;
-if (!(+P.h && +P.w)) { $("#e3").textContent = "Hãy nhập chiều cao và cân nặng ở tab Thử đồ trước."; return; }
-$("#e3").textContent = ""; $("#q").value = "";
-history.push({role:"user", content:q}); busy = true; drawChat(); $("#ask").disabled = true;
-try {
-const hh = history.slice(-12); while (hh.length && hh[0].role !== "user") hh.shift();
-const a = await callAI(SYS(), hh, 900, .6);
-if (!a.trim()) throw new Error("AI chưa trả lời, hãy thử lại.");
-history.push({role:"assistant", content:a});
-} catch (e) { $("#e3").textContent = e.message; history.pop(); drawn = -1; $("#q").value = q; }
-busy = false; store.set("fm_chat", history.slice(-30)); drawChat(); $("#ask").disabled = false;
-}
-$("#ask").onclick = sendQ;
-$("#clr").onclick = () => { history = []; drawn = -1; store.set("fm_chat", []); drawChat(); };
-$("#q").onkeydown = e => { if (e.key === "Enter") sendQ(); };
-drawChat();
-updateMan();
-</script>
-</body>
-</html>
+<div class="actions"><a class="btn ghost" href="${src}" download="fitme-mac-thu.png">Tải ảnh về</
