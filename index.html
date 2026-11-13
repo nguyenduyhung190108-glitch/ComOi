@@ -199,6 +199,9 @@ input[type=range]{padding:0;height:22px;accent-color:var(--gold);background:none
 .chat-img em{position:absolute;top:6px;right:6px;font:700 15px/1 "Cormorant Garamond",serif;font-style:normal;background:rgba(8,25,44,.9);color:var(--gold);border-radius:7px;padding:3px 8px}
 .chat-img figcaption{font-size:12px;line-height:1.4;margin-top:4px;font-weight:600;color:inherit;opacity:.88}
 .send{display:flex;gap:10px;margin-top:12px}.send .btn{min-height:52px;padding:0 26px}
+/*NÚT DỪNG STYLIST — lúc AI đang trả lời, nút Gửi đổi thành Dừng lại (đỏ) tại đúng vị trí cũ: bấm là hủy lượt đang chờ, nút trở lại thành Gửi để hỏi tiếp*/
+.send .btn.stop{background:linear-gradient(180deg,#ff9aa5,#d94f5f);color:#fff;box-shadow:0 6px 22px rgba(217,79,95,.35)}
+.send .btn.stop::after{background:linear-gradient(115deg,transparent 32%,rgba(255,255,255,.4) 50%,transparent 64%)}
 .wardrobe{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
 .item{padding:12px;background:var(--panel);border:1px solid var(--line);border-radius:18px;animation:in .45s var(--ease) both}
 .ph{position:relative;aspect-ratio:3/4;border-radius:12px;overflow:hidden;background:rgba(2,14,30,.6);display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:34px;margin-bottom:10px;border:1px solid var(--line2)}
@@ -568,7 +571,6 @@ body.intro-lock{overflow:hidden}
 @keyframes introSmoke{0%,46%{opacity:0;transform:translateY(8px) scale(.55)}56%{opacity:.9}76%{opacity:.45;transform:translateY(-8px) scale(1.25)}100%{opacity:0;transform:translateY(-20px) scale(1.7)}}
 .intro-pad{position:relative;z-index:6;width:180px;height:16px;margin-top:14px;border-radius:50%;background:radial-gradient(ellipse at center,rgba(127,214,245,.4),transparent 68%);animation:introPad 3.8s ease-out both}
 @keyframes introPad{0%,46%{opacity:.38;transform:scaleX(.85)}58%{opacity:1;transform:scaleX(1.15)}100%{opacity:0;transform:scaleX(1.5)}}
-.intro-cap{margin:20px 0 0;font-size:17.5px;font-weight:600;letter-spacing:.4px;color:#cfe8f8;animation:introCap 3.8s ease both;position:relative;z-index:2;text-align:center}
 @keyframes introCap{0%{opacity:0;transform:translateY(8px)}5%{opacity:1;transform:none}86%{opacity:1}100%{opacity:0}}
 .intro-bar{width:min(220px,56vw);height:4px;border-radius:99px;background:rgba(143,190,225,.22);margin-top:14px;overflow:hidden;animation:introCap 3.8s ease both}
 .intro-bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--aqua),var(--gold));transform-origin:left;animation:introBarFill 3.65s cubic-bezier(.3,.6,.4,1) both}
@@ -581,7 +583,7 @@ body.intro-lock{overflow:hidden}
 /*VÒNG SÁNG LAN TỎA quanh nút Bắt đầu khi đang ở màn chờ — gợi mắt giám khảo về nút bấm duy nhất; chỉ chạy ở trạng thái .waiting, vào .playing nút mờ đi thì vòng sáng cũng tắt theo*/
 .intro-gate.waiting .intro-start{animation:introPulse 2.2s ease-out infinite}
 @keyframes introPulse{0%{box-shadow:0 12px 32px rgba(84,190,240,.35),0 4px 12px rgba(0,6,16,.45),0 0 0 0 rgba(127,214,245,.45)}70%{box-shadow:0 12px 32px rgba(84,190,240,.35),0 4px 12px rgba(0,6,16,.45),0 0 0 17px rgba(127,214,245,0)}100%{box-shadow:0 12px 32px rgba(84,190,240,.35),0 4px 12px rgba(0,6,16,.45),0 0 0 0 rgba(127,214,245,0)}}
-/*CHỮ NEUDYNAMICCLUB DƯỚI TÀU — wordmark theo ảnh logo Hung gửi nhưng làm lại cho rõ và sang trên nền tối: "neu" mảnh xanh băng sáng, "dynamic" là tâm điểm (extra-bold, to nhất, gradient aqua–cyan tươi kèm quầng sáng nhẹ), "club" sửa lại cho đẹp: hết mảnh–nhỏ–mờ xám chìm nền, giờ đậm vừa (600), gần bằng cỡ "neu", xanh băng sáng đặc #a9e4f7 đọc rõ ngay nhưng vẫn dưới "dynamic" một bậc. Cỡ chữ cả cụm đã tăng một nấc (đồng bộ dòng giới thiệu CLB và dòng trạng thái cũng to hơn). Chữ này đứng riêng dưới tàu, không bay theo tàu*/
+/*CHỮ NEUDYNAMICCLUB DƯỚI TÀU — wordmark theo ảnh logo Hung gửi nhưng làm lại cho rõ và sang trên nền tối: "neu" mảnh xanh băng sáng, "dynamic" là tâm điểm (extra-bold, to nhất, gradient aqua–cyan tươi kèm quầng sáng nhẹ), "club" sửa lại cho đẹp: hết mảnh–nhỏ–mờ xám chìm nền, giờ đậm vừa (600), gần bằng cỡ "neu", xanh băng sáng đặc #a9e4f7 đọc rõ ngay nhưng vẫn dưới "dynamic" một bậc. Cỡ chữ cả cụm đã tăng một nấc. Chữ này đứng riêng dưới tàu, không bay theo tàu*/
 .intro-brand{position:relative;z-index:2;margin:16px 0 0;font-size:clamp(34px,8vw,46px);line-height:1.08;font-weight:400;letter-spacing:-.5px;color:#c3dcee;text-align:center;animation:introCap 3.8s ease both;filter:drop-shadow(0 2px 10px rgba(70,180,230,.16))}
 .intro-brand .ib-dyn{font-weight:900;font-size:1.17em;letter-spacing:-1px;background:linear-gradient(92deg,#bdf3ff 0,#45d9f2 45%,#2bd8bc 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;filter:drop-shadow(0 0 6px rgba(80,225,255,.3))}
 .intro-brand .ib-club{font-weight:600;font-size:.94em;letter-spacing:0;color:#a9e4f7}
@@ -619,11 +621,6 @@ body.intro-lock{overflow:hidden}
 .intro-planets .pl-ven{left:8%;bottom:13%;width:27px;height:27px;background:radial-gradient(circle at 36% 32%,#fffbe8,#f3d98b 55%,#c9962e 100%);box-shadow:inset -5px -4px 9px rgba(90,55,5,.4),0 0 20px rgba(255,225,150,.6);animation-delay:.8s}
 @keyframes plFloat{from{transform:translateY(-4px)}to{transform:translateY(5px)}}
 @media(max-width:560px){.intro-planets .pl-sat{width:38px;height:38px}.intro-planets .pl-sat::after{width:72px;height:20px;border-width:4px}.intro-planets .pl-jup{width:44px;height:44px}.intro-planets .pl-mars{width:26px;height:26px}.intro-planets .pl-ven{width:23px;height:23px}}
-/*DẤU BA CHẤM ĐỘNG ở dòng trạng thái — 3 chấm sáng lên lần lượt như đang nạp, chạy cả lúc chờ lẫn lúc phóng (mờ dần theo cả dòng chữ nhờ introCap ở phần tử cha)*/
-.intro-dots i{font-style:normal;opacity:.25;animation:introDot 1.4s ease-in-out infinite}
-.intro-dots i:nth-child(2){animation-delay:.18s}
-.intro-dots i:nth-child(3){animation-delay:.36s}
-@keyframes introDot{0%,60%,100%{opacity:.25}30%{opacity:1}}
 /*BẢNG TÊN NEUDYNAMICCLUB TRÊN THÂN TÀU (bản ảnh dự phòng) — đồng bộ đúng bảng tên phẳng của bản 3D: bỏ dải trắng dài 68% có bóng đổ (nhìn như tem dán lơ lửng, quá to). Giờ là BẢNG PHẲNG TRẮNG MỜ ôm gọn khít theo chữ (width max-content, đệm mỏng), KHÔNG bóng đổ nên không lơ lửng, KHÔNG viền, góc gần vuông như bảng sơn livery, nằm gọn trong thân tàu theo trục thân, không che ô cửa kính phía trên và không che 3 vạch thoát khí của ảnh tàu. Chữ navy một tông 3 bậc rõ rệt, căn giữa bảng, cùng một hàng: "dynamic" extra-bold 800 to nhất, sẫm nhất #052e47 làm tâm điểm; "neu" bold 700 navy vừa #0d4a70; "club" semibold 600 navy nhạt hơn một bậc #3d7396 nhưng vẫn đọc rõ, không chìm vào "dynamic". Nằm TRONG .intro-rocket nên bay dính theo tàu khi phóng*/
 .intro-decal{position:absolute;left:44%;top:52.5%;transform:translate(-50%,-50%) rotate(-50deg);width:max-content;padding:4px 10px 5px;border:0;border-radius:3px;background:#fbfcfd;font-size:12px;line-height:1.25;font-weight:700;letter-spacing:.1px;color:#0d4a70;white-space:nowrap;text-align:center;pointer-events:none}
 .intro-decal .d-dyn{font-weight:800;font-size:1.3em;color:#052e47}
@@ -641,18 +638,17 @@ body.intro-lock{overflow:hidden}
 .intro-door.r i{left:7px}
 .intro-gate.playing .intro-door.l{transform:translateX(-104%)}
 .intro-gate.playing .intro-door.r{transform:translateX(104%)}
-/*MÀN CHỜ — trước khi nhấn "Bắt đầu": tàu và sao đứng yên, không animation nào chạy (bản 3D tự đóng băng khung tĩnh, bản ảnh dự phòng tắt keyframes); caption hiện tĩnh, thanh tiến trình để trống*/
+/*MÀN CHỜ — trước khi nhấn "Bắt đầu": tàu và sao đứng yên, không animation nào chạy (bản 3D tự đóng băng khung tĩnh, bản ảnh dự phòng tắt keyframes); thanh tiến trình để trống*/
 .intro-gate.waiting::before{animation:none}
 .intro-gate.waiting .intro-rocket{animation:none;transform:none;opacity:1}
 .intro-gate.waiting .intro-smoke i{animation:none;opacity:0}
 .intro-gate.waiting .intro-pad{animation:introBreathe 3.2s ease-in-out infinite;opacity:.55;transform:none}
 @keyframes introBreathe{0%,100%{opacity:.42;transform:scaleX(.94)}50%{opacity:.68;transform:scaleX(1.06)}}
-.intro-gate.waiting .intro-cap{animation:none;opacity:1;transform:none}
 .intro-gate.waiting .intro-brand{animation:none;opacity:1;transform:none}
 .intro-gate.waiting .intro-tag{animation:none;opacity:1;transform:none}
 .intro-gate.waiting .intro-bar{animation:none;opacity:1}
 .intro-gate.waiting .intro-bar i{animation:none;transform:scaleX(0)}
-@media(prefers-reduced-motion:reduce){.intro-rocket,.intro-smoke i,.intro-pad,.intro-gate::before,.intro-stars i,.intro-dots i,.intro-gate.waiting .intro-start,.intro-planets i,.intro-meteors i{animation:none!important}.intro-smoke i{opacity:0!important}.intro-stars i{opacity:.5!important}.intro-dots i{opacity:1!important}.intro-meteors i{opacity:0!important}}
+@media(prefers-reduced-motion:reduce){.intro-rocket,.intro-smoke i,.intro-pad,.intro-gate::before,.intro-stars i,.intro-gate.waiting .intro-start,.intro-planets i,.intro-meteors i{animation:none!important}.intro-smoke i{opacity:0!important}.intro-stars i{opacity:.5!important}.intro-meteors i{opacity:0!important}}
 </style>
 </head>
 <body>
@@ -675,7 +671,6 @@ body.intro-lock{overflow:hidden}
   </div>
   <p class="intro-brand" aria-label="neudynamicclub"><span>neu</span><span class="ib-dyn">dynamic</span><span class="ib-club">club</span></p>
   <p class="intro-tag">Câu lạc bộ Khởi Nghiệp Sáng Tạo Dynamic · Đại học Kinh tế Quốc dân</p>
-  <p class="intro-cap">FitMe AI đang chuẩn bị<span class="intro-dots" aria-hidden="true"><i>.</i><i>.</i><i>.</i></span></p>
   <div class="intro-bar" aria-hidden="true"><i></i></div>
   <button type="button" class="intro-start" id="introStart">Bắt đầu</button>
 </div>
@@ -1211,10 +1206,41 @@ if (n === 2) return step(2);
 if (last) return step(3);
 $("#go").click();
 });
-let wipeArm = false;
+let wipeArm = false, wipeArmT = 0, dataGen = 0;
 $("#wipe").onclick = () => {
-if (!wipeArm){ wipeArm = true; $("#wipe").textContent = "Bấm lại lần nữa để xóa toàn bộ dữ liệu"; setTimeout(()=>{ wipeArm = false; $("#wipe").textContent = "Xóa toàn bộ dữ liệu của tôi"; }, 4000); return; }
-["fm_profile","fm_closet","fm_chat","fm_hist","fm_man","fm_body","fm_consent"].forEach(k => store.del(k)); location.reload();
+if (!wipeArm){ wipeArm = true; $("#wipe").textContent = "Bấm lại lần nữa để xóa toàn bộ dữ liệu"; clearTimeout(wipeArmT); wipeArmT = setTimeout(()=>{ wipeArm = false; $("#wipe").textContent = "Xóa toàn bộ dữ liệu của tôi"; }, 4000); return; }
+wipeArm = false; clearTimeout(wipeArmT); clearTimeout(saveT); dataGen++;
+/* Hủy việc đang chạy dở (mặc thử AI) để kết quả cũ không ghi đè lên trạng thái vừa xóa */
+try { TRY.cancel = true; if (TRY.abort) TRY.abort.abort(); stopTryTimer(); if (typeof styAbort !== "undefined" && styAbort) styAbort.abort(); } catch(e){}
+["fm_profile","fm_closet","fm_chat","fm_hist","fm_man","fm_body","fm_consent"].forEach(k => store.del(k));
+/* Xóa TẠI CHỖ, không tải lại trang: bản cũ dùng location.reload() nên mỗi lần bấm xóa là trang dựng lại từ đầu — cổng intro hiện lại bắt nhấn "Bắt đầu" và hộp chính sách hiện lại, dù người dùng đang ở giữa phiên dùng web. Nay chỉ reset đúng dữ liệu + giao diện về trạng thái trống ban đầu, giữ nguyên phiên đang mở (đã qua intro, lựa chọn chính sách của phiên giữ nguyên vì vốn không lưu xuống máy). */
+P = {h:"",w:"",bust:"",waist:"",hip:"",sex:"",shape:"",skin:"",under:"",note:""};
+HIST = []; OCC = "";
+img = thumb = img2 = thumb2 = null; body = null; last = null; history = []; drawn = -1; busy = false;
+Object.assign(M, {back:false, dims:true, ghost:false});
+closetFilter = "Tất cả"; closetQuery = ""; cur = null;
+FIELDS.forEach(k => { $("#"+k).value = ""; }); $("#note").value = "";
+syncSex(); syncUnder(); chips($("#shapeChips"), SHAPES, "shape"); swatches($("#skinChips"));
+document.querySelectorAll("#occChips .chip").forEach(c => c.classList.remove("on"));
+showHist();
+$("#acc").classList.remove("open"); $("#accBtn").setAttribute("aria-expanded", "false"); $("#accIn").inert = true;
+["#file","#file2","#bfile"].forEach(id => { const f = $(id); if (f) f.value = ""; });
+$("#link").value = "";
+mkSizeTable("#t1", [["Ngực","cm"],["Eo","cm"],["Mông","cm"],["Cân nặng","kg"]]);
+mkSizeTable("#t2", [["Eo","cm"],["Mông","cm"],["Cân nặng","kg"]]);
+view = "Mô hình 2D"; viewSync(); syncBodyBlock(); syncProdBlock();
+press($("#mBack"), M.back); $("#mBack").textContent = "Xoay mặt sau"; press($("#mDims"), M.dims); syncGhostBtn();
+["#e1","#e2","#e3","#e4"].forEach(id => { const el = $(id); if (el) el.textContent = ""; });
+$("#result").innerHTML = ""; $("#aiOut").innerHTML = ""; $("#loading").hidden = true; $("#fit").hidden = true;
+$("#save").hidden = false; $("#save").textContent = "Lưu vào tủ đồ";
+$("#go").disabled = false; $("#go").textContent = "Thử đồ ngay";
+$("#mTop").value = 38; $("#mBot").value = 90;
+$("#closetSearch").value = ""; renderCloset();
+$("#q").value = ""; if (typeof setStyBusy === "function") setStyBusy(false); drawChat(); renderStyProfile();
+const tryTab = document.querySelector('[data-tab="tryon"]'); if (tryTab && !tryTab.classList.contains("on")) tryTab.click();
+step(1); updateMan();
+const wb = $("#wipe"); wb.textContent = "Đã xóa toàn bộ dữ liệu";
+clearTimeout(wipeArmT); wipeArmT = setTimeout(()=>{ wb.textContent = "Xóa toàn bộ dữ liệu của tôi"; }, 2600);
 };
 const readImg = (file, max = 1024) => new Promise((ok, no) => {
 if (!file || !file.type.startsWith("image/")) return no(new Error("Hãy chọn một file ảnh."));
@@ -1317,12 +1343,12 @@ if (prodBlocked()) return;
 const f = [...(e.clipboardData?.files || [])].find(f => f.type.startsWith("image/")); if (f) loadImg(f, !img ? 1 : !img2 ? 2 : 1);
 });
 const _aiCache = new Map();
-async function callAI(system, messages, max = 1200, temperature){
+async function callAI(system, messages, max = 1200, temperature, signal){
 if (typeof CONSENT !== "undefined" && !CONSENT.gemini) throw new Error("Bạn chưa đồng ý gửi ảnh tới Gemini, nên FitMe chỉ ước tính size trên máy và không gửi ảnh đi.");
 const ck = system.length + "|" + JSON.stringify(messages).length + "|" + (messages[0] && messages[0].content && messages[0].content[0] && messages[0].content[0].source ? messages[0].content[0].source.data.length : "");
 let r;
-try { r = await fetch(WORKER_URL, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ system, messages, max_tokens: max, temperature }) }); }
-catch (e) { throw new Error("Không kết nối được tới " + (WORKER_URL.startsWith("http") ? WORKER_URL : location.origin + WORKER_URL) + ". Hãy mở web bằng địa chỉ Worker (dạng https://ten.ten-ban.workers.dev), không mở file trên máy."); }
+try { r = await fetch(WORKER_URL, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ system, messages, max_tokens: max, temperature }), signal }); }
+catch (e) { if (e && e.name === "AbortError") throw e; /* bấm "Dừng lại" ở Stylist: để nguyên lỗi hủy để bên gọi nhận ra, không biến thành lỗi mất kết nối */ throw new Error("Không kết nối được tới " + (WORKER_URL.startsWith("http") ? WORKER_URL : location.origin + WORKER_URL) + ". Hãy mở web bằng địa chỉ Worker (dạng https://ten.ten-ban.workers.dev), không mở file trên máy."); }
 const d = await r.json().catch(() => ({}));
 if (!r.ok) throw new Error(d.error || "AI lỗi (" + r.status + ")");
 return d.text || "";
@@ -1691,7 +1717,7 @@ step(3); renderResult(); initFit(); $("#save").hidden = false;
 $("#e4").textContent = "Bạn đang xem kết quả đối chiếu bảng size trên máy (AI đang tắt).";
 return;
 }
-$("#e2").textContent = ""; $("#go").disabled = true; const goTxt = $("#go").textContent; $("#go").textContent = "Đang phân tích…"; step(3);
+$("#e2").textContent = ""; $("#go").disabled = true; const goTxt = $("#go").textContent, gen = dataGen; $("#go").textContent = "Đang phân tích…"; step(3);
 $("#result").innerHTML = ""; $("#loading").hidden = false; $("#save").hidden = true; $("#fit").hidden = true; $("#e4").textContent = "";
 try {
 const m1 = matchChart("#t1"), m2 = matchChart("#t2");
@@ -1711,9 +1737,11 @@ const topR = last.find(r => r !== botR) || last[0];
 const otherR = last.find(r => r !== topR) || topR;
 last.combo = await comboAnalyze(topR, otherR);
 }
+if (gen !== dataGen) { last = null; return; } /* đã bấm "Xóa toàn bộ dữ liệu" trong lúc AI đang phân tích: bỏ kết quả này, không dựng lại dữ liệu vừa xóa */
 renderResult(); initFit(); $("#save").hidden = false;
 } catch (e) {
 last = null;
+if (gen !== dataGen) return; /* đã xóa dữ liệu trong lúc phân tích: không hiện kết quả/lỗi cũ nữa */
 $("#result").innerHTML = `<div class="empty">Chưa phân tích được. ${esc(e && e.message ? e.message : "Đã có lỗi xảy ra.")}<br><button type="button" class="chip" style="margin-top:12px" onclick="document.getElementById('again').click()">Quay lại chọn món</button></div>`;
 } finally {
 $("#loading").hidden = true; $("#go").disabled = false; $("#go").textContent = goTxt;
@@ -2059,7 +2087,7 @@ const steps = plan.map(p => ({ g: p.g, low: p.cat === "bottom", name: p.name }))
 if (!CONSENT.tryon){ err.textContent = "Mặc thử AI đang tắt vì bạn chưa đồng ý gửi ảnh tới Hugging Face. Bấm “Đổi lựa chọn quyền riêng tư” ở cuối trang để bật lại."; return; }
 if (!window.__tryonOk){ window.__tryonOk = true; $("#aiOut").innerHTML = '<p class="hint" style="text-align:center">Ảnh của bạn và ảnh sản phẩm sẽ được gửi tới Hugging Face (Space IDM-VTON) để tạo ảnh mặc thử' + (n > 1 ? ", lần lượt từng món" : "") + '. Bấm nút lần nữa để đồng ý và tiếp tục.</p>'; $("#aiBtn").textContent = "Đồng ý gửi ảnh & mặc thử AI"; return; }
 $("#aiBtn").disabled = true; $("#aiBtn").textContent = "Đang mặc thử…";
-TRY.cancel = false; TRY.stages = []; TRY.view = -1; TRY.mode = "enh";
+const gen = dataGen; TRY.cancel = false; TRY.stages = []; TRY.view = -1; TRY.mode = "enh";
 startTryTimer();
 showTryWaiting();
 let prep = null, preps = [];
@@ -2082,11 +2110,11 @@ TRY.stages.push({ orig: raw, enh: enhanceResult(im), w: im.naturalWidth, h: im.n
 if (i < n - 1) person = await normalizeStage(raw);
 }
 stopTryTimer();
-renderTryResult();
+if (gen === dataGen) renderTryResult(); /* nếu vừa bấm xóa dữ liệu trong lúc chờ ghép thì bỏ kết quả này */
 } catch (e) {
 stopTryTimer();
 if (e && e.message === "__noconsent") { $("#aiOut").innerHTML = ""; err.textContent = "Mặc thử AI đang tắt vì bạn chưa đồng ý gửi ảnh tới Hugging Face. Bấm “Đổi lựa chọn quyền riêng tư” ở cuối trang để bật lại."; }
-else if (e && e.message === "__cancel") { $("#aiOut").innerHTML = ""; err.textContent = "Đã hủy mặc thử. Bấm nút khi muốn thử lại."; }
+else if (e && e.message === "__cancel") { if (gen === dataGen) { $("#aiOut").innerHTML = ""; err.textContent = "Đã hủy mặc thử. Bấm nút khi muốn thử lại."; } }
 else if (TRY.stages.length) { TRY.view = -1; renderTryResult(); err.textContent = "Đã dừng lại — ảnh đang hiển thị là kết quả đã ghép xong món trước đó. Bấm nút mặc thử để ghép tiếp khi sẵn sàng."; }
 else { $("#aiOut").innerHTML = ""; err.textContent = "Chưa đọc được ảnh để ghép. Kiểm tra lại ảnh toàn thân và ảnh sản phẩm rồi bấm thử lại."; }
 }
@@ -2320,7 +2348,7 @@ const hasA = history.some(m => m.role === "assistant");
 el.hidden = !hasA;
 if (!hasA) { el.innerHTML = ""; return; }
 el.innerHTML = `<span class="qglab">Hỏi tiếp về gợi ý trên</span><div class="chips">${FOLLOW.map(q => `<button class="chip" type="button">${esc(q)}</button>`).join("")}</div>`;
-el.querySelectorAll("button").forEach(b => { b.onclick = () => { $("#q").value = b.textContent; sendQ(); }; if (typeof CONSENT !== "undefined" && CONSENT.saved && !CONSENT.gemini) b.disabled = true; });
+el.querySelectorAll("button").forEach(b => { b.onclick = () => { $("#q").value = b.textContent; sendQ(); }; if ((typeof CONSENT !== "undefined" && CONSENT.saved && !CONSENT.gemini) || busy) b.disabled = true; }); /* drawChat vẽ lại chip mỗi lượt nên phải khóa lại tại đây khi đang bận, không chỉ khóa ở setStyBusy */
 }
 function formatMsg(t){
 return esc(t).replace(/\*\*([^*]+)\*\*/g, "<b>$1</b>").split("\n").map(line => {
@@ -2342,6 +2370,22 @@ lines.push("Chốt: ưu tiên bộ " + (outs[0] ? outs[0].name : "đơn giản, 
 return lines.join("\n");
 }
 let drawn = -1;
+/* NÚT DỪNG STYLIST — mỗi lượt hỏi chỉ chạy đúng 1 lời gọi AI: lúc AI đang trả lời (busy), nút Gửi đổi thành nút Dừng lại ngay tại chỗ cũ, các chip hỏi nhanh/hỏi tiếp và nút "Hỏi Stylist" ở Tủ đồ/Kết quả đều tạm khóa để không gửi đè lượt thứ hai làm AI lag; ô nhập vẫn gõ được để chuẩn bị câu tiếp theo nhưng Enter không gửi khi đang bận. Bấm Dừng lại hủy đúng lời gọi đang chờ qua AbortController, dấu "..." biến mất, nút trở lại thành Gửi để hỏi tiếp — câu hỏi vừa gửi vẫn giữ trong lịch sử, không đẩy câu trả lời dự phòng. */
+let styAbort = null;
+function setStyBusy(on){
+const ask = $("#ask"); if (!ask) return;
+if (on){
+ask.disabled = false; ask.textContent = "Dừng lại"; ask.classList.add("stop"); ask.setAttribute("aria-label", "Dừng Stylist AI");
+document.querySelectorAll("#quick button, #followChips button, #wardrobe [data-ask], #result [data-askq]").forEach(b => { b.disabled = true; });
+} else {
+styAbort = null; ask.textContent = "Gửi"; ask.classList.remove("stop"); ask.removeAttribute("aria-label");
+if (typeof applyConsent === "function") applyConsent(); else ask.disabled = false;
+}
+}
+function stopStylist(){
+if (!busy) return;
+if (styAbort) { try { styAbort.abort(); } catch(e){} } /* fetch trong sendQ ném AbortError, khối catch nhận ra là bấm dừng nên dừng sạch */
+}
 function drawChat(){
 const box = $("#chat");
 if (!history.length && !busy){ box.innerHTML = `<div class="empty">Chọn câu hỏi nhanh ở trên hoặc tự hỏi bên dưới — Stylist chỉ gợi ý 1 phương án tốt nhất, trả lời ngắn theo 4 bước: Ưu điểm · Khuyết điểm · Cách khắc phục · Chốt.</div>`; drawn = 0; renderFollow(); return; }
@@ -2367,7 +2411,7 @@ $("#e3").textContent = ""; $("#q").value = "";
 /* Ảnh đính kèm (khi bấm "Hỏi Stylist" từ Tủ đồ hoặc chip "Hỏi thêm Stylist AI" ở mục Kết quả): imgs = ảnh thu nhỏ để HIỆN trong bong bóng chat và lưu cùng lịch sử; fulls = ảnh gốc để GỬI cho AI xem trong đúng lượt hỏi này, không lưu vào lịch sử cho nhẹ bộ nhớ */
 const at = attach && Array.isArray(attach.imgs) && attach.imgs.length ? { imgs: attach.imgs.filter(s => typeof s === "string" && s.startsWith("data:image/")).slice(0, 2), fulls: (attach.fulls || []).slice(0, 2), labels: (attach.labels || []).slice(0, 2), sizes: (attach.sizes || []).slice(0, 2) } : null;
 history.push(at && at.imgs.length ? { role: "user", content: q, imgs: at.imgs, fulls: at.fulls, labels: at.labels, sizes: at.sizes } : { role: "user", content: q });
-busy = true; drawChat(); $("#ask").disabled = true;
+busy = true; const gen = dataGen; styAbort = new AbortController(); drawChat(); setStyBusy(true);
 try {
 const hhRaw = history.slice(-4); while (hhRaw.length && hhRaw[0].role !== "user") hhRaw.shift();
 /* Tin nhắn nào có ảnh đính kèm thì chuyển thành nội dung đa phương tiện đúng định dạng callAI đang dùng ở bước phân tích size: ảnh (ưu tiên ảnh gốc, thiếu thì dùng ảnh thu nhỏ đã lưu) đi trước, chữ đi sau — để Stylist AI nhìn thấy đúng món đồ trong ảnh, không chỉ đọc tên món */
@@ -2380,15 +2424,16 @@ if (!content.length) return m;
 content.push({ type: "text", text: m.content });
 return { role: "user", content };
 });
-const a = await callAI(SYS(), hh, 320, .6);
+const a = await callAI(SYS(), hh, 320, .6, styAbort.signal);
 if (!a.trim()) throw new Error("AI chưa trả lời, hãy thử lại.");
 history.push({role:"assistant", content:a});
-} catch (e) { history.push({role:"assistant", content: (typeof CONSENT !== "undefined" && !CONSENT.gemini) ? "Stylist AI đang tắt vì bạn đã từ chối gửi dữ liệu tới Gemini. Bấm “Đổi lựa chọn quyền riêng tư” ở cuối trang để bật lại." : localStylistFallback(q)}); }
-busy = false; store.set("fm_chat", history.slice(-30).map(m => { if (!m.fulls) return m; const r = { role: m.role, content: m.content }; if (m.imgs) r.imgs = m.imgs; if (m.labels) r.labels = m.labels; if (m.sizes) r.sizes = m.sizes; return r; })); drawChat(); $("#ask").disabled = (typeof CONSENT !== "undefined" && !CONSENT.gemini); if (typeof applyConsent === "function") applyConsent();
+} catch (e) { if (e && (e.name === "AbortError" || (styAbort && styAbort.signal.aborted))) { /* bấm "Dừng lại" (hoặc xóa dữ liệu/xóa đoạn chat giữa lúc chờ): chỉ dừng, không đẩy câu trả lời dự phòng */ } else history.push({role:"assistant", content: (typeof CONSENT !== "undefined" && !CONSENT.gemini) ? "Stylist AI đang tắt vì bạn đã từ chối gửi dữ liệu tới Gemini. Bấm “Đổi lựa chọn quyền riêng tư” ở cuối trang để bật lại." : localStylistFallback(q)}); }
+busy = false; if (gen !== dataGen) { drawn = -1; setStyBusy(false); drawChat(); return; } /* đã xóa dữ liệu trong lúc Stylist đang trả lời: không lưu lại đoạn chat vừa xóa (đồng thời trả nút về Gửi, bản cũ để nút kẹt ở trạng thái chờ) */
+store.set("fm_chat", history.slice(-30).map(m => { if (!m.fulls) return m; const r = { role: m.role, content: m.content }; if (m.imgs) r.imgs = m.imgs; if (m.labels) r.labels = m.labels; if (m.sizes) r.sizes = m.sizes; return r; })); drawChat(); setStyBusy(false);
 }
-$("#ask").onclick = sendQ;
-$("#clr").onclick = () => { history = []; drawn = -1; store.set("fm_chat", []); drawChat(); };
-$("#q").onkeydown = e => { if (e.key === "Enter") sendQ(); };
+$("#ask").onclick = () => { if (busy) stopStylist(); else sendQ(); };
+$("#clr").onclick = () => { if (busy) stopStylist(); /* xóa đoạn chat giữa lúc AI đang trả lời thì hủy luôn lượt đang chờ, để câu trả lời cũ không hiện lại sau khi đã xóa */ history = []; drawn = -1; store.set("fm_chat", []); drawChat(); };
+$("#q").onkeydown = e => { if (e.key === "Enter") sendQ(); }; /* sendQ tự chặn khi busy nên Enter lúc AI đang trả lời không gửi đè lượt mới */
 /* ---------- Đồng ý chính sách & quyền riêng tư: KHÔNG lưu lựa chọn — mỗi lần vào trang đều hiện lại hộp này,
    người dùng chỉ chọn 1 trong 2: Đồng ý tất cả hoặc Từ chối tất cả (chỉ giữ trong phiên đang mở) ---------- */
 store.del("fm_consent"); /* xóa lựa chọn cũ từng lưu ở các bản trước, để không lần nào bị bỏ qua hộp này */
@@ -2410,10 +2455,10 @@ if (CONSENT.saved) window.__tryonOk = !!CONSENT.tryon;
 const q = $("#q"), ask = $("#ask");
 if (q && ask && CONSENT.saved){
 const offG = !CONSENT.gemini;
-ask.disabled = offG;
+ask.disabled = offG && !busy; /* đang bận thì nút Dừng lại luôn bấm được, kể cả khi vừa đổi lựa chọn quyền riêng tư giữa lúc chờ */
 q.disabled = offG;
 q.placeholder = offG ? "Stylist AI đã tắt — đổi lựa chọn ở cuối trang để bật lại" : "Hỏi Stylist...";
-document.querySelectorAll("#quick button, #followChips button, #wardrobe [data-ask], #result [data-askq]").forEach(b => { b.disabled = offG; });
+document.querySelectorAll("#quick button, #followChips button, #wardrobe [data-ask], #result [data-askq]").forEach(b => { b.disabled = offG || busy; });
 }
 bodyBlockOn = !!(CONSENT.saved && !CONSENT.tryon);
 if (typeof syncBodyBlock === "function") syncBodyBlock();
@@ -2991,11 +3036,6 @@ resize();
 
 /* Timeline: hầm mở (0→0,95s) → tàu trồi lên bệ (0,40→1,65s) → khựng nhẹ (1,65→1,92s) → châm lửa (IGNITE) → cất cánh (LIFT) → tăng tốc phóng thẳng lên khỏi khung (LAUNCH_T). Chỉ 1 chặng phóng duy nhất */
 var IGNITE = 1.85, LIFT = 2.05, LAUNCH_T = 1.35;
-/* Dòng trạng thái của intro đổi chữ theo pha bay (chỉ bản 3D đổi được chữ; bản ảnh dự phòng giữ nguyên dòng chuẩn bị) */
-var capEl = gate.querySelector(".intro-cap");
-var capNode = capEl ? capEl.childNodes[0] : null;
-var capPhase = -1;
-function setCap(p, txt){ if (capPhase !== p) { capPhase = p; if (capNode) capNode.nodeValue = txt; } }
 var AXIS = new THREE.Vector3(Math.sin(0.10), Math.cos(0.10), 0);
 var start = null, raf = 0, shown = false, smokeAcc = 0, jetAcc = 0, mistAcc = 0;
 var nv = new THREE.Vector3(), up = new THREE.Vector3();
@@ -3115,10 +3155,6 @@ function frame(now){
 
 
 
-  /* Dòng trạng thái: mở hầm + trồi lên, rồi phóng — chỉ 1 chặng phóng duy nhất */
-  if (t > IGNITE) setCap(1, "Đang phóng từ Trái Đất");
-  else if (t >= 0) setCap(0, "Đang mở hầm phóng");
-
   renderer.render(scene, camera);
   if (!shown) { shown = true; gate.classList.add("gl-on"); }
   raf = requestAnimationFrame(frame);
@@ -3155,16 +3191,6 @@ if (started || done) return; started = true;
 gate.classList.remove("waiting");
 gate.classList.add("playing");
 t1 = setTimeout(finish, reduce ? 700 : 3900);
-if (!reduce) {
-  var capSteps = [[150, "Đang mở hầm phóng"], [1950, "Đang phóng từ Trái Đất"]];
-  capSteps.forEach(function(cs){
-    setTimeout(function(){
-      if (gate.classList.contains("gl-on")) return;
-      var c = gate.querySelector(".intro-cap");
-      if (c && c.childNodes[0]) c.childNodes[0].nodeValue = cs[1];
-    }, cs[0]);
-  });
-}
 }
 if (startBtn) {
 startBtn.addEventListener("click", begin);
