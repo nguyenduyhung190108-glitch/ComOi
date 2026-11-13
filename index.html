@@ -150,6 +150,9 @@ ul.clean{padding-left:20px;margin:8px 0;font-size:16.5px;line-height:1.7}
 #followChips{margin-top:12px}
 .msgsec{font-weight:700}
 .msgsec.pro{color:var(--ok)}.msgsec.con{color:var(--warn)}.msgsec.fix{color:var(--aqua)}
+.msg ul,.msg ol{margin:8px 0;padding-left:22px}
+.msg li{margin:4px 0;line-height:1.55}
+.msg li::marker{color:var(--gold);font-weight:700}
 .cstats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
 @media(max-width:560px){.cstats{grid-template-columns:1fr 1fr}}
 .cstat{border:1px solid var(--line2);border-radius:16px;padding:13px 16px;background:var(--panel)}
@@ -1379,6 +1382,7 @@ return c.slice(0, 6).map(x => `${x.product} (size ${x.size}${x.fit ? ", form " +
 /* PROMPT STYLIST (chat) — MỞ HOÀN TOÀN theo yêu cầu Hung 2026-11-13 ("mở toang giới hạn ra, đừng giới hạn gì cả"): bản __30 từng chặn phạm vi (hỏi ngoài thời trang thì từ chối) và ép mẫu 4 dòng/90 từ, nhưng chặn phạm vi đã gây lỗi — câu "lỗi mốt rồi sợ người ta chê" bị xếp là "vấn đề tâm lý" nên AI từ chối trả lời. Bản này bỏ hết: không chặn chủ đề, không ép mẫu 4 dòng, không giới hạn 90 từ hay 1 phương án. Chỉ giữ 3 ý làm nền: (1) trả lời cụ thể theo đúng hồ sơ/tủ đồ thật của người dùng khi hỏi về mặc đồ; (2) không bịa số liệu/giá/cửa hàng; (3) luật phối theo họ phong cách (STYLE_RULES) để không gợi ý sai kiểu jersey phối quần tây. */
 const SYS = () => "Bạn là FitMe AI, stylist và chuyên gia chọn size quần áo cho người Việt, đồng thời là người bạn trò chuyện cởi mở. Trả lời tiếng Việt, tự nhiên như đang nói chuyện với bạn bè. Không bịa tên quán, địa chỉ, giá cả hay tên nhà thiết kế cụ thể: nếu không chắc thì chỉ nói loại món ăn/món đồ chung chung (phở, bánh mì, áo khoác denim...) và gợi ý tự kiểm tra trên Google Maps, đừng tự đặt tên quán hay tên shop. "
 + "KHÔNG giới hạn chủ đề, KHÔNG từ chối câu hỏi: cứ trả lời mọi câu hỏi của người dùng một cách hữu ích và tự nhiên. Thời trang, chọn size, phối đồ là sở trường của bạn, nhưng cảm xúc và sự tự tin khi mặc đồ (ví dụ sợ lỗi mốt, sợ người ta chê) cũng là chuyện của stylist — hãy động viên và gợi ý cách mặc cho tự tin, đừng bao giờ nói kiểu 'tôi chỉ tư vấn về thời trang, không liên quan đến vấn đề tâm lý'. Cả câu hỏi ngoài thời trang (ăn uống, đi chơi, học tập...) cũng cứ trò chuyện bình thường. TUYỆT ĐỐI KHÔNG mở đầu bằng câu từ chối hay khiêm nhường kiểu 'tôi chỉ tư vấn về...' hay 'tôi không có dữ liệu...'. "
++ "Trả lời SÚC TÍCH và dễ đọc: câu hỏi thường thì tối đa khoảng 100-150 từ; chỉ khi người dùng hỏi sâu, cần phân tích kỹ mới trả lời dài hơn. Vào thẳng ý chính — KHÔNG mở đầu bằng cách nhắc lại hồ sơ hay tủ đồ (đừng viết kiểu 'Tôi nhớ hồ sơ của bạn...' hay 'Tủ đồ của bạn có...'); hồ sơ và tủ đồ chỉ để chọn gợi ý cho đúng người, không cần kể lại. Trình bày gọn: liệt kê thì dùng gạch đầu dòng, mỗi ý 1 dòng ngắn bắt đầu bằng '- '; mỗi ý 1 câu, không viết đoạn văn dài; mỗi câu hỏi chỉ gợi ý tối đa 2-3 món hoặc lựa chọn; không lặp lại cùng một lời khuyên bằng nhiều cách nói khác nhau. "
 + "Khi câu hỏi liên quan tới mặc đồ, hãy gắn câu trả lời với đúng hồ sơ và tủ đồ của người dùng bên dưới (chiều cao/cân nặng, ba vòng, phom dáng, tông da/undertone, món đang có trong tủ) để gợi ý cụ thể tên món và vì sao hợp với người này, đừng nói chung chung kiểu 'xu hướng đa dạng' hay 'theo dõi bộ sưu tập mới'. Hỏi về xu hướng/mốt năm nay thì trả lời thẳng như một stylist cập nhật xu hướng, nêu món cụ thể hợp với người này và phối với món nào trong tủ của họ; nếu câu hỏi kèm theo kết quả tìm kiếm trên mạng thì ưu tiên dùng đúng thông tin đó. Nếu thiếu dữ kiện để kết luận (chưa có số đo, chưa rõ dịp), cứ nói thẳng và hỏi lại dữ kiện còn thiếu thay vì đoán. "
 + STYLE_RULES + " Hồ sơ người dùng: " + profileText() + (closetText() ? " Tủ đồ người dùng đang có (ƯU TIÊN phối từ chính các món này khi phù hợp và ghi rõ tên món nào trong gợi ý là món trong tủ): " + closetText() + "." : " Tủ đồ người dùng đang trống: nếu người dùng hỏi phối từ tủ đồ, hãy nhắc họ thử đồ rồi nhấn Lưu vào tủ đồ trước.");
 /* PROMPT PHÂN TÍCH SIZE (JSON) — dùng cho analyze và comboAnalyze: chỉ trả JSON đúng schema, KHÔNG áp dụng luật 90 từ/4 dòng của chat; confidence phải phản ánh độ chắc chắn thật theo dữ kiện có đủ hay không, không ghi cao mặc định. */
@@ -2356,13 +2360,28 @@ if (!hasA) { el.innerHTML = ""; return; }
 el.innerHTML = `<span class="qglab">Hỏi tiếp về gợi ý trên</span><div class="chips">${FOLLOW.map(q => `<button class="chip" type="button">${esc(q)}</button>`).join("")}</div>`;
 el.querySelectorAll("button").forEach(b => { b.onclick = () => { $("#q").value = b.textContent; sendQ(); }; if ((typeof CONSENT !== "undefined" && CONSENT.saved && !CONSENT.gemini) || busy) b.disabled = true; }); /* drawChat vẽ lại chip mỗi lượt nên phải khóa lại tại đây khi đang bận, không chỉ khóa ở setStyBusy */
 }
+/* RENDER TIN NHẮN AI — markdown gọn, an toàn: esc() chặn HTML trước rồi mới gắn thẻ. **đậm** thành <b>; dòng bắt đầu bằng * / - / • / + thành gạch đầu dòng <ul>, dòng 1. / 2. thành danh sách số <ol>; giữ highlight nhãn Ưu điểm/Khuyết điểm/Cách khắc phục... như cũ. */
 function formatMsg(t){
-return esc(t).replace(/\*\*([^*]+)\*\*/g, "<b>$1</b>").split("\n").map(line => {
+const lines = esc(t).replace(/\*\*([^*]+)\*\*/g, "<b>$1</b>").split("\n");
+const sec = line => {
 const m = line.match(/^\s*(Ưu điểm|Khuyết điểm|Cách khắc phục|Gợi ý chốt|Chốt|Gợi ý|Lưu ý)\s*[:：]\s*(.*)$/i);
-if (!m) return line;
+if (!m) return null;
 const cls = /khuyết/i.test(m[1]) ? "con" : /khắc phục/i.test(m[1]) ? "fix" : "pro";
 return `<span class="msgsec ${cls}">${m[1]}:</span> ${m[2]}`;
-}).join("\n");
+};
+let out = "", list = "";
+const close = () => { if (list) { out += "</" + list + ">"; list = ""; } };
+lines.forEach(line => {
+const b = line.match(/^\s*[*\-•+]\s+(.*)$/);
+const n = line.match(/^\s*\d+[.)]\s+(.*)$/);
+if (b || n) {
+const tag = b ? "ul" : "ol", item = b ? b[1] : n[1];
+if (list !== tag) { close(); out += "<" + tag + ">"; list = tag; }
+out += "<li>" + (sec(item) || item) + "</li>";
+} else { close(); out += (sec(line) || line) + "\n"; }
+});
+close();
+return out;
 }
 function localStylistFallback(q){
 /* Gợi ý offline khi mất kết nối — mở như chat thường, không từ chối chủ đề, không ép mẫu 4 dòng. */
@@ -2395,7 +2414,7 @@ if (styAbort) { try { styAbort.abort(); } catch(e){} } /* fetch trong sendQ ném
 }
 function drawChat(){
 const box = $("#chat");
-if (!history.length && !busy){ box.innerHTML = `<div class="empty">Chọn câu hỏi nhanh ở trên hoặc tự hỏi bên dưới — Stylist chỉ gợi ý 1 phương án tốt nhất, trả lời ngắn theo 4 bước: Ưu điểm · Khuyết điểm · Cách khắc phục · Chốt.</div>`; drawn = 0; renderFollow(); return; }
+if (!history.length && !busy){ box.innerHTML = `<div class="empty">Chọn câu hỏi nhanh ở trên hoặc tự hỏi bên dưới — Stylist trả lời ngắn gọn, gạch đầu dòng, gợi ý theo đúng hồ sơ và tủ đồ của bạn.</div>`; drawn = 0; renderFollow(); return; }
 if (drawn < 1 || drawn > history.length) { box.innerHTML = ""; drawn = 0; }
 box.querySelectorAll(".typing").forEach(e => e.remove());
 history.slice(drawn).forEach(m => { const d = document.createElement("div"); d.className = "msg " + (m.role === "user" ? "u" : "a"); if (m.role === "assistant") d.innerHTML = formatMsg(m.content); else {
