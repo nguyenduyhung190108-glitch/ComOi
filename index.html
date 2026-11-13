@@ -554,7 +554,7 @@ body.intro-lock{overflow:hidden}
 @media(max-width:560px){.intro-team{font-size:12.5px;letter-spacing:.5px;padding:0 6px}}
 .intro-gl{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:1;opacity:0;transition:opacity .5s ease;pointer-events:none}
 .intro-gate.gl-on .intro-gl{opacity:1}
-.intro-gate.gl-on .intro-stage{opacity:0}
+.intro-gate.gl-on .intro-stage{opacity:0;display:none}
 .intro-gate.gl-on::before{opacity:0;animation:none}
 .intro-stage{position:relative;width:min(340px,78vw);display:flex;flex-direction:column;align-items:center;transition:opacity .45s ease}
 .intro-rocket{position:relative;z-index:3;animation:introRocket 2.2s cubic-bezier(.5,0,.9,.4) 1.6s both;will-change:transform,opacity}
@@ -626,8 +626,8 @@ body.intro-lock{overflow:hidden}
 .intro-decal .d-dyn{font-weight:800;font-size:1.3em;color:#052e47}
 .intro-decal .d-club{font-weight:600;font-size:1em;color:#3d7396}
 /*HẦM PHÓNG (SILO) BẢN ẢNH DỰ PHÒNG — lúc chờ: tàu bị hạ xuống dưới đường mặt đất (wrapper .intro-rise translateY 58% + clip-path cắt phần dưới đường hầm) và mặt đất .intro-ground phủ lên trên cùng 2 cánh cửa hầm đóng kín ở giữa (có đường khớp giữa và đèn báo mờ), nên KHÔNG thấy tàu, chỉ thấy mặt đất + bệ + cửa hầm. Nhấn Bắt đầu: cửa trượt sang hai bên (transition ease-out .95s), tàu trồi thẳng lên (transition 1,25s, trễ .4s) qua miệng hầm lên đúng vị trí, khựng nhẹ ở đầu animation phóng rồi châm lửa phóng lên như thường*/
-.intro-rise{position:relative;width:100%;transform:translateY(58%);clip-path:inset(-220% -6% 40% -6%);transition:transform 1.25s cubic-bezier(.25,.7,.3,1) .4s;will-change:transform}
-.intro-gate.playing .intro-rise{transform:translateY(0)}
+.intro-rise{position:relative;width:100%;transform:translateY(58%);clip-path:inset(-220% -6% 60% -6%);transition:transform 1.25s cubic-bezier(.25,.7,.3,1) .4s,clip-path 1.25s cubic-bezier(.25,.7,.3,1) .4s;will-change:transform,clip-path}
+.intro-gate.playing .intro-rise{transform:translateY(0);clip-path:inset(-220% -6% 0% -6%)}
 .intro-ground{position:absolute;left:50%;top:55%;transform:translateX(-50%);width:min(470px,94vw);height:45%;z-index:4;border-radius:14px 14px 0 0;background:linear-gradient(180deg,#10365e 0,#0b2748 55%,#030c18 100%);box-shadow:inset 0 2px 0 rgba(160,215,255,.35),inset 0 14px 24px rgba(0,4,12,.35);pointer-events:none}
 .intro-hatch{position:absolute;left:50%;top:10px;transform:translateX(-50%);width:52%;height:30px;border-radius:8px;overflow:hidden;background:#01060e;box-shadow:inset 0 0 0 2px rgba(150,200,240,.28),inset 0 6px 12px rgba(0,0,0,.8)}
 .intro-door{position:absolute;top:0;width:50.5%;height:100%;background:linear-gradient(180deg,#2a4d75,#122c49);box-shadow:inset 0 1px 0 rgba(190,225,250,.4);transition:transform .95s cubic-bezier(.25,.7,.3,1) .05s}
@@ -861,7 +861,7 @@ body.intro-lock{overflow:hidden}
 <div class="consent-status" id="consentStatus" role="note"></div>
 </footer>
 <script>
-const API_BASE = location.hostname.endsWith(".workers.dev") ? "" : "https://black-truth-368d.nguyenduyhung190108.workers.dev/";
+const API_BASE = location.hostname.endsWith(".workers.dev") ? "" : "https://black-truth-368d.nguyenduyhung190108.workers.dev";
 const WORKER_URL = API_BASE + "/api/chat";
 const $ = s => document.querySelector(s);
 const REDUCE = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -3164,7 +3164,7 @@ function frame(now){
 
 
 
-  renderer.render(scene, camera);
+  try { renderer.render(scene, camera); } catch (e) { gate.classList.remove("gl-on"); dispose(); return; }
   if (!shown) { shown = true; gate.classList.add("gl-on"); }
   raf = requestAnimationFrame(frame);
 }
@@ -3173,6 +3173,8 @@ function dispose(){
   window.removeEventListener("resize", resize);
   try { renderer.dispose(); } catch (e) {}
 }
+/* Cảnh 3D đã dựng xong: bật gl-on NGAY để lớp ảnh dự phòng rời khỏi khung hình hoàn toàn (display:none), không chờ khung hình đầu tiên — tránh sân khấu dự phòng còn hiện đè lên cảnh 3D */
+gate.classList.add("gl-on");
 raf = requestAnimationFrame(frame);
 
 } catch (e) { /* lỗi dựng cảnh: giữ nguyên bản ảnh dự phòng */ }
